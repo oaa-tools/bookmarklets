@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <title>Web Accessibility Bookmarklets</title>
+    <style type="text/css">
+      body, h1, h2, h3, h4, h5, h6, p, dl, dd, ol, ul {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 16px;
+      }
+      div#main-content { margin: 24px; }
+      h1 { font-size: 24px; }
+      p  { margin-top: 12px; }
+      ul { margin-left: 20px; }
+      li { margin-top: 12px; }
+    </style>
+  </head>
+  <body>
+    <div id="main-content" role="main">
+      <h1>Web Accessibility Bookmarklets</h1>
+      <p>To install a bookmarklet, drag one of the following links into your browser&apos;s Bookmarks Toolbar.</p>
+      <ul>
+        <li><a href="javascript:(function(){var el=document.createElement('script');el.setAttribute('src','http://localhost/bookmarklets/headings.js');document.body.appendChild(el);}());">Headings</a></li>
+        <li><a href="javascript:(function(){var el=document.createElement('script');el.setAttribute('src','http://localhost/bookmarklets/landmarks.js');document.body.appendChild(el);}());">Landmarks</a></li>
+      </ul>
+    </div>
+  </body>
+</html>
