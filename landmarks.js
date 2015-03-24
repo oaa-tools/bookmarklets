@@ -172,10 +172,10 @@ javascript: (function() {
   }
 
   function createOverlay (tgt, rect) {
-    var innerStyle = "float: right; background-color: " + tgt.color + "; padding: 2px 2px 5px 5px";
+    var innerStyle = "float: right; background-color: " + tgt.color + "; padding: 2px 2px 4px 4px";
     var node = document.createElement("div");
     var scrollOffsets = getScrollOffsets();
-    var minHeight = 32;
+    var minHeight = 27;
 
     function repositionOverlay (element) {
       if (typeof element.startLeft === "undefined") return;
