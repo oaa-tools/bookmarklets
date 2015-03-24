@@ -37,7 +37,7 @@ javascript: (function() {
   }
 
   function createOverlay (tgt, rect) {
-    var innerStyle = "float: right; background-color: " + tgt.color + "; padding: 2px 2px 4px 4px";
+    var innerStyle = "float: right; background-color: " + tgt.color + "; padding: 1px 1px 4px 4px";
     var node = document.createElement("div");
     var scrollOffsets = getScrollOffsets();
     var minWidth  = 34;
