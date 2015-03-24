@@ -1,15 +1,24 @@
 javascript: (function() {
   var targetList = [
-    {selector: "h1", color: "navy",   label: "H1"},
-    {selector: "h2", color: "olive",  label: "H2"},
-    {selector: "h3", color: "purple", label: "H3"},
-    {selector: "h4", color: "green",  label: "H4"},
-    {selector: "h5", color: "gray",   label: "H5"},
-    {selector: "h6", color: "brown",  label: "H6"}
+    {selector: "h1", color: "navy",   label: "h1"},
+    {selector: "h2", color: "olive",  label: "h2"},
+    {selector: "h3", color: "purple", label: "h3"},
+    {selector: "h4", color: "green",  label: "h4"},
+    {selector: "h5", color: "gray",   label: "h5"},
+    {selector: "h6", color: "brown",  label: "h6"}
   ];
 
   var className  = "a11yGfdXALm1";
   var zIndex = 100000;
+
+  if (!String.prototype.trim) {
+    (function() {
+      var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+      String.prototype.trim = function() {
+        return this.replace(rtrim, '');
+      };
+    })();
+  }
 
   function getScrollOffsets() {
     var t;
@@ -28,9 +37,11 @@ javascript: (function() {
   }
 
   function createOverlay (tgt, rect) {
-    var innerStyle = "float: right; background-color: " + tgt.color + "; padding: 2px 3px";
-    var scrollOffsets = getScrollOffsets();
+    var innerStyle = "float: right; background-color: " + tgt.color + "; padding: 2px 2px 4px 4px";
     var node = document.createElement("div");
+    var scrollOffsets = getScrollOffsets();
+    var minWidth  = 34;
+    var minHeight = 27;
 
     node.setAttribute("class", className);
 
@@ -39,18 +50,18 @@ javascript: (function() {
     node.style.zIndex = zIndex;
 
     node.startLeft = (rect.left + scrollOffsets.x) + "px";
-    node.startTop = (rect.top + scrollOffsets.y) + "px";
+    node.startTop  = (rect.top + scrollOffsets.y) + "px";
 
-    node.style.left = node.startLeft;
-    node.style.top = node.startTop;
-    node.style.height = Math.max(rect.height, 27) + "px";
-    node.style.width = rect.width + "px";
+    node.style.left   = node.startLeft;
+    node.style.top    = node.startTop;
+    node.style.width  = Math.max(rect.width, minWidth) + "px";
+    node.style.height = Math.max(rect.height, minHeight) + "px";
 
-    node.style.boxSizing = "border-box";
-    node.style.border = "3px solid " + tgt.color;
-    node.style.color = "white";
+    node.style.boxSizing  = "border-box";
+    node.style.border     = "3px solid " + tgt.color;
+    node.style.color      = "white";
     node.style.fontFamily = "Arial, Helvetica, 'Liberation Sans', sans-serif";
-    node.style.fontSize = "16px";
+    node.style.fontSize   = "16px";
 
     node.innerHTML = '<div style="' + innerStyle + '">' + tgt.label + '</div>';
     return node;
@@ -63,6 +74,9 @@ javascript: (function() {
       [].forEach.call(elements, function (element) {
         var boundingRect = element.getBoundingClientRect();
         var overlayNode = createOverlay(target, boundingRect);
+        var prefix = target.label + ": ";
+        var textContent = element.textContent.trim();
+        overlayNode.title = prefix + textContent;
         document.body.appendChild(overlayNode);
       });
     });
