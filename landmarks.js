@@ -1,15 +1,15 @@
 javascript: (function() {
   var targetList = [
-    {selector: 'body > header, [role="banner"]',            color: "gray",   label: "BANNER"},
-    {selector: 'main, [role="main"]',                       color: "navy",   label: "MAIN"},
-    {selector: 'body > footer, [role="contentinfo"]',       color: "olive",  label: "CONTENTINFO"},
-    {selector: 'aside:not([role]), [role="complementary"]', color: "brown",  label: "COMPLEMENTARY"},
-    {selector: 'nav, [role="navigation"]',                  color: "green",  label: "NAVIGATION"},
-    {selector: '[role="search"]',                           color: "purple", label: "SEARCH"}
+    {selector: 'body > header, [role="banner"]',            color: "gray",   label: "banner"},
+    {selector: 'main, [role="main"]',                       color: "navy",   label: "main"},
+    {selector: 'body > footer, [role="contentinfo"]',       color: "olive",  label: "contentinfo"},
+    {selector: 'aside:not([role]), [role="complementary"]', color: "brown",  label: "complementary"},
+    {selector: 'nav, [role="navigation"]',                  color: "green",  label: "navigation"},
+    {selector: '[role="search"]',                           color: "purple", label: "search"}
   ];
 
-  var className  = "a11yGfdXALm0";
-  var zIndex = 100000;
+  var className = "a11yGfdXALm0";
+  var zIndex    = 100000;
 
   if (!String.prototype.trim) {
     (function() {
@@ -172,10 +172,10 @@ javascript: (function() {
   }
 
   function createOverlay (tgt, rect) {
-    var innerStyle = "float: right; background-color: " + tgt.color + "; padding: 2px 3px";
+    var innerStyle = "float: right; background-color: " + tgt.color + "; padding: 2px 2px 5px 5px";
     var node = document.createElement("div");
     var scrollOffsets = getScrollOffsets();
-    var dragFromLabel = false;
+    var minHeight = 32;
 
     function repositionOverlay (element) {
       if (typeof element.startLeft === "undefined") return;
@@ -200,7 +200,7 @@ javascript: (function() {
 
     node.style.left = node.startLeft;
     node.style.top = node.startTop;
-    node.style.height = Math.max(rect.height, 27) + "px";
+    node.style.height = Math.max(rect.height, minHeight) + "px";
     node.style.width = rect.width + "px";
 
     node.style.boxSizing = "border-box";
@@ -211,22 +211,12 @@ javascript: (function() {
 
     node.innerHTML = '<div style="' + innerStyle + '">' + tgt.label + '</div>';
 
-    if (dragFromLabel) {
-      node.firstChild.onmousedown = function (event) {
-        drag(this.parentNode, hoistZIndex, event);
-      };
-      node.firstChild.ondblclick = function (event) {
-        repositionOverlay(this.parentNode);
-      };
-    }
-    else {
-      node.onmousedown = function (event) {
-        drag(this, hoistZIndex, event);
-      };
-      node.ondblclick = function (event) {
-        repositionOverlay(this);
-      };
-    }
+    node.onmousedown = function (event) {
+      drag(this, hoistZIndex, event);
+    };
+    node.ondblclick = function (event) {
+      repositionOverlay(this);
+    };
 
     return node;
   }
