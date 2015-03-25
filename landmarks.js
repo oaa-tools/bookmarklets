@@ -111,7 +111,7 @@ javascript: (function() {
     return { x: xOffset, y: yOffset };
   }
 
-  function drag(elementToDrag, upHandlerCallback, event) {
+  function drag(elementToDrag, dragCallback, event) {
     var scroll = getScrollOffsets();
     var startX = event.clientX + scroll.x;
     var startY = event.clientY + scroll.y;
@@ -121,6 +121,8 @@ javascript: (function() {
 
     var deltaX = startX - origX;
     var deltaY = startY - origY;
+
+    if (dragCallback) dragCallback(elementToDrag);
 
     if (document.addEventListener) {
       document.addEventListener("mousemove", moveHandler, true);
@@ -146,6 +148,8 @@ javascript: (function() {
       elementToDrag.style.left = (e.clientX + scroll.x - deltaX) + "px";
       elementToDrag.style.top = (e.clientY + scroll.y - deltaY) + "px";
 
+      elementToDrag.style.cursor = "move";
+
       if (e.stopPropagation) e.stopPropagation();
       else e.cancelBubble = true;
     }
@@ -153,7 +157,9 @@ javascript: (function() {
     function upHandler(e) {
       if (!e) e = window.event;
 
-      if (upHandlerCallback) upHandlerCallback(elementToDrag);
+      elementToDrag.style.cursor = "grab";
+      elementToDrag.style.cursor = "-moz-grab";
+      elementToDrag.style.cursor = "-webkit-grab";
 
       if (document.removeEventListener) {
           document.removeEventListener("mouseup", upHandler, true);
@@ -211,11 +217,19 @@ javascript: (function() {
 
     node.innerHTML = '<div style="' + innerStyle + '">' + tgt.label + '</div>';
 
+    node.onmouseover = function (event) {
+      this.style.cursor = "grab";
+      this.style.cursor = "-moz-grab";
+      this.style.cursor = "-webkit-grab";
+    }
+
     node.onmousedown = function (event) {
       drag(this, hoistZIndex, event);
     };
+
     node.ondblclick = function (event) {
       repositionOverlay(this);
+      window.style.cursor = "auto";
     };
 
     return node;
