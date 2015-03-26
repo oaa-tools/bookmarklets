@@ -1,4 +1,4 @@
-javascript: (function() {
+javascript: (function () {
   var targetList = [
     {selector: 'body > header, [role="banner"]',            color: "gray",   label: "banner"},
     {selector: 'main, [role="main"]',                       color: "navy",   label: "main"},
@@ -20,17 +20,47 @@ javascript: (function() {
     })();
   }
 
-  function collectAltText (listOfImages) {
-    var i, image, text =[];
+  function getAttributeValue (element, attribute) {
+    var value = element.getAttribute(attribute);
+    return (value === null) ? '' : value;
+  }
 
-    for (i = 0; i < listOfImages.length; i++) {
-      image = listOfImages[i];
-      if (image.alt && image.alt.trim().length)
-        text.push(image.alt);
+  function getElementText (element) {
+    var arrayOfStrings;
+
+    function getTextRec (node, arr) {
+      var tagName, altText, childNodes, length, i, content;
+
+      switch (node.nodeType) {
+        case (Node.ELEMENT_NODE):
+          tagName = node.tagName.toLowerCase();
+          if (tagName === 'img' || tagName === 'area') {
+            altText = getAttributeValue(node, "alt").trim();
+            if (altText.length) arr.push(altText);
+          }
+          else {
+            if (node.hasChildNodes()) {
+              childNodes = node.childNodes;
+              length = childNodes.length;
+              for (i = 0; i < length; i++)
+                getTextRec(childNodes[i], arr);
+            }
+          }
+          break;
+        case (Node.TEXT_NODE):
+          content = node.textContent.trim();
+          if (content.length) arr.push(content);
+          break;
+        default:
+          break;
+      }
+
+      return arr;
     }
 
-    if (text.length) return text.join(' ');
-
+    arrayOfStrings = getTextRec(element, []);
+    if (arrayOfStrings.length)
+      return arrayOfStrings.join(' ');
     return '';
   }
 
@@ -39,16 +69,7 @@ javascript: (function() {
 
     if (element === null) return '';
 
-    ariaLabel = getAttributeValue(element, "aria-label");
-    if (ariaLabel) return ariaLabel;
-
-    images = element.getElementsByTagName('img');
-    if (images.length) {
-      altText = collectAltText(images);
-      if (altText) return altText;
-    }
-
-    textContent = element.textContent.trim();
+    textContent = getElementText(element);
     if (textContent) return textContent;
 
     if (element.title) return element.title.trim();
@@ -75,11 +96,6 @@ javascript: (function() {
     return '';
   }
 
-  function getAttributeValue (element, attribute) {
-    var value = element.getAttribute(attribute);
-    return (value === null) ? '' : value;
-  }
-
   function getAccessibleName (element) {
     var name;
 
@@ -92,10 +108,10 @@ javascript: (function() {
     name = getAttributeValue(element, "title");
     if (name.length) return name;
 
-    return "not found";
+    return '';
   }
 
-  function getScrollOffsets() {
+  function getScrollOffsets () {
     var t;
 
     var xOffset = (typeof window.pageXOffset === "undefined") ?
@@ -111,7 +127,7 @@ javascript: (function() {
     return { x: xOffset, y: yOffset };
   }
 
-  function drag(elementToDrag, dragCallback, event) {
+  function drag (elementToDrag, dragCallback, event) {
     var scroll = getScrollOffsets();
     var startX = event.clientX + scroll.x;
     var startY = event.clientY + scroll.y;
@@ -141,7 +157,7 @@ javascript: (function() {
     if (event.preventDefault) event.preventDefault();
     else event.returnValue = false;
 
-    function moveHandler(e) {
+    function moveHandler (e) {
       if (!e) e = window.event;
 
       var scroll = getScrollOffsets();
@@ -154,7 +170,7 @@ javascript: (function() {
       else e.cancelBubble = true;
     }
 
-    function upHandler(e) {
+    function upHandler (e) {
       if (!e) e = window.event;
 
       elementToDrag.style.cursor = "grab";
@@ -221,7 +237,7 @@ javascript: (function() {
       this.style.cursor = "grab";
       this.style.cursor = "-moz-grab";
       this.style.cursor = "-webkit-grab";
-    }
+    };
 
     node.onmousedown = function (event) {
       drag(this, hoistZIndex, event);
@@ -256,12 +272,16 @@ javascript: (function() {
 
     targetList.forEach(function (target) {
       var elements = document.querySelectorAll(target.selector);
+      var accessibleName;
 
       Array.prototype.forEach.call(elements, function (element) {
         var boundingRect = element.getBoundingClientRect();
         var overlayNode = createOverlay(target, boundingRect);
-        var prefix = target.label + " accessible name:\n";
-        overlayNode.title = prefix + getAccessibleName(element);
+        var text = getAccessibleName(element);
+        accessibleName = text.length ?
+          target.label + ": " + text :
+          target.label;
+        overlayNode.title = accessibleName;
         document.body.appendChild(overlayNode);
         counter += 1;
       });

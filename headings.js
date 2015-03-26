@@ -20,6 +20,50 @@ javascript: (function() {
     })();
   }
 
+  function getAttributeValue (element, attribute) {
+    var value = element.getAttribute(attribute);
+    return (value === null) ? '' : value;
+  }
+
+  function getElementText (element) {
+    var arrayOfStrings;
+
+    function getTextRec (node, arr) {
+      var tagName, altText, childNodes, length, i, content;
+
+      switch (node.nodeType) {
+        case (Node.ELEMENT_NODE):
+          tagName = node.tagName.toLowerCase();
+          if (tagName === 'img' || tagName === 'area') {
+            altText = getAttributeValue(node, "alt").trim();
+            if (altText.length) arr.push(altText);
+          }
+          else {
+            if (node.hasChildNodes()) {
+              childNodes = node.childNodes;
+              length = childNodes.length;
+              for (i = 0; i < length; i++)
+                getTextRec(childNodes[i], arr);
+            }
+          }
+          break;
+        case (Node.TEXT_NODE):
+          content = node.textContent.trim();
+          if (content.length) arr.push(content);
+          break;
+        default:
+          break;
+      }
+
+      return arr;
+    }
+
+    arrayOfStrings = getTextRec(element, []);
+    if (arrayOfStrings.length)
+      return arrayOfStrings.join(' ');
+    return '';
+  }
+
   function getScrollOffsets() {
     var t;
 
@@ -75,7 +119,7 @@ javascript: (function() {
         var boundingRect = element.getBoundingClientRect();
         var overlayNode = createOverlay(target, boundingRect);
         var prefix = target.label + ": ";
-        var textContent = element.textContent.trim();
+        var textContent = getElementText(element).trim();
         overlayNode.title = prefix + textContent;
         document.body.appendChild(overlayNode);
       });
