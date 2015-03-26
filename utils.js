@@ -38,10 +38,11 @@ function getScrollOffsets() {
 /*
 * From JavaScript: The Definitive Guide, Sixth Edition, with the following modifications:
 * (1) removed all comments
-* (2) added upHandlerCallback parameter
+* (2) added dragCallback parameter
+* (3) added style.cursor grab and move settings
 */
 
-function drag(elementToDrag, upHandlerCallback, event) {
+function drag (elementToDrag, dragCallback, event) {
   var scroll = getScrollOffsets();
   var startX = event.clientX + scroll.x;
   var startY = event.clientY + scroll.y;
@@ -51,6 +52,8 @@ function drag(elementToDrag, upHandlerCallback, event) {
 
   var deltaX = startX - origX;
   var deltaY = startY - origY;
+
+  if (dragCallback) dragCallback(elementToDrag);
 
   if (document.addEventListener) {
     document.addEventListener("mousemove", moveHandler, true);
@@ -69,21 +72,25 @@ function drag(elementToDrag, upHandlerCallback, event) {
   if (event.preventDefault) event.preventDefault();
   else event.returnValue = false;
 
-  function moveHandler(e) {
+  function moveHandler (e) {
     if (!e) e = window.event;
 
     var scroll = getScrollOffsets();
     elementToDrag.style.left = (e.clientX + scroll.x - deltaX) + "px";
     elementToDrag.style.top = (e.clientY + scroll.y - deltaY) + "px";
 
+    elementToDrag.style.cursor = "move";
+
     if (e.stopPropagation) e.stopPropagation();
     else e.cancelBubble = true;
   }
 
-  function upHandler(e) {
+  function upHandler (e) {
     if (!e) e = window.event;
 
-    if (upHandlerCallback) upHandlerCallback(elementToDrag);
+    elementToDrag.style.cursor = "grab";
+    elementToDrag.style.cursor = "-moz-grab";
+    elementToDrag.style.cursor = "-webkit-grab";
 
     if (document.removeEventListener) {
         document.removeEventListener("mouseup", upHandler, true);
@@ -110,4 +117,50 @@ if (!String.prototype.trim) {
       return this.replace(rtrim, '');
     };
   })();
+}
+
+/* DOM element functions for accessible name calculations */
+
+function getAttributeValue (element, attribute) {
+  var value = element.getAttribute(attribute);
+  return (value === null) ? '' : value;
+}
+
+function getElementText (element) {
+  var arrayOfStrings;
+
+  function getTextRec (node, arr) {
+    var tagName, altText, childNodes, length, i, content;
+
+    switch (node.nodeType) {
+      case (Node.ELEMENT_NODE):
+        tagName = node.tagName.toLowerCase();
+        if (tagName === 'img' || tagName === 'area') {
+          altText = getAttributeValue(node, "alt").trim();
+          if (altText.length) arr.push(altText);
+        }
+        else {
+          if (node.hasChildNodes()) {
+            childNodes = node.childNodes;
+            length = childNodes.length;
+            for (i = 0; i < length; i++)
+              getTextRec(childNodes[i], arr);
+          }
+        }
+        break;
+      case (Node.TEXT_NODE):
+        content = node.textContent.trim();
+        if (content.length) arr.push(content);
+        break;
+      default:
+        break;
+    }
+
+    return arr;
+  }
+
+  arrayOfStrings = getTextRec(element, []);
+  if (arrayOfStrings.length)
+    return arrayOfStrings.join(' ');
+  return '';
 }
