@@ -11,13 +11,9 @@ javascript: (function () {
   var className = "a11yGfdXALm0";
   var zIndex    = 100000;
 
-  if (!String.prototype.trim) {
-    (function() {
-      var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
-      String.prototype.trim = function() {
-        return this.replace(rtrim, '');
-      };
-    })();
+  function normalize (s) {
+    var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+    return s.replace(rtrim, '').replace(/\s+/g, ' ');
   }
 
   function getAttributeValue (element, attribute) {
@@ -35,7 +31,7 @@ javascript: (function () {
         case (Node.ELEMENT_NODE):
           tagName = node.tagName.toLowerCase();
           if (tagName === 'img' || tagName === 'area') {
-            altText = getAttributeValue(node, "alt").trim();
+            altText = normalize(getAttributeValue(node, "alt"));
             if (altText.length) arr.push(altText);
           }
           else {
@@ -48,7 +44,7 @@ javascript: (function () {
           }
           break;
         case (Node.TEXT_NODE):
-          content = node.textContent.trim();
+          content = normalize(node.textContent);
           if (content.length) arr.push(content);
           break;
         default:
@@ -65,15 +61,14 @@ javascript: (function () {
   }
 
   function getRefElementAccessibleName (element) {
-    var ariaLabel, images, altText, textContent;
+    var textContent;
 
     if (element === null) return '';
 
     textContent = getElementText(element);
     if (textContent) return textContent;
 
-    if (element.title) return element.title.trim();
-
+    if (element.title) return normalize(element.title);
     return '';
   }
 
@@ -86,13 +81,12 @@ javascript: (function () {
 
       for (i = 0; i < idRefs.length; i++) {
         refElement = document.getElementById(idRefs[i]);
-        accName = getRefElementAccessibleName(refElement).trim();
+        accName = getRefElementAccessibleName(refElement);
         if (accName.length) text.push(accName);
       }
     }
 
     if (text.length) return text.join(' ');
-
     return '';
   }
 

@@ -119,7 +119,10 @@ if (!String.prototype.trim) {
   })();
 }
 
-/* DOM element functions for accessible name calculations */
+function normalize (s) {
+  var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+  return s.replace(rtrim, '').replace(/\s+/g, ' ');
+}
 
 function getAttributeValue (element, attribute) {
   var value = element.getAttribute(attribute);
@@ -136,7 +139,7 @@ function getElementText (element) {
       case (Node.ELEMENT_NODE):
         tagName = node.tagName.toLowerCase();
         if (tagName === 'img' || tagName === 'area') {
-          altText = getAttributeValue(node, "alt").trim();
+          altText = normalize(getAttributeValue(node, "alt"));
           if (altText.length) arr.push(altText);
         }
         else {
@@ -149,7 +152,7 @@ function getElementText (element) {
         }
         break;
       case (Node.TEXT_NODE):
-        content = node.textContent.trim();
+        content = normalize(node.textContent);
         if (content.length) arr.push(content);
         break;
       default:
