@@ -25,7 +25,7 @@ javascript: (function () {
     var arrayOfStrings;
 
     function getTextRec (node, arr) {
-      var tagName, altText, childNodes, length, i, content;
+      var tagName, altText, content;
 
       switch (node.nodeType) {
         case (Node.ELEMENT_NODE):
@@ -36,10 +36,9 @@ javascript: (function () {
           }
           else {
             if (node.hasChildNodes()) {
-              childNodes = node.childNodes;
-              length = childNodes.length;
-              for (i = 0; i < length; i++)
-                getTextRec(childNodes[i], arr);
+              Array.prototype.forEach.call(node.childNodes, function (n) {
+                getTextRec(n, arr);
+              });
             }
           }
           break;
@@ -239,7 +238,7 @@ javascript: (function () {
 
     node.ondblclick = function (event) {
       repositionOverlay(this);
-      window.style.cursor = "auto";
+      document.body.style.cursor = "auto";
     };
 
     return node;
