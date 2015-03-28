@@ -7,6 +7,7 @@ requirements, including:
 * Landmarks
 
 Instructions for using Landmarks:
+
 * An outlined area with a landmark role label (e.g., MAIN) is referred
   to as an overlay. It has the same geometry as the landmark it outlines.
 * Hovering over an overlay will display a tooltip with the landmark's
