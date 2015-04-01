@@ -1,4 +1,4 @@
-javascript: (function() {
+javascript: (function (utils) {
   var targetList = [
     {selector: "h1", color: "navy",   label: "h1"},
     {selector: "h2", color: "olive",  label: "h2"},
@@ -11,74 +11,10 @@ javascript: (function() {
   var className  = "a11yGfdXALm1";
   var zIndex = 100000;
 
-  function normalize (s) {
-    var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
-    return s.replace(rtrim, '').replace(/\s+/g, ' ');
-  }
-
-  function getAttributeValue (element, attribute) {
-    var value = element.getAttribute(attribute);
-    return (value === null) ? '' : value;
-  }
-
-  function getElementText (element) {
-    var arrayOfStrings;
-
-    function getTextRec (node, arr) {
-      var tagName, altText, content;
-
-      switch (node.nodeType) {
-        case (Node.ELEMENT_NODE):
-          tagName = node.tagName.toLowerCase();
-          if (tagName === 'img' || tagName === 'area') {
-            altText = normalize(getAttributeValue(node, "alt"));
-            if (altText.length) arr.push(altText);
-          }
-          else {
-            if (node.hasChildNodes()) {
-              Array.prototype.forEach.call(node.childNodes, function (n) {
-                getTextRec(n, arr);
-              });
-            }
-          }
-          break;
-        case (Node.TEXT_NODE):
-          content = normalize(node.textContent);
-          if (content.length) arr.push(content);
-          break;
-        default:
-          break;
-      }
-
-      return arr;
-    }
-
-    arrayOfStrings = getTextRec(element, []);
-    if (arrayOfStrings.length)
-      return arrayOfStrings.join(' ');
-    return '';
-  }
-
-  function getScrollOffsets() {
-    var t;
-
-    var xOffset = (typeof window.pageXOffset === "undefined") ?
-      (((t = document.documentElement) || (t = document.body.parentNode)) &&
-        typeof t.ScrollLeft == 'number' ? t : document.body).ScrollLeft :
-      window.pageXOffset;
-
-    var yOffset = (typeof window.pageYOffset === "undefined") ?
-      (((t = document.documentElement) || (t = document.body.parentNode)) &&
-        typeof t.ScrollTop == 'number' ? t : document.body).ScrollTop :
-      window.pageYOffset;
-
-    return { x: xOffset, y: yOffset };
-  }
-
   function createOverlay (tgt, rect) {
     var innerStyle = "float: right; background-color: " + tgt.color + "; padding: 1px 1px 4px 4px";
     var node = document.createElement("div");
-    var scrollOffsets = getScrollOffsets();
+    var scrollOffsets = utils.getScrollOffsets();
     var minWidth  = 34;
     var minHeight = 27;
 
@@ -114,7 +50,7 @@ javascript: (function() {
         var boundingRect = element.getBoundingClientRect();
         var overlayNode = createOverlay(target, boundingRect);
         var prefix = target.label + ": ";
-        var textContent = getElementText(element);
+        var textContent = utils.getElementText(element);
         overlayNode.title = prefix + textContent;
         document.body.appendChild(overlayNode);
       });
@@ -137,4 +73,4 @@ javascript: (function() {
 
   window.onresize = function () { removeNodes(); window.a11yShowHeadings = false; };
   window.accessibility(window.a11yShowHeadings);
-})();
+})(OAAUtils);
