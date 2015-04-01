@@ -16,6 +16,15 @@ var OAAUtils = (function () {
     return { x: xOffset, y: yOffset };
   };
 
+  var setBoxGeometry = function (overlay) {
+    var width = window.innerWidth / 3.2;
+    var left  = window.innerWidth / 2 - width / 2;
+
+    overlay.style.width = width + "px";
+    overlay.style.left  = left + "px";
+    overlay.style.top   = "25px";
+  };
+
   var normalize = function (s) {
     var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
     return s.replace(rtrim, '').replace(/\s+/g, ' ');
@@ -97,6 +106,29 @@ var OAAUtils = (function () {
   return {
     getScrollOffsets: getScrollOffsets,
     getElementText: getElementText,
+    setBoxGeometry: setBoxGeometry,
+
+    createMsgOverlay: function () {
+      var overlay = document.createElement("div");
+
+      overlay.style.position = "absolute";
+      overlay.style.overflow = "auto";
+      overlay.style.zIndex = 300000;
+
+      setBoxGeometry(overlay);
+
+      overlay.style.padding = "0 10px 10px";
+      overlay.style.border = "2px solid #333";
+      overlay.style.backgroundColor = "rgba(255, 255, 255, 1.0)";
+      overlay.style.color = "#333";
+
+      document.body.appendChild(overlay);
+      return overlay;
+    },
+
+    deleteMsgOverlay: function (overlay) {
+      if (overlay) document.body.removeChild(overlay);
+    },
 
     getAccessibleName: function (element) {
       var name;
