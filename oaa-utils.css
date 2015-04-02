@@ -3,7 +3,7 @@ div.oaa-message-dialog {
   overflow    : auto;
   z-index     : 2147483647;
   padding     : 4px;
-  border      : 2px solid #333;
+  border      : 3px solid #333;
   background  : #fff;
   color       : #333;
   font-family : arial, helvetica, sans-serif;
@@ -13,7 +13,7 @@ div.oaa-message-dialog > button {
   float       : right;
   display     : inline-block;
   width       : 30px;
-  border         : none;
+  border      : none;
   padding-bottom : 5px;
   color       : #f5f5f5;
   background  : #464646;
