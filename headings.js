@@ -1,4 +1,4 @@
-javascript: (function (utils) {
+(function (utils) {
   var targetList = [
     {selector: "h1", color: "navy",   label: "h1"},
     {selector: "h2", color: "olive",  label: "h2"},
@@ -42,19 +42,49 @@ javascript: (function (utils) {
     return node;
   }
 
+  function hideMessage () {
+    if (window.a11yMsgHeadings) {
+      utils.deleteMsgOverlay(window.a11yMsgHeadings);
+      delete(window.a11yMsgHeadings);
+      window.a11yShowHeadings = false;
+    }
+  }
+
+  function showMessage () {
+    var titleText = "Headings",
+        msgText = "No heading elements (h1..h6) found.",
+        h2, div;
+
+    if (!window.a11yMsgHeadings)
+      window.a11yMsgHeadings = utils.createMsgOverlay(hideMessage);
+
+    h2 = document.createElement("h2");
+    h2.innerHTML = titleText;
+    window.a11yMsgHeadings.appendChild(h2);
+
+    div = document.createElement("div");
+    div.innerHTML = msgText;
+    window.a11yMsgHeadings.appendChild(div);
+  }
+
   function addNodes () {
+    var counter = 0;
+
     targetList.forEach(function (target) {
       var elements = document.querySelectorAll(target.selector);
 
-      [].forEach.call(elements, function (element) {
+      Array.prototype.forEach.call(elements, function (element) {
         var boundingRect = element.getBoundingClientRect();
         var overlayNode = createOverlay(target, boundingRect);
         var prefix = target.label + ": ";
         var textContent = utils.getElementText(element);
         overlayNode.title = prefix + textContent;
         document.body.appendChild(overlayNode);
+        counter += 1;
       });
     });
+
+    return counter;
   }
 
   function removeNodes () {
@@ -66,9 +96,17 @@ javascript: (function (utils) {
   }
 
   window.accessibility = function (flag) {
+    var count;
+
     window.a11yShowHeadings = (typeof flag === "undefined") ? true : !flag;
-    if (window.a11yShowHeadings) addNodes();
-    else removeNodes();
+    if (window.a11yShowHeadings){
+      count = addNodes();
+      if (count === 0) showMessage();
+    }
+    else {
+      hideMessage();
+      removeNodes();
+    }
   };
 
   window.onresize = function () { removeNodes(); window.a11yShowHeadings = false; };

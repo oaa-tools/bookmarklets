@@ -1,4 +1,4 @@
-javascript: (function (utils) {
+(function (utils) {
   var targetList = [
     {selector: 'body > header, [role="banner"]',            color: "gray",   label: "banner"},
     {selector: 'main, [role="main"]',                       color: "navy",   label: "main"},
@@ -69,20 +69,29 @@ javascript: (function (utils) {
     return node;
   }
 
-  function issueWarning () {
-    var msg = "No elements with ARIA landmark roles found:\n";
-
-    function getSelectorList () {
-      var i, target, list = [];
-
-      for (i = 0; i < targetList.length; i++) {
-        target = targetList[i].selector;
-        list.push(target);
-      }
-      return list.join('\n');
+  function hideMessage () {
+    if (window.a11yMsgLandmarks) {
+      utils.deleteMsgOverlay(window.a11yMsgLandmarks);
+      delete(window.a11yMsgLandmarks);
+      window.a11yShowLandmarks = false;
     }
+  }
 
-    window.alert(msg + '\n' + getSelectorList());
+  function showMessage () {
+    var titleText = "Landmarks",
+        msgText = "No elements with ARIA Landmark roles found.",
+        h2, div;
+
+    if (!window.a11yMsgLandmarks)
+      window.a11yMsgLandmarks = utils.createMsgOverlay(hideMessage);
+
+    h2 = document.createElement("h2");
+    h2.innerHTML = titleText;
+    window.a11yMsgLandmarks.appendChild(h2);
+
+    div = document.createElement("div");
+    div.innerHTML = msgText;
+    window.a11yMsgLandmarks.appendChild(div);
   }
 
   function addNodes () {
@@ -105,10 +114,7 @@ javascript: (function (utils) {
       });
     });
 
-    if (counter === 0) {
-      window.a11yShowLandmarks = false;
-      issueWarning();
-    }
+    return counter;
   }
 
   function removeNodes () {
@@ -120,9 +126,17 @@ javascript: (function (utils) {
   }
 
   window.accessibility = function (flag) {
+    var count;
+
     window.a11yShowLandmarks = (typeof flag === "undefined") ? true : !flag;
-    if (window.a11yShowLandmarks) addNodes();
-    else removeNodes();
+    if (window.a11yShowLandmarks){
+      count = addNodes();
+      if (count === 0) showMessage();
+    }
+    else {
+      hideMessage();
+      removeNodes();
+    }
   };
 
   window.onresize = function () { removeNodes(); window.a11yShowLandmarks = false; };
