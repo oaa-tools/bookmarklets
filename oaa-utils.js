@@ -1,3 +1,5 @@
+/* global OAAUtils: true */
+
 var OAAUtils = (function () {
 
   // ------------------------------------------------
@@ -20,6 +22,11 @@ var OAAUtils = (function () {
     return { x: xOffset, y: yOffset };
   };
 
+  var normalize = function (s) {
+    var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+    return s.replace(rtrim, '').replace(/\s+/g, ' ');
+  };
+
   var setBoxGeometry = function (overlay) {
     var width  = window.innerWidth / 3.2;
     var left   = window.innerWidth / 2 - width / 2;
@@ -28,11 +35,6 @@ var OAAUtils = (function () {
     overlay.style.width = width + "px";
     overlay.style.left  = (scroll.x + left) + "px";
     overlay.style.top   = (scroll.y + 30) + "px";
-  };
-
-  var normalize = function (s) {
-    var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
-    return s.replace(rtrim, '').replace(/\s+/g, ' ');
   };
 
   var createMsgOverlay = function (handler) {
@@ -134,7 +136,9 @@ var OAAUtils = (function () {
 
   return {
     getScrollOffsets: getScrollOffsets,
+    getAttributeValue: getAttributeValue,
     getElementText: getElementText,
+    getAttributeIdRefsValue: getAttributeIdRefsValue,
 
     hideMessage: function () {
       if (window.a11yMessageDialog) {
@@ -161,21 +165,6 @@ var OAAUtils = (function () {
     resizeMessage: function () {
       if (window.a11yMessageDialog)
         setBoxGeometry(window.a11yMessageDialog);
-    },
-
-    getAccessibleName: function (element) {
-      var name;
-
-      name = getAttributeIdRefsValue(element, "aria-labelledby");
-      if (name.length) return name;
-
-      name = getAttributeValue(element, "aria-label");
-      if (name.length) return name;
-
-      name = getAttributeValue(element, "title");
-      if (name.length) return name;
-
-      return '';
     },
 
     // From JavaScript: The Definitive Guide, 6th Edition (slightly modified)

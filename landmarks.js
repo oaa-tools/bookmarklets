@@ -71,6 +71,21 @@
     return node;
   }
 
+  function getAccessibleName (element) {
+    var name;
+
+    name = utils.getAttributeIdRefsValue(element, "aria-labelledby");
+    if (name.length) return name;
+
+    name = utils.getAttributeValue(element, "aria-label");
+    if (name.length) return name;
+
+    name = utils.getAttributeValue(element, "title");
+    if (name.length) return name;
+
+    return '';
+  }
+
   function addNodes () {
     var counter = 0;
 
@@ -81,7 +96,7 @@
       Array.prototype.forEach.call(elements, function (element) {
         var boundingRect = element.getBoundingClientRect();
         var overlayNode = createOverlay(target, boundingRect);
-        var text = utils.getAccessibleName(element);
+        var text = getAccessibleName(element);
         accessibleName = text.length ?
           target.label + ": " + text :
           target.label;
