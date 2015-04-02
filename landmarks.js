@@ -8,8 +8,10 @@
     {selector: '[role="search"]',                           color: "purple", label: "search"}
   ];
 
-  var className = "a11yGfdXALm0";
-  var zIndex    = 100000;
+  var msgTitle  = "Landmarks",
+      msgText   = "No elements with ARIA Landmark roles found.",
+      className = "a11yGfdXALm0",
+      zIndex    = 100000;
 
   function createOverlay (tgt, rect) {
     var innerStyle = "float: right; background-color: " + tgt.color + "; padding: 1px 1px 4px 4px";
@@ -69,31 +71,6 @@
     return node;
   }
 
-  function hideMessage () {
-    if (window.a11yMsgLandmarks) {
-      utils.deleteMsgOverlay(window.a11yMsgLandmarks);
-      delete(window.a11yMsgLandmarks);
-      window.a11yShowLandmarks = false;
-    }
-  }
-
-  function showMessage () {
-    var titleText = "Landmarks",
-        msgText = "No elements with ARIA Landmark roles found.",
-        h2, div;
-
-    if (!window.a11yMsgLandmarks)
-      window.a11yMsgLandmarks = utils.createMsgOverlay(hideMessage);
-
-    h2 = document.createElement("h2");
-    h2.innerHTML = titleText;
-    window.a11yMsgLandmarks.appendChild(h2);
-
-    div = document.createElement("div");
-    div.innerHTML = msgText;
-    window.a11yMsgLandmarks.appendChild(div);
-  }
-
   function addNodes () {
     var counter = 0;
 
@@ -126,19 +103,24 @@
   }
 
   window.accessibility = function (flag) {
-    var count;
-
+    utils.hideMessage();
     window.a11yShowLandmarks = (typeof flag === "undefined") ? true : !flag;
     if (window.a11yShowLandmarks){
-      count = addNodes();
-      if (count === 0) showMessage();
+      if (addNodes() === 0) {
+        utils.showMessage(msgTitle, msgText);
+        window.a11yShowLandmarks = false;
+      }
     }
     else {
-      hideMessage();
       removeNodes();
     }
   };
 
-  window.onresize = function () { removeNodes(); window.a11yShowLandmarks = false; };
+  window.onresize = function () {
+    removeNodes();
+    utils.resizeMessage();
+    window.a11yShowLandmarks = false;
+  };
+
   window.accessibility(window.a11yShowLandmarks);
 })(OAAUtils);

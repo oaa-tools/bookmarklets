@@ -8,6 +8,8 @@
     {selector: "h6", color: "brown",  label: "h6"}
   ];
 
+  var msgTitle = "Headings";
+  var msgText = "No heading elements (h1..h6) found.";
   var className  = "a11yGfdXALm1";
   var zIndex = 100000;
 
@@ -42,31 +44,6 @@
     return node;
   }
 
-  function hideMessage () {
-    if (window.a11yMsgHeadings) {
-      utils.deleteMsgOverlay(window.a11yMsgHeadings);
-      delete(window.a11yMsgHeadings);
-      window.a11yShowHeadings = false;
-    }
-  }
-
-  function showMessage () {
-    var titleText = "Headings",
-        msgText = "No heading elements (h1..h6) found.",
-        h2, div;
-
-    if (!window.a11yMsgHeadings)
-      window.a11yMsgHeadings = utils.createMsgOverlay(hideMessage);
-
-    h2 = document.createElement("h2");
-    h2.innerHTML = titleText;
-    window.a11yMsgHeadings.appendChild(h2);
-
-    div = document.createElement("div");
-    div.innerHTML = msgText;
-    window.a11yMsgHeadings.appendChild(div);
-  }
-
   function addNodes () {
     var counter = 0;
 
@@ -96,19 +73,24 @@
   }
 
   window.accessibility = function (flag) {
-    var count;
-
+    utils.hideMessage();
     window.a11yShowHeadings = (typeof flag === "undefined") ? true : !flag;
     if (window.a11yShowHeadings){
-      count = addNodes();
-      if (count === 0) showMessage();
+      if (addNodes() === 0) {
+        utils.showMessage(msgTitle, msgText);
+        window.a11yShowHeadings = false;
+      }
     }
     else {
-      hideMessage();
       removeNodes();
     }
   };
 
-  window.onresize = function () { removeNodes(); window.a11yShowHeadings = false; };
+  window.onresize = function () {
+    removeNodes();
+    utils.resizeMessage();
+    window.a11yShowHeadings = false;
+  };
+
   window.accessibility(window.a11yShowHeadings);
 })(OAAUtils);

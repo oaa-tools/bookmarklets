@@ -35,6 +35,26 @@ var OAAUtils = (function () {
     return s.replace(rtrim, '').replace(/\s+/g, ' ');
   };
 
+  var createMsgOverlay = function (handler) {
+    var overlay = document.createElement("div");
+    var button  = document.createElement("button");
+
+    overlay.className = "oaa-message-dialog";
+    setBoxGeometry(overlay);
+
+    button.title = "Close message dialog";
+    button.onclick = handler;
+    button.innerHTML = "x";
+
+    overlay.appendChild(button);
+    document.body.appendChild(overlay);
+    return overlay;
+  };
+
+  var deleteMsgOverlay = function (overlay) {
+    if (overlay) document.body.removeChild(overlay);
+  };
+
   var getAttributeValue = function (element, attribute) {
     var value = element.getAttribute(attribute);
     return (value === null) ? '' : value;
@@ -115,27 +135,32 @@ var OAAUtils = (function () {
   return {
     getScrollOffsets: getScrollOffsets,
     getElementText: getElementText,
-    setBoxGeometry: setBoxGeometry,
 
-    createMsgOverlay: function (handler) {
-      // CSS styling: oaa-utils.css
-      var overlay = document.createElement("div");
-      var button  = document.createElement("button");
-
-      overlay.className = "oaa-message-dialog";
-      setBoxGeometry(overlay);
-
-      button.title = "Close message dialog";
-      button.onclick = handler;
-      button.innerHTML = "x";
-
-      overlay.appendChild(button);
-      document.body.appendChild(overlay);
-      return overlay;
+    hideMessage: function () {
+      if (window.a11yMessageDialog) {
+        deleteMsgOverlay(window.a11yMessageDialog);
+        delete(window.a11yMessageDialog);
+      }
     },
 
-    deleteMsgOverlay: function (overlay) {
-      if (overlay) document.body.removeChild(overlay);
+    showMessage: function (title, message) {
+      var h2, div;
+
+      if (!window.a11yMessageDialog)
+        window.a11yMessageDialog = createMsgOverlay(this.hideMessage);
+
+      h2 = document.createElement("h2");
+      h2.innerHTML = title;
+      window.a11yMessageDialog.appendChild(h2);
+
+      div = document.createElement("div");
+      div.innerHTML = message;
+      window.a11yMessageDialog.appendChild(div);
+    },
+
+    resizeMessage: function () {
+      if (window.a11yMessageDialog)
+        setBoxGeometry(window.a11yMessageDialog);
     },
 
     getAccessibleName: function (element) {
