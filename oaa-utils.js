@@ -1,5 +1,9 @@
 var OAAUtils = (function () {
 
+  // ------------------------------------------------
+  // private functions
+  // ------------------------------------------------
+
   var getScrollOffsets = function () {
     var t;
 
@@ -17,12 +21,13 @@ var OAAUtils = (function () {
   };
 
   var setBoxGeometry = function (overlay) {
-    var width = window.innerWidth / 3.2;
-    var left  = window.innerWidth / 2 - width / 2;
+    var width  = window.innerWidth / 3.2;
+    var left   = window.innerWidth / 2 - width / 2;
+    var scroll = getScrollOffsets();
 
     overlay.style.width = width + "px";
-    overlay.style.left  = left + "px";
-    overlay.style.top   = "25px";
+    overlay.style.left  = (scroll.x + left) + "px";
+    overlay.style.top   = (scroll.y + 30) + "px";
   };
 
   var normalize = function (s) {
@@ -103,25 +108,28 @@ var OAAUtils = (function () {
     return '';
   };
 
+  // ------------------------------------------------
+  // public methods
+  // ------------------------------------------------
+
   return {
     getScrollOffsets: getScrollOffsets,
     getElementText: getElementText,
     setBoxGeometry: setBoxGeometry,
 
     createMsgOverlay: function () {
+      // CSS styling: oaa-utils.css
       var overlay = document.createElement("div");
+      var button = document.createElement("a");
 
-      overlay.style.position = "absolute";
-      overlay.style.overflow = "auto";
-      overlay.style.zIndex = 300000;
-
+      overlay.className = "oaa-message-dialog";
       setBoxGeometry(overlay);
 
-      overlay.style.padding = "0 10px 10px";
-      overlay.style.border = "2px solid #333";
-      overlay.style.backgroundColor = "rgba(255, 255, 255, 1.0)";
-      overlay.style.color = "#333";
+      button.href = "#";
+      button.title = "Close message dialog";
+      button.innerHTML = "x";
 
+      overlay.appendChild(button);
       document.body.appendChild(overlay);
       return overlay;
     },
@@ -144,6 +152,8 @@ var OAAUtils = (function () {
 
       return '';
     },
+
+    // From JavaScript: The Definitive Guide, 6th Edition (slightly modified)
 
     drag: function (elementToDrag, dragCallback, event) {
       var scroll = getScrollOffsets();
