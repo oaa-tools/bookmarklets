@@ -9,20 +9,21 @@ div.oaa-message-dialog {
   font-family : arial, helvetica, sans-serif;
 }
 
-div.oaa-message-dialog > a {
+div.oaa-message-dialog > button {
   float       : right;
-  display     : block;
+  display     : inline-block;
   width       : 30px;
-  height      : 30px;
-  line-height : 26px;
-  text-align  : center;
-  text-decoration : none;
-  border      : 2px solid #f5f5f5;
-  border-radius : 50%;
+  border         : none;
+  padding-bottom : 5px;
   color       : #f5f5f5;
   background  : #464646;
-  font-size   : 20px;
-  font-weight : bold;
+  font-size   : 18px;
+  font-weight : normal;
+}
+
+div.oaa-message-dialog > button:hover {
+  color       : #fff;
+  background  : #262626;
 }
 
 div.oaa-message-dialog > h2 {

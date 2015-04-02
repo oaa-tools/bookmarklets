@@ -117,16 +117,16 @@ var OAAUtils = (function () {
     getElementText: getElementText,
     setBoxGeometry: setBoxGeometry,
 
-    createMsgOverlay: function () {
+    createMsgOverlay: function (handler) {
       // CSS styling: oaa-utils.css
       var overlay = document.createElement("div");
-      var button = document.createElement("a");
+      var button  = document.createElement("button");
 
       overlay.className = "oaa-message-dialog";
       setBoxGeometry(overlay);
 
-      button.href = "#";
       button.title = "Close message dialog";
+      button.onclick = handler;
       button.innerHTML = "x";
 
       overlay.appendChild(button);

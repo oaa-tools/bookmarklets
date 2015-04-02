@@ -11,12 +11,11 @@ javascript: (function (utils) {
     }
   }
 
-  function showMessage (msgHeader, msgText, closeHandler) {
+  function showMessage (closeHandler, msgHeader, msgText) {
     var button, h2, div;
 
-    if (!window.msgOverlay) window.msgOverlay = utils.createMsgOverlay();
-    button = window.msgOverlay.firstChild;
-    button.onclick = closeHandler;
+    if (!window.msgOverlay)
+      window.msgOverlay = utils.createMsgOverlay(closeHandler);
 
     h2 = document.createElement("h2");
     h2.innerHTML = msgHeader;
@@ -29,7 +28,7 @@ javascript: (function (utils) {
 
   window.accessibility = function (flag) {
     window.messageState = (typeof flag === "undefined") ? true : !flag;
-    if (!flag) showMessage(header, message, hideMessage);
+    if (!flag) showMessage(hideMessage, header, message);
     else hideMessage();
   };
   window.accessibility(window.messageState);
