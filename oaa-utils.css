@@ -1,0 +1,38 @@
+div.oaa-message-dialog {
+  position    : absolute;
+  overflow    : auto;
+  z-index     : 2147483647;
+  padding     : 4px;
+  border      : 2px solid #333;
+  background  : #fff;
+  color       : #333;
+  font-family : arial, helvetica, sans-serif;
+}
+
+div.oaa-message-dialog > a {
+  float       : right;
+  display     : block;
+  width       : 30px;
+  height      : 30px;
+  line-height : 26px;
+  text-align  : center;
+  text-decoration : none;
+  border      : 2px solid #f5f5f5;
+  border-radius : 50%;
+  color       : #f5f5f5;
+  background  : #464646;
+  font-size   : 20px;
+  font-weight : bold;
+}
+
+div.oaa-message-dialog > h2 {
+  margin      : 0;
+  padding     : 8px 8px 0;
+  font-size   : 22px;
+}
+
+div.oaa-message-dialog > div {
+  margin      : 0;
+  padding     : 10px 8px 8px;
+  font-size   : 14px;
+}
