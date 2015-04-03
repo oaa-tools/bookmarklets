@@ -17,6 +17,7 @@
     var innerStyle = "float: right; background-color: " + tgt.color + "; padding: 1px 1px 4px 4px";
     var node = document.createElement("div");
     var scrollOffsets = utils.getScrollOffsets();
+    var minWidth  = 34;
     var minHeight = 27;
 
     function repositionOverlay (element) {
@@ -42,8 +43,8 @@
 
     node.style.left = node.startLeft;
     node.style.top = node.startTop;
+    node.style.width  = Math.max(rect.width, minWidth) + "px";
     node.style.height = Math.max(rect.height, minHeight) + "px";
-    node.style.width = rect.width + "px";
 
     node.style.boxSizing = "border-box";
     node.style.border = "3px solid " + tgt.color;
