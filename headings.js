@@ -8,16 +8,11 @@
     {selector: "h6", color: "brown",  label: "h6"}
   ];
 
-  var selectors = (function () {
-    var list = [];
-    targetList.forEach(function (tgt) { list.push(tgt.selector); });
-    return list.join(', ');
-  })();
-
-  var msgTitle = "Headings";
-  var msgText = "No heading elements (" + selectors + ") found.";
-  var className  = "a11yGfdXALm1";
-  var zIndex = 100000;
+  var selectors = targetList.map(function (tgt) {return tgt.selector;}).join(', ');
+  var msgTitle  = "Headings";
+  var msgText   = "No heading elements (" + selectors + ") found.";
+  var className = "a11yGfdXALm1";
+  var zIndex    = 100000;
 
   function createOverlay (tgt, rect) {
     var innerStyle = "float: right; background-color: " + tgt.color + "; padding: 1px 1px 4px 4px";

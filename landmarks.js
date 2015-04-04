@@ -8,16 +8,11 @@
     {selector: '[role="search"]',                           color: "purple", label: "search"}
   ];
 
-  var selectors = (function () {
-    var list = [];
-    targetList.forEach(function (tgt) { list.push("<li>" + tgt.selector + "</li>"); });
-    return list.join('');
-  })();
-
-  var msgTitle  = "Landmarks",
-      msgText   = "No elements with ARIA Landmark roles found: <ul>" + selectors + "</ul>",
-      className = "a11yGfdXALm0",
-      zIndex    = 100000;
+  var selectors = targetList.map(function (tgt) {return '<li>' + tgt.selector + '</li>'}).join('');
+  var msgTitle  = "Landmarks";
+  var msgText   = "No elements with ARIA Landmark roles found: <ul>" + selectors + "</ul>";
+  var className = "a11yGfdXALm0";
+  var zIndex    = 100000;
 
   function createOverlay (tgt, rect) {
     var innerStyle = "float: right; background-color: " + tgt.color + "; padding: 1px 1px 4px 4px";

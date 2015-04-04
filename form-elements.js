@@ -10,16 +10,11 @@
     {selector: "output",   color: "teal",   label: "output"}
   ];
 
-  var selectors = (function () {
-    var list = [];
-    targetList.forEach(function (tgt) { list.push(tgt.selector); });
-    return list.join(', ');
-  })();
-
-  var msgTitle = "Form Elements";
-  var msgText = "No form elements (" + selectors + ") found.";
-  var className  = "a11yGfdXALm3";
-  var zIndex = 100000;
+  var selectors = targetList.map(function (tgt) {return '<li>' + tgt.selector + '</li>';}).join('');
+  var msgTitle  = "Form Elements";
+  var msgText   = "No form-related elements found: <ul>" + selectors + "</ul>";
+  var className = "a11yGfdXALm3";
+  var zIndex    = 100000;
 
   function createOverlay (tgt, rect) {
     var innerStyle = "float: right; background-color: " + tgt.color + "; padding: 1px 1px 4px 4px";
