@@ -7,6 +7,8 @@ var OAAUtils = (function () {
   // ------------------------------------------------
   var zIndex = 100000;
 
+  // From Mozilla Developer Network: Element.getBoundingClientRect()
+
   var getScrollOffsets = function () {
     var t;
 
@@ -270,13 +272,6 @@ var OAAUtils = (function () {
       });
     },
 
-    hideMessage: function () {
-      if (window.a11yMessageDialog) {
-        deleteMsgOverlay(window.a11yMessageDialog);
-        delete(window.a11yMessageDialog);
-      }
-    },
-
     showMessage: function (title, message) {
       var h2, div;
 
@@ -290,6 +285,13 @@ var OAAUtils = (function () {
       div = document.createElement("div");
       div.innerHTML = message;
       window.a11yMessageDialog.appendChild(div);
+    },
+
+    hideMessage: function () {
+      if (window.a11yMessageDialog) {
+        deleteMsgOverlay(window.a11yMessageDialog);
+        delete(window.a11yMessageDialog);
+      }
     },
 
     resizeMessage: function () {
