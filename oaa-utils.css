@@ -39,11 +39,12 @@ div.oaa-message-dialog > h2 {
 
 div.oaa-message-dialog > div {
   margin      : 0;
-  padding     : 10px 8px 8px;
+  padding     : 10px 8px 12px;
   font-size   : 14px;
+  line-height : 18px;
 }
 
 div.oaa-message-dialog > div ul {
-  margin-left  : 1em;
-  padding-left : 1em;
+  margin      : 0 1em 0.25em;
+  padding     : 1em 1em 0;
 }
