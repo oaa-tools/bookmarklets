@@ -12,7 +12,6 @@
   var msgTitle  = "Landmarks";
   var msgText   = "No elements with ARIA Landmark roles found: <ul>" + selectors + "</ul>";
   var className = "a11yGfdXALm0";
-  var zIndex    = 100000;
 
   function getAccessibleName (element) {
     var name;

@@ -14,7 +14,6 @@
   var msgTitle  = "Form Elements";
   var msgText   = "No form-related elements found: <ul>" + selectors + "</ul>";
   var className = "a11yGfdXALm2";
-  var zIndex    = 100000;
 
   function getAccessibleName (element) {
     var name;

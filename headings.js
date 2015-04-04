@@ -12,7 +12,6 @@
   var msgTitle  = "Headings";
   var msgText   = "No heading elements (" + selectors + ") found.";
   var className = "a11yGfdXALm1";
-  var zIndex    = 100000;
 
   function getTooltipText (element, target) {
     var textContent = utils.getElementText(element);
