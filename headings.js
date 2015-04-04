@@ -15,31 +15,22 @@
   var zIndex    = 100000;
 
   function createOverlay (tgt, rect) {
-    var innerStyle = "float: right; background-color: " + tgt.color + "; padding: 1px 1px 4px 4px";
     var node = document.createElement("div");
     var scrollOffsets = utils.getScrollOffsets();
+    var innerStyle = "background-color: " + tgt.color;
     var minWidth  = 34;
     var minHeight = 27;
 
-    node.setAttribute("class", className);
-
-    node.style.position = "absolute";
-    node.style.overflow = "hidden";
-    node.style.zIndex = zIndex;
-
+    node.setAttribute("class", [className, 'oaa-element-overlay'].join(' '));
     node.startLeft = (rect.left + scrollOffsets.x) + "px";
-    node.startTop  = (rect.top + scrollOffsets.y) + "px";
+    node.startTop  = (rect.top  + scrollOffsets.y) + "px";
 
-    node.style.left   = node.startLeft;
-    node.style.top    = node.startTop;
+    node.style.left = node.startLeft;
+    node.style.top  = node.startTop;
     node.style.width  = Math.max(rect.width, minWidth) + "px";
     node.style.height = Math.max(rect.height, minHeight) + "px";
-
-    node.style.boxSizing  = "border-box";
-    node.style.border     = "3px solid " + tgt.color;
-    node.style.color      = "white";
-    node.style.fontFamily = "Arial, Helvetica, 'Liberation Sans', sans-serif";
-    node.style.fontSize   = "16px";
+    node.style.borderColor = tgt.color;
+    node.style.zIndex = zIndex;
 
     node.innerHTML = '<div style="' + innerStyle + '">' + tgt.label + '</div>';
     return node;
