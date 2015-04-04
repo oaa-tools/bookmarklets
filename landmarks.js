@@ -8,7 +8,7 @@
     {selector: '[role="search"]',                           color: "purple", label: "search"}
   ];
 
-  var selectors = targetList.map(function (tgt) {return '<li>' + tgt.selector + '</li>'}).join('');
+  var selectors = targetList.map(function (tgt) {return '<li>' + tgt.selector + '</li>';}).join('');
   var msgTitle  = "Landmarks";
   var msgText   = "No elements with ARIA Landmark roles found: <ul>" + selectors + "</ul>";
   var className = "a11yGfdXALm0";
