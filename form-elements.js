@@ -16,56 +16,6 @@
   var className = "a11yGfdXALm2";
   var zIndex    = 100000;
 
-  function createOverlay (tgt, rect) {
-    var node = document.createElement("div");
-    var scrollOffsets = utils.getScrollOffsets();
-    var innerStyle = "background-color: " + tgt.color;
-    var minWidth  = 34;
-    var minHeight = 27;
-
-    function repositionOverlay (element) {
-      if (typeof element.startLeft === "undefined") return;
-      element.style.left = element.startLeft;
-      element.style.top = element.startTop;
-    }
-
-    function hoistZIndex (element) {
-      var incr = 100;
-      zIndex += incr;
-      element.style.zIndex = zIndex;
-    }
-
-    node.setAttribute("class", [className, 'oaa-element-overlay'].join(' '));
-    node.startLeft = (rect.left + scrollOffsets.x) + "px";
-    node.startTop  = (rect.top  + scrollOffsets.y) + "px";
-
-    node.style.left = node.startLeft;
-    node.style.top  = node.startTop;
-    node.style.width  = Math.max(rect.width, minWidth) + "px";
-    node.style.height = Math.max(rect.height, minHeight) + "px";
-    node.style.borderColor = tgt.color;
-    node.style.zIndex = zIndex;
-
-    node.innerHTML = '<div style="' + innerStyle + '">' + tgt.label + '</div>';
-
-    node.onmouseover = function (event) {
-      this.style.cursor = "grab";
-      this.style.cursor = "-moz-grab";
-      this.style.cursor = "-webkit-grab";
-    };
-
-    node.onmousedown = function (event) {
-      utils.drag(this, hoistZIndex, event);
-    };
-
-    node.ondblclick = function (event) {
-      repositionOverlay(this);
-      document.body.style.cursor = "auto";
-    };
-
-    return node;
-  }
-
   function getAccessibleName (element) {
     var name;
 
@@ -125,7 +75,7 @@
 
       Array.prototype.forEach.call(elements, function (element) {
         var boundingRect = element.getBoundingClientRect();
-        var overlayNode = createOverlay(target, boundingRect);
+        var overlayNode = utils.createOverlay(target, boundingRect, className);
         var text = getAccessibleName(element);
         var label = getElementLabel(element);
         accessibleName = text.length ? label + "\n" + text : label;

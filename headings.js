@@ -14,28 +14,6 @@
   var className = "a11yGfdXALm1";
   var zIndex    = 100000;
 
-  function createOverlay (tgt, rect) {
-    var node = document.createElement("div");
-    var scrollOffsets = utils.getScrollOffsets();
-    var innerStyle = "background-color: " + tgt.color;
-    var minWidth  = 34;
-    var minHeight = 27;
-
-    node.setAttribute("class", [className, 'oaa-element-overlay'].join(' '));
-    node.startLeft = (rect.left + scrollOffsets.x) + "px";
-    node.startTop  = (rect.top  + scrollOffsets.y) + "px";
-
-    node.style.left = node.startLeft;
-    node.style.top  = node.startTop;
-    node.style.width  = Math.max(rect.width, minWidth) + "px";
-    node.style.height = Math.max(rect.height, minHeight) + "px";
-    node.style.borderColor = tgt.color;
-    node.style.zIndex = zIndex;
-
-    node.innerHTML = '<div style="' + innerStyle + '">' + tgt.label + '</div>';
-    return node;
-  }
-
   function addNodes () {
     var counter = 0;
 
@@ -44,7 +22,7 @@
 
       Array.prototype.forEach.call(elements, function (element) {
         var boundingRect = element.getBoundingClientRect();
-        var overlayNode = createOverlay(target, boundingRect);
+        var overlayNode = utils.createOverlay(target, boundingRect, className);
         var prefix = target.label + ": ";
         var textContent = utils.getElementText(element);
         overlayNode.title = prefix + textContent;

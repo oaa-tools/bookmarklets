@@ -3,8 +3,9 @@
 var OAAUtils = (function () {
 
   // ------------------------------------------------
-  // private functions
+  // private variables and functions
   // ------------------------------------------------
+  var zIndex = 100000;
 
   var getScrollOffsets = function () {
     var t;
@@ -22,9 +23,72 @@ var OAAUtils = (function () {
     return { x: xOffset, y: yOffset };
   };
 
-  var normalize = function (s) {
-    var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
-    return s.replace(rtrim, '').replace(/\s+/g, ' ');
+  // From JavaScript: The Definitive Guide, 6th Edition (slightly modified)
+
+  var drag = function (elementToDrag, dragCallback, event) {
+    var scroll = getScrollOffsets();
+    var startX = event.clientX + scroll.x;
+    var startY = event.clientY + scroll.y;
+
+    var origX = elementToDrag.offsetLeft;
+    var origY = elementToDrag.offsetTop;
+
+    var deltaX = startX - origX;
+    var deltaY = startY - origY;
+
+    if (dragCallback) dragCallback(elementToDrag);
+
+    if (document.addEventListener) {
+      document.addEventListener("mousemove", moveHandler, true);
+      document.addEventListener("mouseup", upHandler, true);
+    }
+    else if (document.attachEvent) {
+      elementToDrag.setCapture();
+      elementToDrag.attachEvent("onmousemove", moveHandler);
+      elementToDrag.attachEvent("onmouseup", upHandler);
+      elementToDrag.attachEvent("onlosecapture", upHandler);
+    }
+
+    if (event.stopPropagation) event.stopPropagation();
+    else event.cancelBubble = true;
+
+    if (event.preventDefault) event.preventDefault();
+    else event.returnValue = false;
+
+    function moveHandler (e) {
+      if (!e) e = window.event;
+
+      var scroll = getScrollOffsets();
+      elementToDrag.style.left = (e.clientX + scroll.x - deltaX) + "px";
+      elementToDrag.style.top = (e.clientY + scroll.y - deltaY) + "px";
+
+      elementToDrag.style.cursor = "move";
+
+      if (e.stopPropagation) e.stopPropagation();
+      else e.cancelBubble = true;
+    }
+
+    function upHandler (e) {
+      if (!e) e = window.event;
+
+      elementToDrag.style.cursor = "grab";
+      elementToDrag.style.cursor = "-moz-grab";
+      elementToDrag.style.cursor = "-webkit-grab";
+
+      if (document.removeEventListener) {
+          document.removeEventListener("mouseup", upHandler, true);
+          document.removeEventListener("mousemove", moveHandler, true);
+      }
+      else if (document.detachEvent) {
+          elementToDrag.detachEvent("onlosecapture", upHandler);
+          elementToDrag.detachEvent("onmouseup", upHandler);
+          elementToDrag.detachEvent("onmousemove", moveHandler);
+          elementToDrag.releaseCapture();
+      }
+
+      if (e.stopPropagation) e.stopPropagation();
+      else e.cancelBubble = true;
+    }
   };
 
   var setBoxGeometry = function (overlay) {
@@ -55,6 +119,13 @@ var OAAUtils = (function () {
 
   var deleteMsgOverlay = function (overlay) {
     if (overlay) document.body.removeChild(overlay);
+  };
+
+  // accessible name functions
+
+  var normalize = function (s) {
+    var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+    return s.replace(rtrim, '').replace(/\s+/g, ' ');
   };
 
   var getAttributeValue = function (element, attribute) {
@@ -135,10 +206,59 @@ var OAAUtils = (function () {
   // ------------------------------------------------
 
   return {
-    getScrollOffsets: getScrollOffsets,
     getAttributeValue: getAttributeValue,
     getElementText: getElementText,
     getAttributeIdRefsValue: getAttributeIdRefsValue,
+
+    createOverlay: function (tgt, rect, cname) {
+      var node = document.createElement("div");
+      var scrollOffsets = getScrollOffsets();
+      var innerStyle = "background-color: " + tgt.color;
+      var minWidth  = 34;
+      var minHeight = 27;
+
+      function repositionOverlay (element) {
+        if (typeof element.startLeft === "undefined") return;
+        element.style.left = element.startLeft;
+        element.style.top  = element.startTop;
+      }
+
+      function hoistZIndex (element) {
+        var incr = 100;
+        zIndex += incr;
+        element.style.zIndex = zIndex;
+      }
+
+      node.setAttribute("class", [cname, 'oaa-element-overlay'].join(' '));
+      node.startLeft = (rect.left + scrollOffsets.x) + "px";
+      node.startTop  = (rect.top  + scrollOffsets.y) + "px";
+
+      node.style.left = node.startLeft;
+      node.style.top  = node.startTop;
+      node.style.width  = Math.max(rect.width, minWidth) + "px";
+      node.style.height = Math.max(rect.height, minHeight) + "px";
+      node.style.borderColor = tgt.color;
+      node.style.zIndex = zIndex;
+
+      node.innerHTML = '<div style="' + innerStyle + '">' + tgt.label + '</div>';
+
+      node.onmouseover = function (event) {
+        this.style.cursor = "grab";
+        this.style.cursor = "-moz-grab";
+        this.style.cursor = "-webkit-grab";
+      };
+
+      node.onmousedown = function (event) {
+        drag(this, hoistZIndex, event);
+      };
+
+      node.ondblclick = function (event) {
+        repositionOverlay(this);
+        document.body.style.cursor = "auto";
+      };
+
+      return node;
+    },
 
     hideMessage: function () {
       if (window.a11yMessageDialog) {
@@ -165,75 +285,6 @@ var OAAUtils = (function () {
     resizeMessage: function () {
       if (window.a11yMessageDialog)
         setBoxGeometry(window.a11yMessageDialog);
-    },
-
-    // From JavaScript: The Definitive Guide, 6th Edition (slightly modified)
-
-    drag: function (elementToDrag, dragCallback, event) {
-      var scroll = getScrollOffsets();
-      var startX = event.clientX + scroll.x;
-      var startY = event.clientY + scroll.y;
-
-      var origX = elementToDrag.offsetLeft;
-      var origY = elementToDrag.offsetTop;
-
-      var deltaX = startX - origX;
-      var deltaY = startY - origY;
-
-      if (dragCallback) dragCallback(elementToDrag);
-
-      if (document.addEventListener) {
-        document.addEventListener("mousemove", moveHandler, true);
-        document.addEventListener("mouseup", upHandler, true);
-      }
-      else if (document.attachEvent) {
-        elementToDrag.setCapture();
-        elementToDrag.attachEvent("onmousemove", moveHandler);
-        elementToDrag.attachEvent("onmouseup", upHandler);
-        elementToDrag.attachEvent("onlosecapture", upHandler);
-      }
-
-      if (event.stopPropagation) event.stopPropagation();
-      else event.cancelBubble = true;
-
-      if (event.preventDefault) event.preventDefault();
-      else event.returnValue = false;
-
-      function moveHandler (e) {
-        if (!e) e = window.event;
-
-        var scroll = getScrollOffsets();
-        elementToDrag.style.left = (e.clientX + scroll.x - deltaX) + "px";
-        elementToDrag.style.top = (e.clientY + scroll.y - deltaY) + "px";
-
-        elementToDrag.style.cursor = "move";
-
-        if (e.stopPropagation) e.stopPropagation();
-        else e.cancelBubble = true;
-      }
-
-      function upHandler (e) {
-        if (!e) e = window.event;
-
-        elementToDrag.style.cursor = "grab";
-        elementToDrag.style.cursor = "-moz-grab";
-        elementToDrag.style.cursor = "-webkit-grab";
-
-        if (document.removeEventListener) {
-            document.removeEventListener("mouseup", upHandler, true);
-            document.removeEventListener("mousemove", moveHandler, true);
-        }
-        else if (document.detachEvent) {
-            elementToDrag.detachEvent("onlosecapture", upHandler);
-            elementToDrag.detachEvent("onmouseup", upHandler);
-            elementToDrag.detachEvent("onmousemove", moveHandler);
-            elementToDrag.releaseCapture();
-        }
-
-        if (e.stopPropagation) e.stopPropagation();
-        else e.cancelBubble = true;
-      }
     }
-
   };
 })();
