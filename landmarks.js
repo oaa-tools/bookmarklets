@@ -8,8 +8,14 @@
     {selector: '[role="search"]',                           color: "purple", label: "search"}
   ];
 
+  var selectors = (function () {
+    var list = [];
+    targetList.forEach(function (tgt) { list.push("<li>" + tgt.selector + "</li>"); });
+    return list.join('');
+  })();
+
   var msgTitle  = "Landmarks",
-      msgText   = "No elements with ARIA Landmark roles found.",
+      msgText   = "No elements with ARIA Landmark roles found: <ul>" + selectors + "</ul>",
       className = "a11yGfdXALm0",
       zIndex    = 100000;
 

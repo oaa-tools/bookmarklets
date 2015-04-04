@@ -1,17 +1,23 @@
 (function (utils) {
   var targetList = [
     // {selector: "form",     color: "gray",   label: "form"},
-    {selector: "fieldset", color: "maroon", label: "fieldset"},
     {selector: "input",    color: "navy",   label: "input"},
     {selector: "select",   color: "green",  label: "select"},
     {selector: "textarea", color: "brown",  label: "textarea"},
     {selector: "button",   color: "purple", label: "button"},
     {selector: "label",    color: "olive",  label: "label"},
+    {selector: "fieldset", color: "maroon", label: "fieldset"},
     {selector: "output",   color: "teal",   label: "output"}
   ];
 
+  var selectors = (function () {
+    var list = [];
+    targetList.forEach(function (tgt) { list.push(tgt.selector); });
+    return list.join(', ');
+  })();
+
   var msgTitle = "Form Elements";
-  var msgText = "No form elements (form, input, select, textarea, button, label, fieldset, output) found.";
+  var msgText = "No form elements (" + selectors + ") found.";
   var className  = "a11yGfdXALm3";
   var zIndex = 100000;
 
@@ -119,7 +125,7 @@
     }
 
     if (id && id.length)
-      return label + ' id="' + id + '"';
+      return label + ' [id="' + id + '"]';
     else
       return label;
   }

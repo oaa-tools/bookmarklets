@@ -8,8 +8,14 @@
     {selector: "h6", color: "brown",  label: "h6"}
   ];
 
+  var selectors = (function () {
+    var list = [];
+    targetList.forEach(function (tgt) { list.push(tgt.selector); });
+    return list.join(', ');
+  })();
+
   var msgTitle = "Headings";
-  var msgText = "No heading elements (h1..h6) found.";
+  var msgText = "No heading elements (" + selectors + ") found.";
   var className  = "a11yGfdXALm1";
   var zIndex = 100000;
 
