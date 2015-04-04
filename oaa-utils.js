@@ -91,6 +91,8 @@ var OAAUtils = (function () {
     }
   };
 
+  // message dialog functions
+
   var setBoxGeometry = function (overlay) {
     var width  = window.innerWidth / 3.2;
     var left   = window.innerWidth / 2 - width / 2;
@@ -258,6 +260,14 @@ var OAAUtils = (function () {
       };
 
       return node;
+    },
+
+    removeNodes: function (cname) {
+      var selector = "div." + cname;
+      var elements = document.querySelectorAll(selector);
+      Array.prototype.forEach.call(elements, function (element) {
+        document.body.removeChild(element);
+      });
     },
 
     hideMessage: function () {

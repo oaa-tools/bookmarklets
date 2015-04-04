@@ -88,14 +88,6 @@
     return counter;
   }
 
-  function removeNodes () {
-    var selector = "div." + className;
-    var elements = document.querySelectorAll(selector);
-    Array.prototype.forEach.call(elements, function (element) {
-      document.body.removeChild(element);
-    });
-  }
-
   window.accessibility = function (flag) {
     utils.hideMessage();
     window.a11yShowFormElements = (typeof flag === "undefined") ? true : !flag;
@@ -106,12 +98,12 @@
       }
     }
     else {
-      removeNodes();
+      utils.removeNodes(className);
     }
   };
 
   window.onresize = function () {
-    removeNodes();
+    utils.removeNodes(className);
     utils.resizeMessage();
     window.a11yShowFormElements = false;
   };
