@@ -32,11 +32,11 @@
     }
   };
 
-  window.onresize = function () {
+  window.addEventListener('resize', function (event) {
     utils.removeNodes(className);
     utils.resizeMessage();
     window.a11yShowHeadings = false;
-  };
+  });
 
   window.accessibility(window.a11yShowHeadings);
 })(OAAUtils);
