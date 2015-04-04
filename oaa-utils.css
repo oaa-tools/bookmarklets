@@ -1,3 +1,18 @@
+div.oaa-element-overlay {
+  position    : absolute;
+  overflow    : hidden;
+  box-sizing  : border-box;
+  color       : white;
+  border      : 3px solid;
+  font-family : arial, helvetica, 'Liberation Sans', sans-serif;
+  font-size   : 16px;
+}
+
+div.oaa-element-overlay > div {
+  float       : right;
+  padding     : 1px 1px 4px 4px;
+}
+
 div.oaa-message-dialog {
   position    : absolute;
   overflow    : auto;
