@@ -14,31 +14,16 @@
   var className = "a11yGfdXALm1";
   var zIndex    = 100000;
 
-  function addNodes () {
-    var counter = 0;
-
-    targetList.forEach(function (target) {
-      var elements = document.querySelectorAll(target.selector);
-
-      Array.prototype.forEach.call(elements, function (element) {
-        var boundingRect = element.getBoundingClientRect();
-        var overlayNode = utils.createOverlay(target, boundingRect, className);
-        var prefix = target.label + ": ";
-        var textContent = utils.getElementText(element);
-        overlayNode.title = prefix + textContent;
-        document.body.appendChild(overlayNode);
-        counter += 1;
-      });
-    });
-
-    return counter;
+  function getTooltipText (element, target) {
+    var textContent = utils.getElementText(element);
+    return target.label + ": " + textContent;
   }
 
   window.accessibility = function (flag) {
     utils.hideMessage();
     window.a11yShowHeadings = (typeof flag === "undefined") ? true : !flag;
     if (window.a11yShowHeadings){
-      if (addNodes() === 0) {
+      if (utils.addNodes(targetList, className, getTooltipText) === 0) {
         utils.showMessage(msgTitle, msgText);
         window.a11yShowHeadings = false;
       }

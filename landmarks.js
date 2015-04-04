@@ -29,34 +29,16 @@
     return '';
   }
 
-  function addNodes () {
-    var counter = 0;
-
-    targetList.forEach(function (target) {
-      var elements = document.querySelectorAll(target.selector);
-      var accessibleName;
-
-      Array.prototype.forEach.call(elements, function (element) {
-        var boundingRect = element.getBoundingClientRect();
-        var overlayNode = utils.createOverlay(target, boundingRect, className);
-        var text = getAccessibleName(element);
-        accessibleName = text.length ?
-          target.label + ": " + text :
-          target.label;
-        overlayNode.title = accessibleName;
-        document.body.appendChild(overlayNode);
-        counter += 1;
-      });
-    });
-
-    return counter;
+  function getTooltipText (element, target) {
+    var text = getAccessibleName(element);
+    return text.length ? target.label + ": " + text : target.label;
   }
 
   window.accessibility = function (flag) {
     utils.hideMessage();
     window.a11yShowLandmarks = (typeof flag === "undefined") ? true : !flag;
     if (window.a11yShowLandmarks){
-      if (addNodes() === 0) {
+      if (utils.addNodes(targetList, className, getTooltipText) === 0) {
         utils.showMessage(msgTitle, msgText);
         window.a11yShowLandmarks = false;
       }

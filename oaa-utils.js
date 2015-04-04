@@ -93,6 +93,58 @@ var OAAUtils = (function () {
     }
   };
 
+  // core function for bookmarklets
+
+  var createOverlay = function (tgt, rect, cname) {
+    var node = document.createElement("div");
+    var scrollOffsets = getScrollOffsets();
+    var innerStyle = "background-color: " + tgt.color;
+    var minWidth  = 34;
+    var minHeight = 27;
+
+    function repositionOverlay (element) {
+      if (typeof element.startLeft === "undefined") return;
+      element.style.left = element.startLeft;
+      element.style.top  = element.startTop;
+    }
+
+    function hoistZIndex (element) {
+      var incr = 100;
+      zIndex += incr;
+      element.style.zIndex = zIndex;
+    }
+
+    node.setAttribute("class", [cname, 'oaa-element-overlay'].join(' '));
+    node.startLeft = (rect.left + scrollOffsets.x) + "px";
+    node.startTop  = (rect.top  + scrollOffsets.y) + "px";
+
+    node.style.left = node.startLeft;
+    node.style.top  = node.startTop;
+    node.style.width  = Math.max(rect.width, minWidth) + "px";
+    node.style.height = Math.max(rect.height, minHeight) + "px";
+    node.style.borderColor = tgt.color;
+    node.style.zIndex = zIndex;
+
+    node.innerHTML = '<div style="' + innerStyle + '">' + tgt.label + '</div>';
+
+    node.onmouseover = function (event) {
+      this.style.cursor = "grab";
+      this.style.cursor = "-moz-grab";
+      this.style.cursor = "-webkit-grab";
+    };
+
+    node.onmousedown = function (event) {
+      drag(this, hoistZIndex, event);
+    };
+
+    node.ondblclick = function (event) {
+      repositionOverlay(this);
+      document.body.style.cursor = "auto";
+    };
+
+    return node;
+  };
+
   // message dialog functions
 
   var setBoxGeometry = function (overlay) {
@@ -214,58 +266,26 @@ var OAAUtils = (function () {
     getElementText: getElementText,
     getAttributeIdRefsValue: getAttributeIdRefsValue,
 
-    createOverlay: function (tgt, rect, cname) {
-      var node = document.createElement("div");
-      var scrollOffsets = getScrollOffsets();
-      var innerStyle = "background-color: " + tgt.color;
-      var minWidth  = 34;
-      var minHeight = 27;
+    addNodes: function (targetList, className, getTitleText) {
+      var counter = 0;
 
-      function repositionOverlay (element) {
-        if (typeof element.startLeft === "undefined") return;
-        element.style.left = element.startLeft;
-        element.style.top  = element.startTop;
-      }
+      targetList.forEach(function (target) {
+        var elements = document.querySelectorAll(target.selector);
 
-      function hoistZIndex (element) {
-        var incr = 100;
-        zIndex += incr;
-        element.style.zIndex = zIndex;
-      }
+        Array.prototype.forEach.call(elements, function (element) {
+          var boundingRect = element.getBoundingClientRect();
+          var overlayNode = createOverlay(target, boundingRect, className);
+          overlayNode.title = getTitleText(element, target);
+          document.body.appendChild(overlayNode);
+          counter += 1;
+        });
+      });
 
-      node.setAttribute("class", [cname, 'oaa-element-overlay'].join(' '));
-      node.startLeft = (rect.left + scrollOffsets.x) + "px";
-      node.startTop  = (rect.top  + scrollOffsets.y) + "px";
-
-      node.style.left = node.startLeft;
-      node.style.top  = node.startTop;
-      node.style.width  = Math.max(rect.width, minWidth) + "px";
-      node.style.height = Math.max(rect.height, minHeight) + "px";
-      node.style.borderColor = tgt.color;
-      node.style.zIndex = zIndex;
-
-      node.innerHTML = '<div style="' + innerStyle + '">' + tgt.label + '</div>';
-
-      node.onmouseover = function (event) {
-        this.style.cursor = "grab";
-        this.style.cursor = "-moz-grab";
-        this.style.cursor = "-webkit-grab";
-      };
-
-      node.onmousedown = function (event) {
-        drag(this, hoistZIndex, event);
-      };
-
-      node.ondblclick = function (event) {
-        repositionOverlay(this);
-        document.body.style.cursor = "auto";
-      };
-
-      return node;
+      return counter;
     },
 
-    removeNodes: function (cname) {
-      var selector = "div." + cname;
+    removeNodes: function (className) {
+      var selector = "div." + className;
       var elements = document.querySelectorAll(selector);
       Array.prototype.forEach.call(elements, function (element) {
         document.body.removeChild(element);

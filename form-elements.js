@@ -66,33 +66,17 @@
       return label;
   }
 
-  function addNodes () {
-    var counter = 0;
-
-    targetList.forEach(function (target) {
-      var elements = document.querySelectorAll(target.selector);
-      var accessibleName;
-
-      Array.prototype.forEach.call(elements, function (element) {
-        var boundingRect = element.getBoundingClientRect();
-        var overlayNode = utils.createOverlay(target, boundingRect, className);
-        var text = getAccessibleName(element);
-        var label = getElementLabel(element);
-        accessibleName = text.length ? label + "\n" + text : label;
-        overlayNode.title = accessibleName;
-        document.body.appendChild(overlayNode);
-        counter += 1;
-      });
-    });
-
-    return counter;
+  function getTooltipText (element, target) {
+    var text = getAccessibleName(element);
+    var label = getElementLabel(element);
+    return text.length ? label + "\n" + text : label;
   }
 
   window.accessibility = function (flag) {
     utils.hideMessage();
     window.a11yShowFormElements = (typeof flag === "undefined") ? true : !flag;
     if (window.a11yShowFormElements){
-      if (addNodes() === 0) {
+      if (utils.addNodes(targetList, className, getTooltipText) === 0) {
         utils.showMessage(msgTitle, msgText);
         window.a11yShowFormElements = false;
       }
