@@ -11,7 +11,7 @@
   ];
 
   var selectors = targetList.map(function (tgt) {return '<li>' + tgt.selector + '</li>';}).join('');
-  var msgTitle  = "Form Elements";
+  var msgTitle  = "Forms";
   var msgText   = "No form-related elements found: <ul>" + selectors + "</ul>";
   var className = "a11yGfdXALm2";
 
