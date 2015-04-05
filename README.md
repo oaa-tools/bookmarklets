@@ -3,7 +3,7 @@
 Highlight classes of elements on a web page that relate to accessibility
 requirements, including:
 
-* Forms
+* Forms (work in progress)
 * Headings
 * Landmarks
 
