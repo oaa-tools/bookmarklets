@@ -8,6 +8,12 @@ div.oaa-element-overlay {
   font-size   : 16px;
 }
 
+div.oaa-element-overlay:hover {
+  cursor      : grab;
+  cursor      : -moz-grab;
+  cursor      : -webkit-grab;
+}
+
 div.oaa-element-overlay > div {
   float       : right;
   padding     : 1px 1px 4px 4px;

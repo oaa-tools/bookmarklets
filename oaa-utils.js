@@ -127,19 +127,12 @@ var OAAUtils = (function () {
 
     node.innerHTML = '<div style="' + innerStyle + '">' + tgt.label + '</div>';
 
-    node.onmouseover = function (event) {
-      this.style.cursor = "grab";
-      this.style.cursor = "-moz-grab";
-      this.style.cursor = "-webkit-grab";
-    };
-
     node.onmousedown = function (event) {
       drag(this, hoistZIndex, event);
     };
 
     node.ondblclick = function (event) {
       repositionOverlay(this);
-      document.body.style.cursor = "auto";
     };
 
     return node;
