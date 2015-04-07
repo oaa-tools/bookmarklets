@@ -255,6 +255,7 @@ var OAAUtils = (function () {
   // ------------------------------------------------
 
   return {
+    normalize: normalize,
     getAttributeValue: getAttributeValue,
     getElementText: getElementText,
     getAttributeIdRefsValue: getAttributeIdRefsValue,
