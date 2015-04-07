@@ -148,7 +148,7 @@ var OAAUtils = (function () {
   };
 
   /*
-  * elementInfo: Use for debugging, e.g., in conjunction with isVisible
+  * elementInfo: Use for debugging, for example with isVisible fn.
   */
   var elementInfo = function (element) {
     var tagName = element.tagName.toLowerCase();
@@ -163,7 +163,7 @@ var OAAUtils = (function () {
   * isVisible: Recursively check element properties from getComputedStyle
   * until document element is reached, to determine whether element or any
   * of its ancestors has properties set that affect its visibility. Called
-  * by the addNotes function.
+  * by addNodes function.
   */
   var isVisible = function (element, rect) {
 
@@ -256,8 +256,8 @@ var OAAUtils = (function () {
   };
 
   /*
-  * getElementText: Recursively concatenate text nodes and alt text
-  * from 'img' and 'area' elements for all descendants of element.
+  * getElementText: Recursively concatenate the text nodes of element and
+  * alt text of 'img' and 'area' children of element and its descendants.
   */
   var getElementText = function (element) {
     var arrayOfStrings;
@@ -298,9 +298,9 @@ var OAAUtils = (function () {
   };
 
   /*
-  * getRefElementAccessibleName: First get text content from element
-  * and if that is empty, get its title attribute value, otherwise
-  * return an empty string.
+  * getRefElementAccessibleName: Get text content from element and
+  * if that is empty, get its title attribute value, and if that is
+  * null or empty return an empty string.
   */
   var getRefElementAccessibleName = function (element) {
     var textContent;
