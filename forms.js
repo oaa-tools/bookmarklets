@@ -3,12 +3,12 @@
     // {selector: "form",     color: "gray",   label: "form"},
     {selector: "fieldset", color: "gray",   label: "fieldset"},
     {selector: "legend",   color: "maroon", label: "legend"},
+    {selector: "label",    color: "olive",  label: "label"},
     {selector: "input",    color: "navy",   label: "input"},
     {selector: "select",   color: "green",  label: "select"},
     {selector: "textarea", color: "brown",  label: "textarea"},
     {selector: "output",   color: "teal",   label: "output"},
-    {selector: "button",   color: "purple", label: "button"},
-    {selector: "label",    color: "olive",  label: "label"}
+    {selector: "button",   color: "purple", label: "button"}
   ];
 
   var selectors = targetList.map(function (tgt) {return '<li>' + tgt.selector + '</li>';}).join('');
@@ -113,16 +113,24 @@
     return '';
   }
 
-  // needs to be recursive
   function addFieldsetLegend(element, accName) {
-    var fieldset, legend, text;
+    var fieldset, legend, text, name;
 
     if (typeof element.closest === 'function') {
       fieldset = element.closest('fieldset');
       if (fieldset) {
         legend = fieldset.querySelector('legend');
-        text = utils.getElementText(legend);
-        if (text.length) return text + ' ' + accName;
+        if (legend) {
+          text = utils.getElementText(legend);
+          if (text.length)
+            name = utils.normalize(text + ' ' + accName);
+          else
+            name = accName;
+        }
+        else {
+          name = accName;
+        }
+        return addFieldsetLegend(fieldset.parentNode, name);
       }
     }
 
@@ -154,10 +162,10 @@
             accName = getAccessibleName(element, ['value', 'title']);
             break;
           case 'submit':
-            accName = getAccessibleNameOrDefault(element, 'submit');
+            accName = getAccessibleNameOrDefault(element, 'Submit');
             break;
           case 'reset':
-            accName = getAccessibleNameOrDefault(element, 'reset');
+            accName = getAccessibleNameOrDefault(element, 'Reset');
             break;
           default:
             accName = getAccessibleNameUseLabel(element, ['title']);
