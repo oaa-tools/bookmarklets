@@ -179,7 +179,7 @@ var OAAUtils = (function () {
 
   var getAttributeValue = function (element, attribute) {
     var value = element.getAttribute(attribute);
-    return (value === null) ? '' : value;
+    return (value === null) ? '' : normalize(value);
   };
 
   var getElementText = function (element) {
@@ -192,7 +192,7 @@ var OAAUtils = (function () {
         case (Node.ELEMENT_NODE):
           tagName = node.tagName.toLowerCase();
           if (tagName === 'img' || tagName === 'area') {
-            altText = normalize(getAttributeValue(node, "alt"));
+            altText = getAttributeValue(node, "alt");
             if (altText.length) arr.push(altText);
           }
           else {
