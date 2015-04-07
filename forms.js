@@ -166,17 +166,18 @@
         break;
       case 'textarea':
         elementInfo = tagName;
-        accName = getAccessibleNameUseLabel(element, ['placeholder', 'title']);
         if (id && id.length) elementInfo += ' [id="' + id + '"]';
-        break;
-      case 'button':
-        getAccessibleNameButton(element);
+        accName = getAccessibleNameUseLabel(element, ['placeholder', 'title']);
         break;
       case 'select':
       case 'output':
         elementInfo = tagName;
         if (id && id.length) elementInfo += ' [id="' + id + '"]';
         accName = getAccessibleNameUseLabel(element, ['title']);
+        break;
+      case 'button':
+        elementInfo = tagName;
+        getAccessibleNameButton(element);
         break;
       case 'label':
         forVal = element.getAttribute('for');
@@ -196,6 +197,9 @@
       case 'label':
       case 'legend':
         if (accName.length) accName = 'TEXT CONTENT: ' + accName;
+        break;
+      case 'form':
+      case 'fieldset':
         break;
       default:
         accName = addFieldsetLegend(element, accName);
