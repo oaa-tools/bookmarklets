@@ -7,7 +7,6 @@ var OAAUtils = (function () {
   // ------------------------------------------------
   var zIndex = 100000;
 
-
   /*
   * getScrollOffsets: Use x and y scroll offsets to calculate positioning
   * coordinates that take into account whether the page has been scrolled.
