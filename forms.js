@@ -177,7 +177,7 @@
         break;
       case 'button':
         elementInfo = tagName;
-        getAccessibleNameButton(element);
+        accName = getAccessibleNameButton(element);
         break;
       case 'label':
         forVal = element.getAttribute('for');
