@@ -3,11 +3,11 @@
     // {selector: "form",     color: "gray",   label: "form"},
     {selector: "fieldset", color: "gray",   label: "fieldset"},
     {selector: "legend",   color: "maroon", label: "legend"},
+    {selector: "output",   color: "teal",   label: "output"},
     {selector: "label",    color: "olive",  label: "label"},
     {selector: "input",    color: "navy",   label: "input"},
     {selector: "select",   color: "green",  label: "select"},
     {selector: "textarea", color: "brown",  label: "textarea"},
-    {selector: "output",   color: "teal",   label: "output"},
     {selector: "button",   color: "purple", label: "button"}
   ];
 
