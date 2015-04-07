@@ -29,26 +29,26 @@
   }
 
   function getAccessibleName (element, attributes) {
-    var name;
+    var name, i;
 
-    name = getAccessibleNameAria (element);
+    name = getAccessibleNameAria(element);
     if (name.length) return name;
 
-    // fallback to attributes
     if (typeof attributes !== 'undefined') {
-      attributes.forEach(function (attrib) {
-        name = utils.getAttributeValue(element, attrib);
+      for (i = 0; i < attributes.length; i++) {
+        name = utils.getAttributeValue(element, attributes[i]);
         if (name.length) return name;
-      });
+      }
     }
 
     return '';
   }
 
   function getAccessibleNameUseLabel (element, attributes) {
-    var name, label, id = element.id;
+    var id = element.id;
+    var name, label, i;
 
-    name = getAccessibleNameAria (element);
+    name = getAccessibleNameAria(element);
     if (name.length) return name;
 
     // use label selector [for=id]
@@ -71,10 +71,10 @@
 
     // fallback to attributes
     if (typeof attributes !== 'undefined') {
-      attributes.forEach(function (attrib) {
-        name = utils.getAttributeValue(element, attrib);
+      for (i = 0; i < attributes.length; i++) {
+        name = utils.getAttributeValue(element, attributes[i]);
         if (name.length) return name;
-      });
+      }
     }
 
     return '';
