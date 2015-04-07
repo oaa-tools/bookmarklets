@@ -3,12 +3,16 @@
 var OAAUtils = (function () {
 
   // ------------------------------------------------
-  // private variables and functions
+  // private functions and variables
   // ------------------------------------------------
   var zIndex = 100000;
 
-  // From Mozilla Developer Network: Element.getBoundingClientRect()
 
+  /*
+  * getScrollOffsets: Use x and y scroll offsets to calculate positioning
+  * coordinates that take into account whether the page has been scrolled.
+  * From Mozilla Developer Network: Element.getBoundingClientRect()
+  */
   var getScrollOffsets = function () {
     var t;
 
@@ -25,8 +29,11 @@ var OAAUtils = (function () {
     return { x: xOffset, y: yOffset };
   };
 
-  // From JavaScript: The Definitive Guide, 6th Edition (slightly modified)
-
+  /*
+  * drag: Add drag and drop functionality to an element by setting this
+  * as its mousedown handler. Depends upon getScrollOffsets function.
+  * From JavaScript: The Definitive Guide, 6th Edition (slightly modified)
+  */
   var drag = function (elementToDrag, dragCallback, event) {
     var scroll = getScrollOffsets();
     var startX = event.clientX + scroll.x;
@@ -93,8 +100,10 @@ var OAAUtils = (function () {
     }
   };
 
-  // core function for bookmarklets
-
+  /*
+  * createOverlay: Core function for bookmarklets that creates, positions
+  * and sets properties and event handlers on each outline overlay.
+  */
   var createOverlay = function (tgt, rect, cname) {
     var node = document.createElement("div");
     var scrollOffsets = getScrollOffsets();
@@ -138,6 +147,9 @@ var OAAUtils = (function () {
     return node;
   };
 
+  /*
+  * elementInfo: Use for debugging, e.g., in conjunction with isVisible
+  */
   var elementInfo = function (element) {
     var tagName = element.tagName.toLowerCase();
 
@@ -147,10 +159,14 @@ var OAAUtils = (function () {
     return element.id ? tagName + '[id="' + element.id + '"]' : tagName;
   };
 
+  /*
+  * isVisible: Recursively check element properties from getComputedStyle
+  * until document element is reached, to determine whether element or any
+  * of its ancestors has properties set that affect its visibility. Called
+  * by the addNotes function.
+  */
   var isVisible = function (element, rect) {
 
-    // Recursive function to check element properties and then
-    // those of its parent until the document node is reached
     function isVisibleRec (el, r) {
       if (el.nodeType === Node.DOCUMENT_NODE) return true;
       // if (typeof r === 'undefined') r = el.getBoundingClientRect();
@@ -174,6 +190,11 @@ var OAAUtils = (function () {
 
   // message dialog functions
 
+  /*
+  * setBoxGeometry: Set the width and position of message dialog based on
+  * the width of the browser window. Called by functions resizeMessage and
+  * createMsgOverlay.
+  */
   var setBoxGeometry = function (overlay) {
     var width  = window.innerWidth / 3.2;
     var left   = window.innerWidth / 2 - width / 2;
@@ -184,6 +205,11 @@ var OAAUtils = (function () {
     overlay.style.top   = (scroll.y + 30) + "px";
   };
 
+  /*
+  * createMsgOverlay: Construct and position the message dialog whose
+  * purpose is to alert the user when no target elements are found by
+  * a bookmarklet.
+  */
   var createMsgOverlay = function (handler) {
     var overlay = document.createElement("div");
     var button  = document.createElement("button");
@@ -200,22 +226,39 @@ var OAAUtils = (function () {
     return overlay;
   };
 
+  /*
+  * deleteMsgOverlay: Use reference to delete message dialog.
+  */
   var deleteMsgOverlay = function (overlay) {
     if (overlay) document.body.removeChild(overlay);
   };
 
-  // accessible name functions
-
+  /*
+  * normalize: Trim leading and trailing whitespace and condense all
+  * interal sequences of whitespace to a single space. Adapted from
+  * Mozilla documentation on String.prototype.trim polyfill. Handles
+  * BOM and NBSP characters.
+  */
   var normalize = function (s) {
     var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
     return s.replace(rtrim, '').replace(/\s+/g, ' ');
   };
 
+  // accessible name functions
+
+  /*
+  * getAttributeValue: Return attribute value if present on element,
+  * otherwise return empty string.
+  */
   var getAttributeValue = function (element, attribute) {
     var value = element.getAttribute(attribute);
     return (value === null) ? '' : normalize(value);
   };
 
+  /*
+  * getElementText: Recursively concatenate text nodes and alt text
+  * from 'img' and 'area' elements for all descendants of element.
+  */
   var getElementText = function (element) {
     var arrayOfStrings;
 
@@ -254,6 +297,11 @@ var OAAUtils = (function () {
     return '';
   };
 
+  /*
+  * getRefElementAccessibleName: First get text content from element
+  * and if that is empty, get its title attribute value, otherwise
+  * return an empty string.
+  */
   var getRefElementAccessibleName = function (element) {
     var textContent;
 
@@ -266,6 +314,11 @@ var OAAUtils = (function () {
     return '';
   };
 
+  /*
+  * getAttributeIdRefsValue: Get the IDREFS value of specified attribute
+  * and return the concatenated string based on referencing each of the
+  * IDREF values. See getRefElementAccessibleName
+  */
   var getAttributeIdRefsValue = function (element, attribute) {
     var value = element.getAttribute(attribute);
     var idRefs, i, refElement, accName, text = [];
