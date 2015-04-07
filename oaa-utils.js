@@ -138,6 +138,40 @@ var OAAUtils = (function () {
     return node;
   };
 
+  var elementInfo = function (element) {
+    var tagName = element.tagName.toLowerCase();
+
+    if (tagName === 'input' && element.type)
+      tagName +=  element.type.length ? '[type="' + element.type + '"]' : '[type="text"]';
+
+    return element.id ? tagName + '[id="' + element.id + '"]' : tagName;
+  };
+
+  var isVisible = function (element, rect) {
+
+    // Recursive function to check element properties and then
+    // those of its parent until the document node is reached
+    function isVisibleRec (el, r) {
+      if (el.nodeType === Node.DOCUMENT_NODE) return true;
+      // if (typeof r === 'undefined') r = el.getBoundingClientRect();
+
+      var computedStyle = window.getComputedStyle(el, null);
+      var display = computedStyle.getPropertyValue('display');
+      var visibility = computedStyle.getPropertyValue('visibility');
+      var hidden = el.getAttribute('hidden');
+      var ariaHidden = el.getAttribute('aria-hidden');
+
+      if ((display === 'none') || (visibility === 'hidden') ||
+          // (r.width === 0 || r.height === 0) ||
+          (hidden !== null) || (ariaHidden === 'true')) {
+        return false;
+      }
+      return isVisibleRec(el.parentNode);
+    }
+
+    return isVisibleRec(element, rect);
+  };
+
   // message dialog functions
 
   var setBoxGeometry = function (overlay) {
@@ -267,11 +301,13 @@ var OAAUtils = (function () {
         var elements = document.querySelectorAll(target.selector);
 
         Array.prototype.forEach.call(elements, function (element) {
-          var boundingRect = element.getBoundingClientRect();
-          var overlayNode = createOverlay(target, boundingRect, className);
-          overlayNode.title = getTitleText(element, target);
-          document.body.appendChild(overlayNode);
-          counter += 1;
+          var boundingRect = element.getBoundingClientRect(), overlayNode;
+          if (isVisible(element, boundingRect)) {
+            overlayNode = createOverlay(target, boundingRect, className);
+            overlayNode.title = getTitleText(element, target);
+            document.body.appendChild(overlayNode);
+            counter += 1;
+          }
         });
       });
 
