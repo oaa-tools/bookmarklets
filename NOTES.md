@@ -2,8 +2,8 @@
 
 ### `isVisible` function
 
-* Is now recursive, such that when a form is hidden, all of its elements
-  are hidden.
+* Is now recursive, such that when a form is hidden, it detects that all
+  of its elements are hidden.
 * How to determine visibility based on element geometry?
 * To compare OAA Library algorithm, search for `DOMElementComputedStyle`
 
