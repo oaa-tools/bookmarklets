@@ -33,23 +33,10 @@ div.oaa-message-dialog {
 
 div.oaa-message-dialog > button {
   float       : right;
-  display     : inline-block;
-  width       : 30px;
-  border      : none;
-  border-top  : 1px solid #ccc;
-  border-left : 1px solid #ccc;
-  box-shadow  : 1px 1px 3px #555;
-  margin-top  : -1px;
-  padding-bottom : 5px;
-  color       : #f5f5f5;
-  background  : #464646;
-  font-size   : 18px;
-  font-weight : normal;
 }
 
-div.oaa-message-dialog > button:hover {
-  color       : #fff;
-  background  : #262626;
+div.oaa-message-dialog > button:after {
+  content     : "Close";
 }
 
 div.oaa-message-dialog > h2 {

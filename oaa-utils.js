@@ -216,9 +216,7 @@ var OAAUtils = (function () {
     overlay.className = "oaa-message-dialog";
     setBoxGeometry(overlay);
 
-    button.title = "Close message dialog";
     button.onclick = handler;
-    button.innerHTML = "x";
 
     overlay.appendChild(button);
     document.body.appendChild(overlay);
