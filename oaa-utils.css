@@ -42,6 +42,8 @@ div.oaa-message-dialog > button:after {
 div.oaa-message-dialog > h2 {
   margin      : 0;
   padding     : 8px 8px 0;
+  color       : inherit;
+  font-family : inherit;
   font-size   : 22px;
 }
 
