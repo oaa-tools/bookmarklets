@@ -16,22 +16,10 @@
   var msgText   = "No form-related elements found: <ul>" + selectors + "</ul>";
   var className = "a11yGfdXALm2";
 
-  function getAccessibleNameAria (element) {
-    var name;
-
-    name = utils.getAttributeIdRefsValue(element, 'aria-labelledby');
-    if (name.length) return name;
-
-    name = utils.getAttributeValue(element, 'aria-label');
-    if (name.length) return name;
-
-    return '';
-  }
-
   function getAccessibleName (element, attributes) {
     var name, i;
 
-    name = getAccessibleNameAria(element);
+    name = utils.getAccessibleNameAria(element);
     if (name.length) return name;
 
     if (typeof attributes !== 'undefined') {
@@ -48,7 +36,7 @@
     var id = element.id;
     var name, label, i;
 
-    name = getAccessibleNameAria(element);
+    name = utils.getAccessibleNameAria(element);
     if (name.length) return name;
 
     // use label selector [for=id]
@@ -84,7 +72,7 @@
   function getAccessibleNameOrDefault (element, defValue) {
     var name;
 
-    name = getAccessibleNameAria(element);
+    name = utils.getAccessibleNameAria(element);
     if (name.length) return name;
 
     name = utils.getAttributeValue(element, 'value');
@@ -101,7 +89,7 @@
   function getAccessibleNameButton (element) {
     var name;
 
-    name = getAccessibleNameAria(element);
+    name = utils.getAccessibleNameAria(element);
     if (name.length) return name;
 
     name = utils.getElementText(element);
