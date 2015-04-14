@@ -332,6 +332,22 @@ var OAAUtils = (function () {
     return '';
   };
 
+  /*
+  * getAccessibleNameAria: The attributes that take precedence over all
+  * other associations in determining an accessible name for an element
+  */
+  function getAccessibleNameAria (element) {
+    var name;
+
+    name = getAttributeIdRefsValue(element, 'aria-labelledby');
+    if (name.length) return name;
+
+    name = getAttributeValue(element, 'aria-label');
+    if (name.length) return name;
+
+    return '';
+  }
+
   //--------------------------------------------------------------
   // public methods
   //--------------------------------------------------------------
@@ -341,6 +357,7 @@ var OAAUtils = (function () {
     getAttributeValue: getAttributeValue,
     getElementText: getElementText,
     getAttributeIdRefsValue: getAttributeIdRefsValue,
+    getAccessibleNameAria: getAccessibleNameAria,
 
     addNodes: function (targetList, className, getTitleText) {
       var counter = 0;
