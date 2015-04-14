@@ -164,11 +164,10 @@ var OAAUtils = (function () {
   * of its ancestors has properties set that affect its visibility. Called
   * by addNodes function.
   */
-  var isVisible = function (element, rect) {
+  var isVisible = function (element) {
 
-    function isVisibleRec (el, r) {
+    function isVisibleRec (el) {
       if (el.nodeType === Node.DOCUMENT_NODE) return true;
-      // if (typeof r === 'undefined') r = el.getBoundingClientRect();
 
       var computedStyle = window.getComputedStyle(el, null);
       var display = computedStyle.getPropertyValue('display');
@@ -177,14 +176,13 @@ var OAAUtils = (function () {
       var ariaHidden = el.getAttribute('aria-hidden');
 
       if ((display === 'none') || (visibility === 'hidden') ||
-          // (r.width === 0 || r.height === 0) ||
           (hidden !== null) || (ariaHidden === 'true')) {
         return false;
       }
       return isVisibleRec(el.parentNode);
     }
 
-    return isVisibleRec(element, rect);
+    return isVisibleRec(element);
   };
 
   // message dialog functions
@@ -351,8 +349,9 @@ var OAAUtils = (function () {
         var elements = document.querySelectorAll(target.selector);
 
         Array.prototype.forEach.call(elements, function (element) {
-          var boundingRect = element.getBoundingClientRect(), overlayNode;
-          if (isVisible(element, boundingRect)) {
+          var boundingRect, overlayNode;
+          if (isVisible(element)) {
+            boundingRect = element.getBoundingClientRect();
             overlayNode = createOverlay(target, boundingRect, className);
             overlayNode.title = getTitleText(element, target);
             document.body.appendChild(overlayNode);
