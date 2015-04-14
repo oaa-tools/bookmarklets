@@ -199,11 +199,11 @@
         break;
       default:
         accName = addFieldsetLegend(element, accName);
-        if (accName.length) accName = 'ACCESSIBLE NAME: ' + accName;
+        if (accName.length) accName = 'ACC. NAME: ' + accName;
         break;
     }
 
-    elementInfo = 'ELEMENT INFO: ' + elementInfo;
+    elementInfo = 'ELEMENT: ' + elementInfo;
 
     if (accName.length)
       return elementInfo + '\n' + accName;
