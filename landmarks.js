@@ -3,6 +3,7 @@
     {selector: 'body > header, [role="banner"]',            color: "gray",   label: "banner"},
     {selector: 'main, [role="main"]',                       color: "navy",   label: "main"},
     {selector: 'body > footer, [role="contentinfo"]',       color: "olive",  label: "contentinfo"},
+    {selector: '[role="application"]',                      color: "teal",   label: "application"},
     {selector: 'aside:not([role]), [role="complementary"]', color: "brown",  label: "complementary"},
     {selector: 'nav, [role="navigation"]',                  color: "green",  label: "navigation"},
     {selector: '[role="search"]',                           color: "purple", label: "search"}
@@ -13,24 +14,28 @@
   var msgText   = "No elements with ARIA Landmark roles found: <ul>" + selectors + "</ul>";
   var className = "a11yGfdXALm0";
 
-  function getAccessibleName (element) {
+  function getElementInfo (element) {
+    var tagName = element.tagName.toLowerCase();
+    var role = utils.getAttributeValue(element, 'role');
+    return role.length ? tagName + ' [role="' + role + '"]' : tagName;
+  }
+
+  function getAccessibleName (element, target) {
     var name;
 
-    name = utils.getAttributeIdRefsValue(element, "aria-labelledby");
-    if (name.length) return name;
-
-    name = utils.getAttributeValue(element, "aria-label");
+    name = utils.getAccessibleNameAria(element);
     if (name.length) return name;
 
     name = utils.getAttributeValue(element, "title");
     if (name.length) return name;
 
-    return '';
+    return target.label;
   }
 
   function getTooltipText (element, target) {
-    var text = getAccessibleName(element);
-    return text.length ? target.label + ": " + text : target.label;
+    var elementInfo = getElementInfo(element);
+    var accessibleName = getAccessibleName(element, target);
+    return 'ELEMENT: ' + elementInfo + '\n' + 'ACC. NAME: ' + accessibleName;
   }
 
   window.accessibility = function (flag) {
