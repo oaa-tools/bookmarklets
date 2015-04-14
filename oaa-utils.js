@@ -356,7 +356,6 @@ var OAAUtils = (function () {
     normalize: normalize,
     getAttributeValue: getAttributeValue,
     getElementText: getElementText,
-    getAttributeIdRefsValue: getAttributeIdRefsValue,
     getAccessibleNameAria: getAccessibleNameAria,
 
     addNodes: function (targetList, className, getTitleText) {
