@@ -7,6 +7,9 @@
 * How to determine visibility based on element geometry?
 * To compare OAA Library algorithm, search for `DOMElementComputedStyle`
 
+#### Questions
+* Should `aria-hidden` be used to determine visibility?
+
 ### `forms.js` accessible name calculation
 
 #### Notes
@@ -39,6 +42,13 @@
     attribute `title`
 * `input` `type=` all types not listed above
   * use `label`, then attribute `title`
+
+#### Questions
+* When the `aria-labelledby` attribute is specified on an element, and an
+  element referenced by an IDREF has an `aria-label` attribute, does it
+  take precedence over text content and `title`?
+* How to implement the calculation that takes into account input type=text,
+  menu, and select elements.
 
 ### Ideas
 
