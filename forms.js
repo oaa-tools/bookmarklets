@@ -1,9 +1,9 @@
 (function (utils) {
   var targetList = [
-    // {selector: "form",     color: "gray",   label: "form"},
+    // {selector: "form",     color: "silver",   label: "form"},
+    {selector: "output",   color: "teal",   label: "output"},
     {selector: "fieldset", color: "gray",   label: "fieldset"},
     {selector: "legend",   color: "maroon", label: "legend"},
-    {selector: "output",   color: "teal",   label: "output"},
     {selector: "label",    color: "olive",  label: "label"},
     {selector: "input",    color: "navy",   label: "input"},
     {selector: "select",   color: "green",  label: "select"},
@@ -29,19 +29,21 @@
       }
     }
 
+    name = utils.getAttributeValue(element, 'title');
+    if (name.length) return name;
+
     return '';
   }
 
   function getAccessibleNameUseLabel (element, attributes) {
-    var id = element.id;
     var name, label, i;
 
     name = utils.getAccessibleNameAria(element);
     if (name.length) return name;
 
     // use label selector [for=id]
-    if (id.length) {
-      label = document.querySelector('[for="' + id + '"]');
+    if (element.id) {
+      label = document.querySelector('[for="' + element.id + '"]');
       if (label) {
         name = utils.getElementText(label);
         if (name.length) return name;
@@ -64,6 +66,9 @@
         if (name.length) return name;
       }
     }
+
+    name = utils.getAttributeValue(element, 'title');
+    if (name.length) return name;
 
     return '';
   }
@@ -141,13 +146,13 @@
           case 'tel':
           case 'email':
           case 'url':
-            accName = getAccessibleNameUseLabel(element, ['placeholder', 'title']);
+            accName = getAccessibleNameUseLabel(element, ['placeholder']);
             break;
           case 'image':
-            accName = getAccessibleName(element, ['alt', 'value', 'title']);
+            accName = getAccessibleName(element, ['alt', 'value']);
             break;
           case 'button':
-            accName = getAccessibleName(element, ['value', 'title']);
+            accName = getAccessibleName(element, ['value']);
             break;
           case 'submit':
             accName = getAccessibleNameOrDefault(element, 'Submit');
@@ -156,20 +161,20 @@
             accName = getAccessibleNameOrDefault(element, 'Reset');
             break;
           default:
-            accName = getAccessibleNameUseLabel(element, ['title']);
+            accName = getAccessibleNameUseLabel(element);
             break;
         }
         break;
       case 'textarea':
         elementInfo = tagName;
         if (id && id.length) elementInfo += ' [id="' + id + '"]';
-        accName = getAccessibleNameUseLabel(element, ['placeholder', 'title']);
+        accName = getAccessibleNameUseLabel(element, ['placeholder']);
         break;
       case 'select':
       case 'output':
         elementInfo = tagName;
         if (id && id.length) elementInfo += ' [id="' + id + '"]';
-        accName = getAccessibleNameUseLabel(element, ['title']);
+        accName = getAccessibleNameUseLabel(element);
         break;
       case 'button':
         elementInfo = tagName;
