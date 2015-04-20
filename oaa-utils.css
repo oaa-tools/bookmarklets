@@ -6,17 +6,19 @@ div.oaa-element-overlay {
   border      : 3px solid;
   font-family : arial, helvetica, 'Liberation Sans', sans-serif;
   font-size   : 16px;
-}
-
-div.oaa-element-overlay:hover {
-  cursor      : grab;
-  cursor      : -moz-grab;
-  cursor      : -webkit-grab;
+  pointer-events: none;
 }
 
 div.oaa-element-overlay > div {
   float       : right;
   padding     : 1px 1px 4px 4px;
+  pointer-events: auto;
+}
+
+div.oaa-element-overlay > div:hover {
+  cursor      : grab;
+  cursor      : -moz-grab;
+  cursor      : -webkit-grab;
 }
 
 div.oaa-message-dialog {
