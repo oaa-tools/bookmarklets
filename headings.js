@@ -1,3 +1,4 @@
+//window.headings = function(utils) {
 (function (utils) {
   var targetList = [
     {selector: "h1", color: "navy",   label: "h1"},
