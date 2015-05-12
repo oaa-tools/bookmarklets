@@ -109,6 +109,7 @@ var OAAUtils = (function () {
     var innerStyle = "background-color: " + tgt.color;
     var minWidth  = 34;
     var minHeight = 27;
+    var labelDiv;
 
     function repositionOverlay (element) {
       if (typeof element.startLeft === "undefined") return;
@@ -134,13 +135,14 @@ var OAAUtils = (function () {
     node.style.zIndex = zIndex;
 
     node.innerHTML = '<div style="' + innerStyle + '">' + tgt.label + '</div>';
+    labelDiv = node.firstChild;
 
-    node.onmousedown = function (event) {
-      drag(this, hoistZIndex, event);
+    labelDiv.onmousedown = function (event) {
+      drag(this.parentNode, hoistZIndex, event);
     };
 
-    node.ondblclick = function (event) {
-      repositionOverlay(this);
+    labelDiv.ondblclick = function (event) {
+      repositionOverlay(this.parentNode);
     };
 
     return node;

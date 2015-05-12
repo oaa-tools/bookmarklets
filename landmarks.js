@@ -1,12 +1,12 @@
 (function (utils) {
   var targetList = [
-    {selector: 'body > header, [role="banner"]',            color: "gray",   label: "banner"},
-    {selector: 'main, [role="main"]',                       color: "navy",   label: "main"},
+    {selector: 'aside:not([role]), [role="complementary"]', color: "brown",  label: "complementary"},
     {selector: 'body > footer, [role="contentinfo"]',       color: "olive",  label: "contentinfo"},
     {selector: '[role="application"]',                      color: "teal",   label: "application"},
-    {selector: 'aside:not([role]), [role="complementary"]', color: "brown",  label: "complementary"},
     {selector: 'nav, [role="navigation"]',                  color: "green",  label: "navigation"},
-    {selector: '[role="search"]',                           color: "purple", label: "search"}
+    {selector: 'body > header, [role="banner"]',            color: "gray",   label: "banner"},
+    {selector: '[role="search"]',                           color: "purple", label: "search"},
+    {selector: 'main, [role="main"]',                       color: "navy",   label: "main"}
   ];
 
   var selectors = targetList.map(function (tgt) {return '<li>' + tgt.selector + '</li>';}).join('');
