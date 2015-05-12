@@ -1,8 +1,11 @@
 (function (utils) {
     var targetList = [
-        {selector: "ul", color: "navy", label: "unordered list"},
-        {selector: "ol", color: "purple", label: "ordered list"}
+        {selector: "ul", color: "navy", label: "ul"},
+        {selector: "ol", color: "purple", label: "ol"}
     ];
+    //var listitems = [ 
+    //    {selector "li", color:"olive", label: "li"}
+    //];
 
     var selectors = targetList.map(function (tgt) {return tgt.selector;}).join(', ');
     var msgTitle  = "Lists";
