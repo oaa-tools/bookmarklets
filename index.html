@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title>Web Accessibility Bookmarklets</title>
+    <meta charset="utf-8"/>
+    <style type="text/css">
+      body, h1, h2, h3, h4, h5, h6, p, dl, dd, ol, ul {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 16px;
+      }
+      div#main-content { margin: 24px; }
+      h1 { font-size: 24px; }
+      p  { margin-top: 12px; }
+      ul { margin-left: 20px; }
+      li { margin-top: 12px; }
+    </style>
+  </head>
+  <body>
+    <div id="main-content" role="main">
+      <h1>Web Accessibility Bookmarklets</h1>
+      <p>To install a bookmarklet, drag one of the following links into your browser&apos;s Bookmarks Toolbar.</p>
+      <ul>
+        <li><a href="javascript:(function(baseUrl,src){var done,link,script,head;function createLink(){var el=document.createElement('link');el.rel='stylesheet';el.type='text/css';el.href=baseUrl+'oaa-utils.css';return el}if(typeof window.OAAUtils==='undefined'){done=false;link=createLink();script=document.createElement('script');script.src=baseUrl+'oaa-utils.js';script.onload=script.onreadystatechange=function(){if(!done&&(!this.readyState||this.readyState=='loaded'||this.readyState=='complete')){done=true;initMyBookmarklet()}};head=document.getElementsByTagName('head')[0];head.appendChild(script);head.appendChild(link)}else{initMyBookmarklet()}function initMyBookmarklet(){var el=document.createElement('script');el.setAttribute('src',baseUrl+src);document.body.appendChild(el)}})('http://localhost/bookmarklets/','forms.js');">Forms</a></li>
+        <li><a href="javascript:(function(baseUrl,src){var done,link,script,head;function createLink(){var el=document.createElement('link');el.rel='stylesheet';el.type='text/css';el.href=baseUrl+'oaa-utils.css';return el}if(typeof window.OAAUtils==='undefined'){done=false;link=createLink();script=document.createElement('script');script.src=baseUrl+'oaa-utils.js';script.onload=script.onreadystatechange=function(){if(!done&&(!this.readyState||this.readyState=='loaded'||this.readyState=='complete')){done=true;initMyBookmarklet()}};head=document.getElementsByTagName('head')[0];head.appendChild(script);head.appendChild(link)}else{initMyBookmarklet()}function initMyBookmarklet(){var el=document.createElement('script');el.setAttribute('src',baseUrl+src);document.body.appendChild(el)}})('http://localhost/bookmarklets/','headings.js');">Headings</a></li>
+        <li><a href="javascript:(function(baseUrl,src){var done,link,script,head;function createLink(){var el=document.createElement('link');el.rel='stylesheet';el.type='text/css';el.href=baseUrl+'oaa-utils.css';return el}if(typeof window.OAAUtils==='undefined'){done=false;link=createLink();script=document.createElement('script');script.src=baseUrl+'oaa-utils.js';script.onload=script.onreadystatechange=function(){if(!done&&(!this.readyState||this.readyState=='loaded'||this.readyState=='complete')){done=true;initMyBookmarklet()}};head=document.getElementsByTagName('head')[0];head.appendChild(script);head.appendChild(link)}else{initMyBookmarklet()}function initMyBookmarklet(){var el=document.createElement('script');el.setAttribute('src',baseUrl+src);document.body.appendChild(el)}})('http://localhost/bookmarklets/','landmarks.js');">Landmarks</a></li>
+        <li><a href="javascript:(function(baseUrl,src){var done,link,script,head;function createLink(){var el=document.createElement('link');el.rel='stylesheet';el.type='text/css';el.href=baseUrl+'oaa-utils.css';return el}if(typeof window.OAAUtils==='undefined'){done=false;link=createLink();script=document.createElement('script');script.src=baseUrl+'oaa-utils.js';script.onload=script.onreadystatechange=function(){if(!done&&(!this.readyState||this.readyState=='loaded'||this.readyState=='complete')){done=true;initMyBookmarklet()}};head=document.getElementsByTagName('head')[0];head.appendChild(script);head.appendChild(link)}else{initMyBookmarklet()}function initMyBookmarklet(){var el=document.createElement('script');el.setAttribute('src',baseUrl+src);document.body.appendChild(el)}})('http://localhost/bookmarklets/','lists.js');">Lists</a></li>
+      </ul>
+    </div>
+  </body>
+</html>
