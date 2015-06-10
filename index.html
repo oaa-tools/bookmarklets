@@ -1,33 +1,61 @@
+<!DOCTYPE html>
 <html>
+
   <head>
-    <title>Web Accessibility Bookmarklets</title>
-    <meta charset="utf-8"/>
-    <style type="text/css">
-      body, h1, h2, h3, h4, h5, h6, p, dl, dd, ol, ul {
-        margin: 0;
-        padding: 0;
-      }
-      body {
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 16px;
-      }
-      div#main-content { margin: 24px; }
-      h1 { font-size: 24px; }
-      p  { margin-top: 12px; }
-      ul { margin-left: 20px; }
-      li { margin-top: 12px; }
-    </style>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Bookmarklets : Highlight accessibility features of web pages">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Bookmarklets</title>
   </head>
+
   <body>
-    <div id="main-content" role="main">
-      <h1>Web Accessibility Bookmarklets</h1>
-      <p>To install a bookmarklet, drag one of the following links into your browser&apos;s Bookmarks Toolbar.</p>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/landilark/bookmarklets">View on GitHub</a>
+
+          <h1 id="project_title">Bookmarklets</h1>
+          <h2 id="project_tagline">Highlight accessibility features of web pages</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/landilark/bookmarklets/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/landilark/bookmarklets/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p></p>
+    <div id="main-content">
+      <h1>
+<a id="web-accessibility-bookmarklets" class="anchor" href="#web-accessibility-bookmarklets" aria-hidden="true"><span class="octicon octicon-link"></span></a>Web Accessibility Bookmarklets</h1>
+      <p>To install a bookmarklet, drag one of the following links into your browser's Bookmarks Toolbar.</p>
       <ul>
-        <li><a href="javascript:(function(baseUrl,src){var done,link,script,head;function createLink(){var el=document.createElement('link');el.rel='stylesheet';el.type='text/css';el.href=baseUrl+'oaa-utils.css';return el}if(typeof window.OAAUtils==='undefined'){done=false;link=createLink();script=document.createElement('script');script.src=baseUrl+'oaa-utils.js';script.onload=script.onreadystatechange=function(){if(!done&&(!this.readyState||this.readyState=='loaded'||this.readyState=='complete')){done=true;initMyBookmarklet()}};head=document.getElementsByTagName('head')[0];head.appendChild(script);head.appendChild(link)}else{initMyBookmarklet()}function initMyBookmarklet(){var el=document.createElement('script');el.setAttribute('src',baseUrl+src);document.body.appendChild(el)}})('http://localhost/bookmarklets/','forms.js');">Forms</a></li>
-        <li><a href="javascript:(function(baseUrl,src){var done,link,script,head;function createLink(){var el=document.createElement('link');el.rel='stylesheet';el.type='text/css';el.href=baseUrl+'oaa-utils.css';return el}if(typeof window.OAAUtils==='undefined'){done=false;link=createLink();script=document.createElement('script');script.src=baseUrl+'oaa-utils.js';script.onload=script.onreadystatechange=function(){if(!done&&(!this.readyState||this.readyState=='loaded'||this.readyState=='complete')){done=true;initMyBookmarklet()}};head=document.getElementsByTagName('head')[0];head.appendChild(script);head.appendChild(link)}else{initMyBookmarklet()}function initMyBookmarklet(){var el=document.createElement('script');el.setAttribute('src',baseUrl+src);document.body.appendChild(el)}})('http://localhost/bookmarklets/','headings.js');">Headings</a></li>
-        <li><a href="javascript:(function(baseUrl,src){var done,link,script,head;function createLink(){var el=document.createElement('link');el.rel='stylesheet';el.type='text/css';el.href=baseUrl+'oaa-utils.css';return el}if(typeof window.OAAUtils==='undefined'){done=false;link=createLink();script=document.createElement('script');script.src=baseUrl+'oaa-utils.js';script.onload=script.onreadystatechange=function(){if(!done&&(!this.readyState||this.readyState=='loaded'||this.readyState=='complete')){done=true;initMyBookmarklet()}};head=document.getElementsByTagName('head')[0];head.appendChild(script);head.appendChild(link)}else{initMyBookmarklet()}function initMyBookmarklet(){var el=document.createElement('script');el.setAttribute('src',baseUrl+src);document.body.appendChild(el)}})('https://raw.githubusercontent.com/landilark/bookmarklets/gh-pages/','landmarks.js');">Landmarks</a></li>
-        <li><a href="javascript:(function(baseUrl,src){var done,link,script,head;function createLink(){var el=document.createElement('link');el.rel='stylesheet';el.type='text/css';el.href=baseUrl+'oaa-utils.css';return el}if(typeof window.OAAUtils==='undefined'){done=false;link=createLink();script=document.createElement('script');script.src=baseUrl+'oaa-utils.js';script.onload=script.onreadystatechange=function(){if(!done&&(!this.readyState||this.readyState=='loaded'||this.readyState=='complete')){done=true;initMyBookmarklet()}};head=document.getElementsByTagName('head')[0];head.appendChild(script);head.appendChild(link)}else{initMyBookmarklet()}function initMyBookmarklet(){var el=document.createElement('script');el.setAttribute('src',baseUrl+src);document.body.appendChild(el)}})('http://localhost/bookmarklets/','lists.js');">Lists</a></li>
+        <li>Forms</li>
+        <li>Headings</li>
+        <li>Landmarks</li>
+        <li>Lists</li>
       </ul>
     </div>
+  
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Bookmarklets maintained by <a href="https://github.com/landilark">landilark</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
   </body>
 </html>
