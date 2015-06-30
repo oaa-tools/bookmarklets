@@ -5,7 +5,7 @@
   "main": "landmarks.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nhoyt/bookmarklets.git"
+    "url": "git+https://github.com/oaa-tools/bookmarklets.git"
   },
   "contributors": [
     "Landi Lark",
@@ -13,9 +13,9 @@
   ],
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/nhoyt/bookmarklets/issues"
+    "url": "https://github.com/oaa-tools/bookmarklets/issues"
   },
-  "homepage": "https://github.com/nhoyt/bookmarklets#readme",
+  "homepage": "https://github.com/oaa-tools/bookmarklets#readme",
   "devDependencies": {
     "babel-core": "^5.5.8",
     "babel-loader": "^5.1.4",
