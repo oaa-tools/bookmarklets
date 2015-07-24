@@ -18,7 +18,7 @@
         <header class="inner">
           <a id="forkme_banner" href="https://github.com/landilark/bookmarklets">View on GitHub</a>
 
-          <h1 id="project_title">Bookmarklets</h1>
+          <h1 id="project_title">Accessibility Bookmarklets</h1>
           <h2 id="project_tagline">Highlight accessibility features of web pages</h2>
 
             <section id="downloads">
@@ -41,31 +41,21 @@
 
     <div id="main-content">
         <article class="markdown-body entry-content" itemprop="mainContentOfPage">
-            <h1><a id="user-content-bookmarklets" class="anchor" href="#bookmarklets" aria-hidden="true"><span class="octicon octicon-link"></span></a>bookmarklets</h1>
+            <h1><a id="user-content-bookmarklets" class="anchor" href="#bookmarklets" aria-hidden="true"><span class="octicon octicon-link"></span></a></h1>
 
-            <p>Highlight classes of elements on a web page that relate to accessibility requirements, including:</p>
-
+            <p>Accessibility Bookmarklets are <em>visualization</em> tools that highlight hidden information that assitive technologies use to navigate through a webpage. 
+            <p>Once installed, these bookmarklets can interact with any webpage. To install a bookmarklet, drag and drop one into your browser's bookmarks bar.</p>
+     
             <ul>
-                <li>Forms</li>
-                <li>Headings</li>
-                <li>Landmarks</li>
+                <li class="bookmarklet"><a href="javascript:(function(baseUrl,src){var done,link,script,head;function createLink(){var el=document.createElement('link');el.rel='stylesheet';el.type='text/css';el.href=baseUrl+'oaa-utils.css';return el}if(typeof window.OAAUtils==='undefined'){done=false;link=createLink();script=document.createElement('script');script.src=baseUrl+'oaa-utils.js';script.onload=script.onreadystatechange=function(){if(!done&amp;&amp;(!this.readyState||this.readyState=='loaded'||this.readyState=='complete')){done=true;initMyBookmarklet()}};head=document.getElementsByTagName('head')[0];head.appendChild(script);head.appendChild(link)}else{initMyBookmarklet()}function initMyBookmarklet(){var el=document.createElement('script');el.setAttribute('src',baseUrl+src);document.body.appendChild(el)}})('https://landilark.github.io/bookmarklets/','forms.js');">Forms</a></li>
+                <li class="bookmarklet"><a href="javascript:(function(baseUrl,src){var done,link,script,head;function createLink(){var el=document.createElement('link');el.rel='stylesheet';el.type='text/css';el.href=baseUrl+'oaa-utils.css';return el}if(typeof window.OAAUtils==='undefined'){done=false;link=createLink();script=document.createElement('script');script.src=baseUrl+'oaa-utils.js';script.onload=script.onreadystatechange=function(){if(!done&amp;&amp;(!this.readyState||this.readyState=='loaded'||this.readyState=='complete')){done=true;initMyBookmarklet()}};head=document.getElementsByTagName('head')[0];head.appendChild(script);head.appendChild(link)}else{initMyBookmarklet()}function initMyBookmarklet(){var el=document.createElement('script');el.setAttribute('src',baseUrl+src);document.body.appendChild(el)}})('https://landilark.github.io/bookmarklets/','headings.js');">Headings</a></li>
+                <li class="bookmarklet"><a href="javascript:(function(baseUrl,src){var done,link,script,head;function createLink(){var el=document.createElement('link');el.rel='stylesheet';el.type='text/css';el.href=baseUrl+'oaa-utils.css';return el}if(typeof window.OAAUtils==='undefined'){done=false;link=createLink();script=document.createElement('script');script.src=baseUrl+'oaa-utils.js';script.onload=script.onreadystatechange=function(){if(!done&amp;&amp;(!this.readyState||this.readyState=='loaded'||this.readyState=='complete')){done=true;initMyBookmarklet()}};head=document.getElementsByTagName('head')[0];head.appendChild(script);head.appendChild(link)}else{initMyBookmarklet()}function initMyBookmarklet(){var el=document.createElement('script');el.setAttribute('src',baseUrl+src);document.body.appendChild(el)}})('https://landilark.github.io/bookmarklets/','landmarks.js');">Landmarks</a></li>
+                <li class="bookmarklet"><a href="javascript:(function(baseUrl,src){var done,link,script,head;function createLink(){var el=document.createElement('link');el.rel='stylesheet';el.type='text/css';el.href=baseUrl+'oaa-utils.css';return el}if(typeof window.OAAUtils==='undefined'){done=false;link=createLink();script=document.createElement('script');script.src=baseUrl+'oaa-utils.js';script.onload=script.onreadystatechange=function(){if(!done&amp;&amp;(!this.readyState||this.readyState=='loaded'||this.readyState=='complete')){done=true;initMyBookmarklet()}};head=document.getElementsByTagName('head')[0];head.appendChild(script);head.appendChild(link)}else{initMyBookmarklet()}function initMyBookmarklet(){var el=document.createElement('script');el.setAttribute('src',baseUrl+src);document.body.appendChild(el)}})('https://landilark.github.io/bookmarklets/','lists.js');">Lists</a></li>
             </ul>
-
-            <p>Instructions for using the web accessibility bookmarklets:</p>
-
-            <ul>
-                <li>An outlined area (e.g., a heading outline with label 'h2') is referred to as an overlay. It has the same geometry as the element it outlines.</li>
-                <li>Hovering over the label of an overlay (the solid-color rectangle in the top-right corner) will display a tooltip with information on the underlying element's type, label, text content or accessible name.</li>
-                <li>You can move an overlay with mouse drag-and-drop using its label as the drag handle.</li>
-                <li>After moving an overlay, double clicking its label will move the overlay back to its original position.</li>
-                <li>The last overlay that was clicked or moved has the highest z-index of all overlays. Thus if the label of one overlay is partially obscured by the label of another, clicking the partially obscured label will expose the entire label.</li>
-                <li>In some cases, one overlay may completely obscure another, hiding even the label of the other overlay. We plan to address this issue by adding page-level information that indicates how many overlays of each type were found on the page.</li>
-            </ul>
-
             <p>Note: A bookmarklet is a JavaScript snippet that can be run within a web browser and that typically performs an action related to the currently loaded web page.</p>
         </article>
     </div>
-
+   </div>
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
