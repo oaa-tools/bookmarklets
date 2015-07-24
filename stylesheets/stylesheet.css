@@ -426,13 +426,18 @@ Small Device Styles
 
 a.bookmarklet {
   display: block;
-  padding: 3em;
+  padding: 2em;
   border: .15em solid gray;
   border-radius: 25%;
-  width: 1em;
+  width: 4em;
+  text-decoration: none;
+  color: black;
   background-color: lightgrey;
-  font-size: 1em;
-  margin: 1em;
+  font-size: 1.5em;
+}
+
+a.bookmarklet:hover, a.bookmarklet:focus {
+  background-color: #556A7B;
 }
 
 ul.bookmarklet {
@@ -441,7 +446,7 @@ ul.bookmarklet {
 
 li.bookmarklet {
   list-style: none;
-  margin: 6em;
+  margin: 7em;
   display: block;
   float: left;
   width: 3em;
