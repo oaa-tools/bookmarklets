@@ -426,7 +426,6 @@ Small Device Styles
 
 a.bookmarklet {
   display: block;
-  float: left;
   padding: 3em;
   border: .15em solid gray;
   border-radius: 25%;
@@ -438,4 +437,12 @@ a.bookmarklet {
 
 ul.bookmarklet {
   display: inline-block;
+}
+
+li.bookmarklet {
+  list-style: none;
+  margin: 6em;
+  display: block;
+  float: left;
+  width: 3em;
 }
