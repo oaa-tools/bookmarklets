@@ -431,6 +431,7 @@ a.bookmarklet {
   border: .15em solid gray;
   border-radius: 25%;
   width: 1em;
+  background-color: lightgrey;
   font-size: 1em;
   margin: 1em;
 }
