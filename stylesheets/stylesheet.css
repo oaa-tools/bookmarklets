@@ -423,3 +423,18 @@ Small Device Styles
   }
 
 }
+
+a.bookmarklet {
+  display: block;
+  float: left;
+  padding: 3em;
+  border: .15em solid gray;
+  border-radius: 25%;
+  width: 1em;
+  font-size: 1em;
+  margin: 1em;
+}
+
+ul.bookmarklet {
+  display: inline-block;
+}
