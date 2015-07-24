@@ -438,6 +438,7 @@ a.bookmarklet {
 
 a.bookmarklet:hover, a.bookmarklet:focus {
   background-color: #556A7B;
+  color: white;
 }
 
 ul.bookmarklet {
