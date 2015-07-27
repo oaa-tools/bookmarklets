@@ -1,5 +1,13 @@
-(function (utils) {
-  var targetList = [
+/*
+*   headings.js: bookmarklet script for highlighting HTML heading elements
+*/
+
+import Bookmarklet from './Bookmarklet';
+import { headingsCss } from './utils/dom';
+import { getElementText } from './utils/accname';
+
+(function () {
+  let targetList = [
     {selector: "h1", color: "navy",   label: "h1"},
     {selector: "h2", color: "olive",  label: "h2"},
     {selector: "h3", color: "purple", label: "h3"},
@@ -8,35 +16,22 @@
     {selector: "h6", color: "brown",  label: "h6"}
   ];
 
-  var selectors = targetList.map(function (tgt) {return tgt.selector;}).join(', ');
-  var msgTitle  = "Headings";
-  var msgText   = "No heading elements (" + selectors + ") found.";
-  var className = "a11yGfdXALm1";
+  let selectors = targetList.map(function (tgt) {return tgt.selector;}).join(', ');
 
-  function getTooltipText (element, target) {
-    var textContent = utils.getElementText(element);
+  function getInfo (element, target) {
+    var textContent = getElementText(element);
     return target.label + ": " + textContent;
   }
 
-  window.accessibility = function (flag) {
-    utils.hideMessage();
-    window.a11yShowHeadings = (typeof flag === "undefined") ? true : !flag;
-    if (window.a11yShowHeadings){
-      if (utils.addNodes(targetList, className, getTooltipText) === 0) {
-        utils.showMessage(msgTitle, msgText);
-        window.a11yShowHeadings = false;
-      }
-    }
-    else {
-      utils.removeNodes(className);
-    }
+  let params = {
+    msgTitle:   "Headings",
+    msgText:    "No heading elements (" + selectors + ") found.",
+    targetList: targetList,
+    cssClass:   headingsCss,
+    getInfo:    getInfo,
+    dndFlag:    true
   };
 
-  window.addEventListener('resize', function (event) {
-    utils.removeNodes(className);
-    utils.resizeMessage();
-    window.a11yShowHeadings = false;
-  });
-
-  window.accessibility(window.a11yShowHeadings);
-})(OAAUtils);
+  let blt = new Bookmarklet("a11yHeadings", params);
+  blt.run();
+})();

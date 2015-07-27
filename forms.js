@@ -1,5 +1,17 @@
-(function (utils) {
-  var targetList = [
+/*
+*   forms.js: bookmarklet script for highlighting form-related elements
+*/
+
+import Bookmarklet from './Bookmarklet';
+import { formsCss } from './utils/dom';
+import {
+  getAccessibleNameAria,
+  getAttributeValue,
+  getElementText
+} from './utils/accname';
+
+(function () {
+  let targetList = [
     // {selector: "form",     color: "silver",   label: "form"},
     {selector: "output",   color: "teal",   label: "output"},
     {selector: "fieldset", color: "gray",   label: "fieldset"},
@@ -11,41 +23,38 @@
     {selector: "button",   color: "purple", label: "button"}
   ];
 
-  var selectors = targetList.map(function (tgt) {return '<li>' + tgt.selector + '</li>';}).join('');
-  var msgTitle  = "Forms";
-  var msgText   = "No form-related elements found: <ul>" + selectors + "</ul>";
-  var className = "a11yGfdXALm2";
+  let selectors = targetList.map(function (tgt) {return '<li>' + tgt.selector + '</li>';}).join('');
 
-  function getAccessibleName (element, attributes) {
-    var name, i;
+  function getAccessibleNameUseAttributes (element, attributes) {
+    let name;
 
-    name = utils.getAccessibleNameAria(element);
+    name = getAccessibleNameAria(element);
     if (name.length) return name;
 
     if (typeof attributes !== 'undefined') {
-      for (i = 0; i < attributes.length; i++) {
-        name = utils.getAttributeValue(element, attributes[i]);
+      for (let attr of attributes) {
+        name = getAttributeValue(element, attr);
         if (name.length) return name;
       }
     }
 
-    name = utils.getAttributeValue(element, 'title');
+    name = getAttributeValue(element, 'title');
     if (name.length) return name;
 
     return '';
   }
 
   function getAccessibleNameUseLabel (element, attributes) {
-    var name, label, i;
+    let name, label;
 
-    name = utils.getAccessibleNameAria(element);
+    name = getAccessibleNameAria(element);
     if (name.length) return name;
 
     // use label selector [for=id]
     if (element.id) {
       label = document.querySelector('[for="' + element.id + '"]');
       if (label) {
-        name = utils.getElementText(label);
+        name = getElementText(label);
         if (name.length) return name;
       }
     }
@@ -54,20 +63,20 @@
     if (typeof element.closest === 'function') {
       label = element.closest('label');
       if (label) {
-        name = utils.getElementText(label);
+        name = getElementText(label);
         if (name.length) return name;
       }
     }
 
     // fallback to attributes
     if (typeof attributes !== 'undefined') {
-      for (i = 0; i < attributes.length; i++) {
-        name = utils.getAttributeValue(element, attributes[i]);
+      for (let attr of attributes) {
+        name = getAttributeValue(element, attr);
         if (name.length) return name;
       }
     }
 
-    name = utils.getAttributeValue(element, 'title');
+    name = getAttributeValue(element, 'title');
     if (name.length) return name;
 
     return '';
@@ -75,48 +84,48 @@
 
   // Use for input type submit or reset
   function getAccessibleNameOrDefault (element, defValue) {
-    var name;
+    let name;
 
-    name = utils.getAccessibleNameAria(element);
+    name = getAccessibleNameAria(element);
     if (name.length) return name;
 
-    name = utils.getAttributeValue(element, 'value');
+    name = getAttributeValue(element, 'value');
     if (name.length) return name;
 
     if (defValue && defValue.length) return defValue;
 
-    name = utils.getAttributeValue(element, 'title');
+    name = getAttributeValue(element, 'title');
     if (name.length) return name;
 
     return '';
   }
 
   function getAccessibleNameButton (element) {
-    var name;
+    let name;
 
-    name = utils.getAccessibleNameAria(element);
+    name = getAccessibleNameAria(element);
     if (name.length) return name;
 
-    name = utils.getElementText(element);
+    name = getElementText(element);
     if (name.length) return name;
 
-    name = utils.getAttributeValue(element, 'title');
+    name = getAttributeValue(element, 'title');
     if (name.length) return name;
 
     return '';
   }
 
-  function addFieldsetLegend(element, accName) {
-    var fieldset, legend, text, name;
+  function addFieldsetLegend (element, accName) {
+    let fieldset, legend, text, name;
 
     if (typeof element.closest === 'function') {
       fieldset = element.closest('fieldset');
       if (fieldset) {
         legend = fieldset.querySelector('legend');
         if (legend) {
-          text = utils.getElementText(legend);
+          text = getElementText(legend);
           if (text.length)
-            name = utils.normalize(text + ' ' + accName);
+            name = text + ' ' + accName;
           else
             name = accName;
         }
@@ -131,9 +140,10 @@
   }
 
   function getElementInfoAndAccName (element) {
-    var tagName = element.tagName.toLowerCase();
-    var id = element.id, type = element.type;
-    var elementInfo, accName, forVal;
+    let tagName = element.tagName.toLowerCase(),
+        id      = element.id,
+        type    = element.type,
+        elementInfo, accName, forVal;
 
     switch (tagName) {
       case 'input':
@@ -149,10 +159,10 @@
             accName = getAccessibleNameUseLabel(element, ['placeholder']);
             break;
           case 'image':
-            accName = getAccessibleName(element, ['alt', 'value']);
+            accName = getAccessibleNameUseAttributes(element, ['alt', 'value']);
             break;
           case 'button':
-            accName = getAccessibleName(element, ['value']);
+            accName = getAccessibleNameUseAttributes(element, ['value']);
             break;
           case 'submit':
             accName = getAccessibleNameOrDefault(element, 'Submit');
@@ -183,11 +193,11 @@
       case 'label':
         forVal = element.getAttribute('for');
         elementInfo = (forVal && forVal.length) ? tagName + ' [for="' + forVal + '"]' : tagName;
-        accName = utils.getElementText(element);
+        accName = getElementText(element);
         break;
       case 'legend':
         elementInfo = tagName;
-        accName = utils.getElementText(element);
+        accName = getElementText(element);
         break;
       default:
         elementInfo = tagName;
@@ -216,29 +226,19 @@
       return elementInfo;
   }
 
-  function getTooltipText (element, target) {
+  function getInfo (element, target) {
     return getElementInfoAndAccName(element);
   }
 
-  window.accessibility = function (flag) {
-    utils.hideMessage();
-    window.a11yShowFormElements = (typeof flag === "undefined") ? true : !flag;
-    if (window.a11yShowFormElements){
-      if (utils.addNodes(targetList, className, getTooltipText) === 0) {
-        utils.showMessage(msgTitle, msgText);
-        window.a11yShowFormElements = false;
-      }
-    }
-    else {
-      utils.removeNodes(className);
-    }
+  let params = {
+    msgTitle:   "Forms",
+    msgText:    "No form-related elements found: <ul>" + selectors + "</ul>",
+    targetList: targetList,
+    cssClass:   formsCss,
+    getInfo:    getInfo,
+    dndFlag:    true
   };
 
-  window.addEventListener('resize', function (event) {
-    utils.removeNodes(className);
-    utils.resizeMessage();
-    window.a11yShowFormElements = false;
-  });
-
-  window.accessibility(window.a11yShowFormElements);
-})(OAAUtils);
+  let blt = new Bookmarklet("a11yForms", params);
+  blt.run();
+})();
