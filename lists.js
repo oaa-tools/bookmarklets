@@ -1,7 +1,7 @@
 (function (utils) {
     var targetList = [
-        {selector: "ul", color: "navy", label: "ul"},
-        {selector: "ol", color: "purple", label: "ol"}
+        {selector: "ul", color: "navy", label: "ul", numberOfChildren: 0},
+        {selector: "ol", color: "purple", label: "ol", numberOfChildren: 0}
     ];
 
     var selectors = targetList.map(function (tgt) {return tgt.selector;}).join(', ');
@@ -10,27 +10,27 @@
     var className = "a11yGfdXALm2";
 
     function getTooltipText (element, target) {
-    var textContent = countListItems(element, target);
-    return target.label + ": " + textContent;
+      var textContent = countListItems(element, target);
+      return target.label + ": with " + textContent + " items";
     }
     
     function countListItems (element, target) {
-        /*var listArray = [];
-        var i = 0;
-        var iterations = target.getElementsByTagName().length;
-        console.log(iterations);
-        while (iterations >=  0) { 
-            listArray[i] = $(target.selector).children("li").length;
-            i++;
-            iterations--;
-            console.log("writing " + i + "th element");
+      var totalChildCount = [];
+      var currentElement = element;
+      var currentId = currentElement.id;
+      var child = currentElement.firstChild;
+      var childCount = 0;
+
+        while (child) {
+            if((child.nodeType == 1) && (child.tagName == "LI")){
+                childCount++;
+            }
+            child = child.nextElementSibling;
         }
-        return listArray; */
-        vm = this;
-        var listItems = $(target.selector).children("li").length;
-        console.log(target.selector);
-        var temp = "with " +  listItems + " items";
-        return temp;
+
+        totalChildCount.push(childCount);
+
+        return totalChildCount;
     }
 
     
