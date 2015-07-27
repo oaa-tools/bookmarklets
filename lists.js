@@ -26,8 +26,28 @@ import { getAccessibleName } from './utils/accname';
         listType = 'Unordered list'; break;
     }
     let accessibleName = getAccessibleName(element) || listType;
-    return 'ACC. NAME: ' + accessibleName;
+    let listCount = countListItems(element, target);
+    return 'ACC. NAME: ' + accessibleName + '\n with' + listCount + ' items';
   }
+
+   function countListItems (element, target) {
+       let totalChildCount = [];
+       let currentElement = element;
+       let currentId = currentElement.id;
+       let child = currentElement.firstChild;
+       let childCount = 0;
+ 
+         while (child) {
+             if((child.nodeType == 1) && (child.tagName == "LI")){
+                 childCount++;
+             }
+             child = child.nextElementSibling;
+         }
+ 
+         totalChildCount.push(childCount);
+ 
+         return totalChildCount;
+     }
 
   let params = {
     msgTitle:   "Lists",
