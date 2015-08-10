@@ -105,7 +105,6 @@ a {
   text-decoration: none;
   color: #007edf;
   text-shadow: none;
-
   transition: color 0.5s ease;
   transition: text-shadow 0.5s ease;
   -webkit-transition: color 0.5s ease;
@@ -461,6 +460,7 @@ a.bookmarklet {
   font-weight: bold;
   box-shadow: .05em .05em .1em rgba(0, 0, 0, .75); */
   text-shadow: .05em .05em 0 rgba(0, 0, 0, 1);
+  text-decoration: none;
   color: #fff;
 }
 
