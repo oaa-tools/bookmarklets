@@ -295,7 +295,7 @@ Full-Width Styles
 
 #main-navigation a{
   color: #ffffff;
-  padding: 1em 1em 0 1em;
+  padding: 1em;
   display: block;
   text-decoration: none;
 }
@@ -312,7 +312,7 @@ Full-Width Styles
 
 #main-navigation ul {
   margin-left: 10em;
-  margin-bottom: none;
+  margin-bottom: 0px;
   font-weight: 700;
   font-size: 19px;
   font-family: 'Roboto', serif;
