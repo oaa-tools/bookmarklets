@@ -295,20 +295,24 @@ Full-Width Styles
 
 #main-navigation a{
   color: #ffffff;
+  padding: 1em 1em 0 1em;
+  display: block;
+  text-decoration: none;
 }
 
 #main-navigation a:hover, #main-navigation a:focus{
   background-color: #3f3e3c;
+  border: none;
 }
 
 #main-navigation li {
   display: inline-block;
   border-left: 0.15em solid #3f3e3c;
-  padding: 1em 1em 0 1em;
 }
 
 #main-navigation ul {
   margin-left: 10em;
+  margin-bottom: none;
   font-weight: 700;
   font-size: 19px;
   font-family: 'Roboto', serif;
