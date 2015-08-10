@@ -292,7 +292,15 @@ Full-Width Styles
 
 #main-navigation {
   background: #1b1a18;
+}
+
+#main-navigation a{
   color: #ffffff;
+}
+
+#main-navigation li {
+  display: inline-block;
+  margin-top: 1em;
 }
 
 #header_wrap .inner {
@@ -303,13 +311,13 @@ Full-Width Styles
   margin: 0;
   color: #fff;
   font-size: 42px;
-  font-weight: 700;
+  font-weight: 444400;
   text-shadow: #111 0px 0px 10px;
 }
 
 #project_tagline {
-  color: #fff;
-  font-size: 24px;
+  color: #ecf600;
+  font-size: 20px;
   font-weight: 300;
   background: none;
   text-shadow: #111 0px 0px 10px;
