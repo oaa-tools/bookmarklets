@@ -302,6 +302,13 @@ Full-Width Styles
   margin-top: 1em;
 }
 
+#main-navigation ul {
+  margin-left: 10em;
+  font-weight: 700;
+  font-size: 19px;
+  font-family: 'Roboto', serif;
+}
+
 #header_wrap .inner {
   padding: 50px 10px 30px 10px;
 }
