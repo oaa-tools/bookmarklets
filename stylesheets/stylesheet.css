@@ -62,7 +62,7 @@ h1, h2, h3, h4, h5, h6 {
   margin: 10px 0;
   font-weight: 700;
   color:#222222;
-  font-family: 'Lucida Grande', 'Calibri', Helvetica, Arial, sans-serif;
+  font-family: 'Roboto Slab', serif;
   letter-spacing: -1px;
 }
 
@@ -202,7 +202,7 @@ ul, ol, dl {
 
 ul {
   list-style-position: inside;
-  list-style: disc;
+  list-style: none;
   padding-left: 20px;
 }
 
@@ -287,12 +287,12 @@ Full-Width Styles
 }
 
 #header_wrap {
-  background: #212121;
-  background: -moz-linear-gradient(top, #373737, #212121);
-  background: -webkit-linear-gradient(top, #373737, #212121);
-  background: -ms-linear-gradient(top, #373737, #212121);
-  background: -o-linear-gradient(top, #373737, #212121);
-  background: linear-gradient(top, #373737, #212121);
+  background: #3f3e3c;
+}
+
+#main-navigation {
+  background: #1b1a18;
+  color: #ffffff;
 }
 
 #header_wrap .inner {
