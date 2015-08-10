@@ -311,7 +311,7 @@ Full-Width Styles
   margin: 0;
   color: #fff;
   font-size: 42px;
-  font-weight: 444400;
+  font-weight: 400;
   text-shadow: #111 0px 0px 10px;
 }
 
@@ -432,7 +432,7 @@ Small Device Styles
 
 }
 
-a.bookmarklet {
+/*a.bookmarklet {
   display: block;
   padding: 2em;
   border: .15em solid gray;
@@ -442,8 +442,21 @@ a.bookmarklet {
   color: black;
   background-color: lightgrey;
   font-size: 1.5em;
-}
+}*/
 
+a.bookmarklet {
+    background: grey;
+    margin-right: .5em;
+    display: inline-block;
+    background: -moz-linear-gradient(top, #ffffff 0%, #b96957 100%);
+    border-radius: .5em;
+    font-size: 1.75em;
+    padding: .25em .5em;
+    font-weight: bold;
+    box-shadow: .05em .05em .1em rgba(0, 0, 0, .75); */
+    text-shadow: .05em .05em 0 rgba(0, 0, 0, 1);
+    color: #fff;
+}
 a.bookmarklet:hover, a.bookmarklet:focus {
   background-color: #556A7B;
   color: white;
