@@ -314,6 +314,11 @@ Full-Width Styles
   text-shadow: #111 0px 0px 10px;
 }
 
+#project_title .highlight {
+  border-bottom: 0.1em solid #ecf600;
+  line-height: 42px;
+}
+
 #project_tagline {
   color: #ecf600;
   font-size: 20px;
