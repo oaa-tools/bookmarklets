@@ -299,7 +299,8 @@ Full-Width Styles
 
 #main-navigation li {
   display: inline-block;
-  margin-top: 1em;
+  border-left: 0.15em solid #3f3e3c;
+  padding: 1em;
 }
 
 #main-navigation ul {
