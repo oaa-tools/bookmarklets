@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
     <link href='http://fonts.googleapis.com/css?family=Roboto|Roboto+Slab' rel='stylesheet' type='text/css'>
-    <a href="http://landilark.github.io/bookmarklets"><title>Accessibility Bookmarklets</title></a>
+    <title>Accessibility Bookmarklets</title>
   </head>
 
   <body>
@@ -16,7 +16,7 @@
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
-          <h1 id="project_title"><span class="highlight">Accessibility</span> Bookmarklets</h1>
+          <a href="http://landilark.github.io/bookmarklets"><h1 id="project_title"><span class="highlight">Accessibility</span> Bookmarklets</h1></a>
           <h2 id="project_tagline">Highlight accessibility features of web pages</h2>
         </header>
     </div>
@@ -40,8 +40,8 @@
         <article class="markdown-body entry-content" itemprop="mainContentOfPage">
             <h1><a id="user-content-bookmarklets" class="anchor" href="#bookmarklets" aria-hidden="true"><span class="octicon octicon-link"></span></a></h1>
 
-            <p>Accessibility Bookmarklets are <em>visualization</em> tools that highlight hidden information that assitive technologies use to navigate through a webpage. 
-            <p>Once installed, these bookmarklets can interact with any webpage. To install a bookmarklet, drag and drop one into your browser's bookmarks bar.</p>
+            <p>Accessibility Bookmarklets are <em>visualization</em> tools that highlight hidden information that assitive technologies use to navigate through a webpage. </br>
+            Once installed, these bookmarklets can interact with any webpage. To install a bookmarklet, drag and drop one into your browser's bookmarks bar.</p>
      
             <ul class="bookmarklet">
                 <li class="bookmarklet"><a class="bookmarklet" href="javascript:(function(baseUrl,src){var done,link,script,head;function createLink(){var el=document.createElement('link');el.rel='stylesheet';el.type='text/css';el.href=baseUrl+'oaa-utils.css';return el}if(typeof window.OAAUtils==='undefined'){done=false;link=createLink();script=document.createElement('script');script.src=baseUrl+'oaa-utils.js';script.onload=script.onreadystatechange=function(){if(!done&amp;&amp;(!this.readyState||this.readyState=='loaded'||this.readyState=='complete')){done=true;initMyBookmarklet()}};head=document.getElementsByTagName('head')[0];head.appendChild(script);head.appendChild(link)}else{initMyBookmarklet()}function initMyBookmarklet(){var el=document.createElement('script');el.setAttribute('src',baseUrl+src);document.body.appendChild(el)}})('https://landilark.github.io/bookmarklets/','forms.js');">Forms</a></li>
