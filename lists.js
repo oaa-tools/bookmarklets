@@ -17,23 +17,31 @@ import { countChildrenWithTagNames } from './utils/utils.js';
   let selectors = targetList.map(function (tgt) {return tgt.selector;}).join(', ');
 
   function getInfo (element, target) {
+    let accessibleName = getAccessibleName(element);
+
     let listType;
     switch (target.label) {
       case 'dl':
-        listType = 'Definition list'; break;
+        listType = 'Definition list';
+        break;
       case 'ol':
-        listType = 'Ordered list'; break;
+        listType = 'Ordered list';
+        break;
       case 'ul':
-        listType = 'Unordered list'; break;
+        listType = 'Unordered list';
+        break;
     }
-
-    let accessibleName = getAccessibleName(element) || listType;
 
     let listCount = target.label === 'dl' ?
                     countChildrenWithTagNames(element, ['DT', 'DD']) :
                     countChildrenWithTagNames(element, ['LI']);
 
-    return 'ACC. NAME: ' + accessibleName + '\n with ' + listCount + ' items';
+    let elemInfo = listType + ' with ' + listCount + ' items';
+
+    let info = 'ELEMENT: ' + elemInfo;
+    if (accessibleName) info += '\n' + 'ACC. NAME: ' + accessibleName;
+
+    return info;
   }
 
   let params = {
