@@ -106,12 +106,9 @@ export function drag (elementToDrag, dragCallback, event) {
 export function countChildrenWithTagNames (element, tagNames) {
   let count = 0;
 
-  let child = element.firstChild;
+  let child = element.firstElementChild;
   while (child) {
-    if (child.nodeType === Node.ELEMENT_NODE) {
-      if (tagNames.indexOf(child.tagName) > -1)
-        count += 1;
-    }
+    if (tagNames.indexOf(child.tagName) > -1) count += 1;
     child = child.nextElementSibling;
   }
 
