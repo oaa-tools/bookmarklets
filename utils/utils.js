@@ -93,3 +93,27 @@ export function drag (elementToDrag, dragCallback, event) {
     else e.cancelBubble = true;
   }
 }
+
+/*
+*   countChildrenWithTagNames: For the specified DOM element, return the
+*   number of its child elements with tagName equal to one of the values
+*   in the tagNames array.
+*
+*   @param element  : DOM element
+*   @param tagNames : Array of String
+*/
+
+export function countChildrenWithTagNames (element, tagNames) {
+  let count = 0;
+
+  let child = element.firstChild;
+  while (child) {
+    if (child.nodeType === Node.ELEMENT_NODE) {
+      if (tagNames.indexOf(child.tagName) > -1)
+        count += 1;
+    }
+    child = child.nextElementSibling;
+  }
+
+  return count;
+}
