@@ -19,25 +19,34 @@ import { countChildrenWithTagNames } from './utils/utils.js';
   function getInfo (element, target) {
     let accessibleName = getAccessibleName(element);
 
-    let listType, listCount;
+    let roleInfo, listType, listCount;
     switch (target.label) {
       case 'dl':
-        listType = 'Definition list';
+        listType  = 'Definition list';
         listCount = countChildrenWithTagNames(element, ['DT', 'DD']);
         break;
       case 'ol':
-        listType = 'Ordered list';
+        roleInfo  = 'List';
+        listType  = 'Ordered list';
         listCount = countChildrenWithTagNames(element, ['LI']);
         break;
       case 'ul':
-        listType = 'Unordered list';
+        roleInfo  = 'List';
+        listType  = 'Unordered list';
         listCount = countChildrenWithTagNames(element, ['LI']);
         break;
     }
 
-    let elemInfo = listType + ' with ' + listCount + ' items';
+    if (roleInfo) {
+      if (accessibleName)
+        accessibleName = roleInfo + ': ' + accessibleName;
+      else
+        accessibleName = roleInfo;
+    }
 
-    let info = 'ELEMENT: ' + elemInfo;
+    let props = listType + ' with ' + listCount + ' items';
+
+    let info = 'PROPERTIES: ' + props;
     if (accessibleName) info += '\n' + 'ACC. NAME: ' + accessibleName;
 
     return info;
