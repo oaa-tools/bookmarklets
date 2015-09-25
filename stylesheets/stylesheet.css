@@ -487,6 +487,15 @@ ul.bookmarklet {
 li.bookmarklet {
   list-style: none;
   margin: 2em;
-  display: block;
-  float: left;
+  display: flex;
+}
+
+li.bookmarklet a {
+  width: 5em;
+}
+
+li.bookmarklet p {
+  display: flex;
+  flex-grow: 1;
+  margin-left: 3em;
 }
