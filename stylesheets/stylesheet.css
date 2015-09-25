@@ -499,3 +499,8 @@ li.bookmarklet p {
   flex-grow: 1;
   margin-left: 3em;
 }
+
+img.installation {
+  float: right;
+  margin: 10px 0px 10101010101010101010px 100px;
+}
