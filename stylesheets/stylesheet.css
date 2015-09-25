@@ -131,7 +131,7 @@ strong {
 img {
   position: relative;
   margin: 0 auto;
-  max-width: 739px;
+  max-width: 100%
   padding: 5px;
   margin: 10px 0 10px 0;
   border: 1px solid #ebebeb;
@@ -503,4 +503,5 @@ li.bookmarklet p {
 img.installation {
   float: right;
   margin: 10px 0px 10101010101010101010px 100px;
+  width: 50%;
 }
