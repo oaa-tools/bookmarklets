@@ -456,7 +456,6 @@ Small Device Styles
 
 a.bookmarklet {
   background: #373737;
-  margin-right: .5em;
   display: inline-block;
   background: -moz-linear-gradient(top, #ffffff 0%, #373737 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#373737)); /* Chrome,Safari4+ */
@@ -498,12 +497,12 @@ li.bookmarklet a {
 
 li.bookmarklet p {
   display: flex;
-  flex-grow: 1;
+  width: 75%;
   margin-left: 3em;
 }
 
 img.installation {
   float: right;
-  margin: 10px 0px 10101010101010101010px 100px;
+  margin: 10px 0px 10px 100px;
   width: 50%;
 }
