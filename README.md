@@ -6,6 +6,7 @@ requirements, including:
 * Forms
 * Headings
 * Landmarks
+* Lists
 
 Instructions for using the web accessibility bookmarklets:
 

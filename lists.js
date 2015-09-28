@@ -1,37 +1,66 @@
-(function (utils) {
-    var targetList = [
-        {selector: "ul", color: "navy", label: "ul"},
-        {selector: "ol", color: "purple", label: "ol"}
-    ];
-    var selectors = targetList.map(function (tgt) {return tgt.selector;}).join(', ');
-    var msgTitle  = "Lists";
-    var msgText   = "No list elements (" + selectors + ") found.";
-    var className = "a11yGfdXALm2";
+/*
+*   lists.js: bookmarklet script for highlighting HTML list elements
+*/
 
-    function getTooltipText (element, target) {
-    var textContent = utils.getElementText(element);
-    return target.label + ": " + textContent;
+import Bookmarklet from './Bookmarklet';
+import { listsCss } from './utils/dom';
+import { getAccessibleName } from './utils/accname';
+import { countChildrenWithTagNames } from './utils/utils.js';
+
+(function () {
+  let targetList = [
+    {selector: "dl", color: "olive",  label: "dl"},
+    {selector: "ol", color: "purple", label: "ol"},
+    {selector: "ul", color: "navy",   label: "ul"}
+  ];
+
+  let selectors = targetList.map(function (tgt) {return tgt.selector;}).join(', ');
+
+  function getInfo (element, target) {
+    let accessibleName = getAccessibleName(element);
+
+    let roleInfo, listType, listCount;
+    switch (target.label) {
+      case 'dl':
+        listType  = 'Definition list';
+        listCount = countChildrenWithTagNames(element, ['DT', 'DD']);
+        break;
+      case 'ol':
+        roleInfo  = 'List';
+        listType  = 'Ordered list';
+        listCount = countChildrenWithTagNames(element, ['LI']);
+        break;
+      case 'ul':
+        roleInfo  = 'List';
+        listType  = 'Unordered list';
+        listCount = countChildrenWithTagNames(element, ['LI']);
+        break;
     }
-    
-    window.accessibility = function (flag){
-        utils.hideMessage();
-        window.a11yShowLists = (typeof flag === "undefined") ? true : !flag;
-        if (window.a11yShowLists){
-            if (utils.addNodes(targetList, className, getTooltipText) === 0) {
-                utils.showMessage(msgTitle, msgText);
-                window.a11yShowLists = false;
-            }  
-        }
-        else {
-            utils.removeNodes(className);
-        }
-    };
-    
-    window.addEventListener('resize', function (event) {
-        utils.removeNodes(className);
-        utils.resizeMessage();
-        window.a11yShowLists = false;
-    });
 
-   window.accessibility(window.a11yShowLists);
-})(OAAUtils);
+    if (roleInfo) {
+      if (accessibleName)
+        accessibleName = roleInfo + ': ' + accessibleName;
+      else
+        accessibleName = roleInfo;
+    }
+
+    let props = listType + ' with ' + listCount + ' items';
+
+    let info = 'PROPERTIES: ' + props;
+    if (accessibleName) info += '\n' + 'ACC. NAME: ' + accessibleName;
+
+    return info;
+  }
+
+  let params = {
+    msgTitle:   "Lists",
+    msgText:    "No list elements (" + selectors + ") found.",
+    targetList: targetList,
+    cssClass:   listsCss,
+    getInfo:    getInfo,
+    dndFlag:    true
+  };
+
+  let blt = new Bookmarklet("a11yLists", params);
+  blt.run();
+})();
