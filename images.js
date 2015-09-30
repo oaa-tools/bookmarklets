@@ -4,7 +4,7 @@
 
 import Bookmarklet from './Bookmarklet';
 import { imagesCss } from './utils/dom';
-import { getAccessibleName } from './utils/accname';
+import { getAccessibleName, getElementText } from './utils/accname';
 import { countChildrenWithTagNames } from './utils/utils.js';
 
 (function (utils) {
