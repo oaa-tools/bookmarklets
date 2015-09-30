@@ -1,5 +1,5 @@
 /*
-*   images.js: bookmarklet script for highlighting images
+*   images.js: bookmarklet script for highlighting images.
 */
 
 import Bookmarklet from './Bookmarklet';
@@ -15,11 +15,11 @@ import { countChildrenWithTagNames } from './utils/utils.js';
   ];
 
     let selectors = targetList.map(function (tgt) {return tgt.selector;}).join(', ');
-    let accessibleName = getAccessibleName(element);
 
     function getInfo (element, target) {
-      var textContent = getElementText(element);
-      return target.label + ": " + textContent + "/n" + "ACC. Name: " + accessibleName;
+      let textContent = getElementText(element);
+      let accessibleName = getAccessibleName(element);
+      return target.label + ": " + textContent + "\n" + "ACC. Name: " + accessibleName;
     } 
 
     let params = {
