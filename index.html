@@ -14,24 +14,23 @@
   <body>
 
     <!-- HEADER -->
-    <div id="header_wrap" class="outer">
+    <div id="header_wrap" class="outer" role="banner"> 
         <header class="inner">
           <a href="/"><h1 id="project_title"><span class="highlight">Accessibility</span> Bookmarklets</h1></a>
           <h2 id="project_tagline">Highlight accessibility features of web pages</h2>
+          <nav id="main-navigation" class="outer">
+            <ul class="inner">
+              <li><a href="/">Home</a></li><li><a href="/install.html">Installation</a></li><li><a href="/documentation.html">Documentation</a></li>
+            </ul>
+          </nav>
         </header>
-    </div>
-    <nav id="main-navigation" class="outer">
-        <ul class="inner">
-            <li><a href="/">Home</a></li><li><a href="/install.html">Installation</a></li><li><a href="/documentation.html">Documentation</a></li>
-        </ul>
-    </nav>
-
+     </div>
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <p></p>
 
-    <div id="main-content">
+    <div id="main-content" role="main">
         <article class="markdown-body entry-content" itemprop="mainContentOfPage">
             <h1><a id="user-content-bookmarklets" class="anchor" href="#bookmarklets" aria-hidden="true"><span class="octicon octicon-link"></span></a></h1>
             <h2>Making Accessibility Visible</h2>
@@ -46,17 +45,17 @@
             <img src="headings.png"/>
             <h2>Usage</h2>
             <p>To get started using the bookmarklets, follow the <a href="/install.html">installation instructions</a>.</p>
-            <p>Our bookmarklets are based on WCAG 2.0, ARIA 1.0, and HTML5 requirements. They are designed for use on modern desktop browsers (Chrome, Firefox, Safari, Opera, and IE 9 or above). For more about what each bookmarklet offers, see the Documentation.</p>
+            <p>Our bookmarklets are based on WCAG 2.0, ARIA 1.0, and HTML5 requirements. They are designed for use on modern desktop browsers (Chrome, Firefox, Safari, Opera, and IE 9 or above). For more about what each bookmarklet offers, see the <a href="/documentation.html">documentation</a>.</p>
             <p>The bookmarklets make accessibility information visible by showing information on top of the page that relates to the design of accessible web resources. They are intended as a helpful aid for web designers and developers. They are not intended to provide specific compliance results or recommendations.</p>
             <h2>Contributors</h2>
             <p>These bookmarklets were originally created by <a href="disability.illinois.edu">Disability Resources and Educational Services</a> (DRES) at the University of Illinois at Urbana-Champaign and <a href="pixotech.com">Pixo</a>. The bookmarklets and this web page are open source in GitHub, and anyone can contribute.</p>
             <h2>What is a bookmarklet?</h2>
-            <p>A bookmarklet is a JavaScript snippet that can be run within a web browser and that typically performs an action related to the currently loaded web page.</p>
+            <p>A bookmarklet is a link that contains Javascript that you can run on any web page.</p>
         </article>
     </div>
    </div>
     <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
+    <div id="footer_wrap" class="outer" role="contentinfo">
       <footer class="inner">
         <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
       </footer>
