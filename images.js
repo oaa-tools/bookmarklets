@@ -18,7 +18,7 @@ import { countChildrenWithTagNames } from './utils/utils.js';
     let accessibleName = getAccessibleName(element);
 
     function getInfo (element, target) {
-      var textContent = getElementText(element);
+      let textContent = getElementText(element);
       return target.label + ": " + textContent + "/n" + "ACC. Name: " + accessibleName;
     } 
 
