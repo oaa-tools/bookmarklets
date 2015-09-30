@@ -1,9 +1,9 @@
 /*
-*   lists.js: bookmarklet script for highlighting HTML list elements
+*   images.js: bookmarklet script for highlighting images
 */
 
 import Bookmarklet from './Bookmarklet';
-import { listsCss } from './utils/dom';
+import { imagesCss } from './utils/dom';
 import { getAccessibleName } from './utils/accname';
 import { countChildrenWithTagNames } from './utils/utils.js';
 
@@ -16,7 +16,12 @@ import { countChildrenWithTagNames } from './utils/utils.js';
 
     let selectors = targetList.map(function (tgt) {return tgt.selector;}).join(', ');
     let accessibleName = getAccessibleName(element);
-    
+
+    function getInfo (element, target) {
+      var textContent = getElementText(element);
+      return target.label + ": " + textContent + "/n" + "ACC. Name: " + accessibleName;
+    } 
+
     let params = {
       msgTitle: "Images",
       msgText: "No image elements (" + selectors + ") found.",
