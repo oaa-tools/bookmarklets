@@ -6,7 +6,8 @@ module.exports = {
     forms:     "./forms.js",
     headings:  "./headings.js",
     landmarks: "./landmarks.js",
-    lists:     "./lists.js"
+    lists:     "./lists.js",
+    images:    "./images.js"
   },
   output: {
     path: path.join(__dirname, "build"),
