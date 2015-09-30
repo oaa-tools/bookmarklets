@@ -15,11 +15,11 @@ import { countChildrenWithTagNames } from './utils/utils.js';
   ];
 
     let selectors = targetList.map(function (tgt) {return tgt.selector;}).join(', ');
-    let accessibleName = getAccessibleName(element);
 
     function getInfo (element, target) {
       let textContent = getElementText(element);
-      return target.label + ": " + textContent + "/n" + "ACC. Name: " + accessibleName;
+      let accessibleName = getAccessibleName(element);
+      return target.label + ": " + textContent + "\n" + "ACC. Name: " + accessibleName;
     } 
 
     let params = {
