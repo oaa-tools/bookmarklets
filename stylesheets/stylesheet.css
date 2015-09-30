@@ -401,6 +401,29 @@ Full-Width Styles
 
 
 /*******************************************************************************
+Responsive Styles (Tablet)
+*******************************************************************************/
+
+@media screen and (max-width: 959px) {
+  /*** Navigation ***/
+  #main-navigation .inner {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  #main-navigation li {
+    border-left: none;
+    display: block;
+    text-align: center;
+  }
+
+  /*** Main content ***/
+  #main-content img {
+    overflow: auto;
+  }
+}
+
+/*******************************************************************************
 Small Device Styles
 *******************************************************************************/
 
@@ -451,7 +474,9 @@ Small Device Styles
     max-width: 480px;
     font-size: 11px;
   }
-
+  img.installation {
+    display: none;
+  }
 }
 
 a.bookmarklet {
