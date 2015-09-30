@@ -1,5 +1,5 @@
 /*
-*   images.js: bookmarklet script for highlighting images
+*   images.js: bookmarklet script for highlighting images.
 */
 
 import Bookmarklet from './Bookmarklet';
