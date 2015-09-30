@@ -5,6 +5,7 @@
 import Bookmarklet from './Bookmarklet';
 import { listsCss } from './utils/dom';
 import { getAccessibleName } from './utils/accname';
+import { countChildrenWithTagNames } from './utils/utils.js';
 
 (function () {
   let targetList = [
@@ -16,38 +17,40 @@ import { getAccessibleName } from './utils/accname';
   let selectors = targetList.map(function (tgt) {return tgt.selector;}).join(', ');
 
   function getInfo (element, target) {
-    let listType;
+    let accessibleName = getAccessibleName(element);
+
+    let roleInfo, listType, listCount;
     switch (target.label) {
       case 'dl':
-        listType = 'Definition list'; break;
+        listType  = 'Definition list';
+        listCount = countChildrenWithTagNames(element, ['DT', 'DD']);
+        break;
       case 'ol':
-        listType = 'Ordered list'; break;
+        roleInfo  = 'List';
+        listType  = 'Ordered list';
+        listCount = countChildrenWithTagNames(element, ['LI']);
+        break;
       case 'ul':
-        listType = 'Unordered list'; break;
+        roleInfo  = 'List';
+        listType  = 'Unordered list';
+        listCount = countChildrenWithTagNames(element, ['LI']);
+        break;
     }
-    let accessibleName = getAccessibleName(element) || listType;
-    let listCount = countListItems(element, target);
-    return 'ACC. NAME: ' + accessibleName + '\n with' + listCount + ' items';
-  }
 
-   function countListItems (element, target) {
-       let totalChildCount = [];
-       let currentElement = element;
-       let currentId = currentElement.id;
-       let child = currentElement.firstChild;
-       let childCount = 0;
- 
-         while (child) {
-             if((child.nodeType == 1) && (child.tagName == "LI")){
-                 childCount++;
-             }
-             child = child.nextElementSibling;
-         }
- 
-         totalChildCount.push(childCount);
- 
-         return totalChildCount;
-     }
+    if (roleInfo) {
+      if (accessibleName)
+        accessibleName = roleInfo + ': ' + accessibleName;
+      else
+        accessibleName = roleInfo;
+    }
+
+    let props = listType + ' with ' + listCount + ' items';
+
+    let info = 'PROPERTIES: ' + props;
+    if (accessibleName) info += '\n' + 'ACC. NAME: ' + accessibleName;
+
+    return info;
+  }
 
   let params = {
     msgTitle:   "Lists",
