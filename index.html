@@ -1,58 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Accessibility Bookmarklets : Highlight accessibility features of web pages">
+    <meta name="description" content="Bookmarklets : Highlight accessibility features of web pages">
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-    <script type="text/javascript">
-    var host = "accessibility-bookmarklets.org";
-    if ((host == window.location.host) && (window.location.protocol != "https:"))
-        window.location.protocol = "https";
-    </script>
+    <link href='http://fonts.googleapis.com/css?family=Roboto|Roboto+Slab' rel='stylesheet' type='text/css'>
     <title>Accessibility Bookmarklets</title>
   </head>
 
   <body>
 
     <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/oaa-tools/bookmarklets">View on GitHub</a>
-
-          <h1 id="project_title">Accessibility Bookmarklets</h1>
+    <header id="header_wrap" class="outer" role="banner"> 
+        <div class="inner">
+          <a href="/"><h1 id="project_title"><span class="highlight">Accessibility</span> Bookmarklets</h1></a>
           <h2 id="project_tagline">Highlight accessibility features of web pages</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/oaa-tools/bookmarklets/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/oaa-tools/bookmarklets/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
+        </div>
+        <nav id="main-navigation" class="outer">
+          <ul class="inner">
+            <li><a href="/">Home</a></li><li><a href="/install.html">Installation</a></li><li><a href="/documentation.html">Documentation</a></li>
+          </ul>
+        </nav>
+     </header>
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
-      <div id="main-content" role="main">
-      <h1>Web Accessibility Bookmarklets</h1>
-      <p>To install a bookmarklet, drag one of the following links into your browser&apos;s Bookmarks Toolbar.</p>
-      <ul>
-        <li><a href="javascript:if(window.a11yForms)window.a11yForms.run();else{(function(){var%20link=document.createElement('link');link.rel='stylesheet';link.type='text/css';link.href='https://oaa-tools.github.io/bookmarklets/styles.css';document.getElementsByTagName('head')[0].appendChild(link);var%20script=document.createElement('script');script.type='text/javascript';script.src='https://oaa-tools.github.io/bookmarklets/build/forms.js';document.getElementsByTagName('head')[0].appendChild(script);})();}">Forms</a></li>
-        <li><a href="javascript:if(window.a11yHeadings)window.a11yHeadings.run();else{(function(){var%20link=document.createElement('link');link.rel='stylesheet';link.type='text/css';link.href='https://oaa-tools.github.io/bookmarklets/styles.css';document.getElementsByTagName('head')[0].appendChild(link);var%20script=document.createElement('script');script.type='text/javascript';script.src='https://oaa-tools.github.io/bookmarklets/build/headings.js';document.getElementsByTagName('head')[0].appendChild(script);})();}">Headings</a></li>
-        <li><a href="javascript:if(window.a11yLandmarks)window.a11yLandmarks.run();else{(function(){var%20link=document.createElement('link');link.rel='stylesheet';link.type='text/css';link.href='https://oaa-tools.github.io/bookmarklets/styles.css';document.getElementsByTagName('head')[0].appendChild(link);var%20script=document.createElement('script');script.type='text/javascript';script.src='https://oaa-tools.github.io/bookmarklets/build/landmarks.js';document.getElementsByTagName('head')[0].appendChild(script);})();}">Landmarks</a></li>
-        <li><a href="javascript:if(window.a11yLists)window.a11yLists.run();else{(function(){var%20link=document.createElement('link');link.rel='stylesheet';link.type='text/css';link.href='https://oaa-tools.github.io/bookmarklets/styles.css';document.getElementsByTagName('head')[0].appendChild(link);var%20script=document.createElement('script');script.type='text/javascript';script.src='https://oaa-tools.github.io/bookmarklets/build/lists.js';document.getElementsByTagName('head')[0].appendChild(script);})();}">Lists</a></li>
-      </ul>
-    </div>
-    </div>
+      <section id="main_content" class="inner">
+        <p></p>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Accessibility Bookmarklets maintained by <a href="https://github.com/oaa-tools">oaa-tools</a></p>
-        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
-      </footer>
+    <div id="main-content" role="main">
+        <article class="markdown-body entry-content" itemprop="mainContentOfPage">
+            <h2>Making Accessibility Visible</h2>
+            <p>Accessibility of web pages can be hard to observe. These bookmarklets help web developers and designers see the "big picture" regarding web accessibility.</p>
+            <p>The bookmarklets do this by:</p>
+                <ul>
+                    <li>Making otherwise hidden accessibility features on web pages (like ARIA landmarks, roles, labels and descriptions and alternative text for non-text objects) more visible</li>
+                    <li>Showing whether HTML markup (like lists, headings, label elements, and appropriate landmark roles) is used with proper semantics for accessibility</li>
+                    <li>Flagging elements or regions on web pages where information that could improve accessibility (like elements not contained in landmarks, image alt text or long descriptions, list accessible names or descriptions, or form control labels) is missing</li>
+                </ul>
+            <p>For example, having headings highlighted in the screenshot below allows a quick visual inspection of their structure and nesting. The headings bookmarklet is just one available in this free collection.</p>
+            <img alt="Headings bookmarklet activated on W3C's website" src="headings.png"/>
+            <h2>Usage</h2>
+            <p>To get started using the bookmarklets, follow the <a href="/install.html">installation instructions</a>.</p>
+            <p>Our bookmarklets are based on WCAG 2.0, ARIA 1.0, and HTML5 requirements. They are designed for use on modern desktop browsers (Chrome, Firefox, Safari, Opera, and IE 9 or above). For more about what each bookmarklet offers, see the <a href="/documentation.html">documentation</a>.</p>
+            <p>The bookmarklets make accessibility information visible by showing information on top of the page that relates to the design of accessible web resources. They are intended as a helpful aid for web designers and developers. They are not intended to provide specific compliance results or recommendations.</p>
+            <h2>Contributors</h2>
+            <p>These bookmarklets were originally created by <a href="disability.illinois.edu">Disability Resources and Educational Services</a> (DRES) at the University of Illinois at Urbana-Champaign and <a href="pixotech.com">Pixo</a>. The bookmarklets and this web page are open source in GitHub, and anyone can contribute.</p>
+            <h2>What is a bookmarklet?</h2>
+            <p>A bookmarklet is a link that contains Javascript that you can run on any web page.</p>
+        </article>
     </div>
+   </div>
+    <!-- FOOTER  -->
+    <footer id="footer_wrap" class="outer" role="contentinfo">
+      <div class="inner">
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </div>
+    </footer>
 
     
 

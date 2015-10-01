@@ -35,10 +35,6 @@ footer, header, hgroup, menu, nav, section {
   display: block;
 }
 
-ol, ul {
-  list-style: none;
-}
-
 table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -62,7 +58,7 @@ h1, h2, h3, h4, h5, h6 {
   margin: 10px 0;
   font-weight: 700;
   color:#222222;
-  font-family: 'Lucida Grande', 'Calibri', Helvetica, Arial, sans-serif;
+  font-family: 'Roboto Slab', serif;
   letter-spacing: -1px;
 }
 
@@ -105,7 +101,6 @@ a {
   text-decoration: none;
   color: #007edf;
   text-shadow: none;
-
   transition: color 0.5s ease;
   transition: text-shadow 0.5s ease;
   -webkit-transition: color 0.5s ease;
@@ -136,7 +131,7 @@ strong {
 img {
   position: relative;
   margin: 0 auto;
-  max-width: 739px;
+  max-width: 100%;
   padding: 5px;
   margin: 10px 0 10px 0;
   border: 1px solid #ebebeb;
@@ -202,7 +197,6 @@ ul, ol, dl {
 
 ul {
   list-style-position: inside;
-  list-style: disc;
   padding-left: 20px;
 }
 
@@ -266,8 +260,8 @@ Full-Width Styles
 
 .inner {
   position: relative;
-  max-width: 640px;
   padding: 20px 10px;
+  max-width: 960px;
   margin: 0 auto;
 }
 
@@ -287,29 +281,65 @@ Full-Width Styles
 }
 
 #header_wrap {
-  background: #212121;
-  background: -moz-linear-gradient(top, #373737, #212121);
-  background: -webkit-linear-gradient(top, #373737, #212121);
-  background: -ms-linear-gradient(top, #373737, #212121);
-  background: -o-linear-gradient(top, #373737, #212121);
-  background: linear-gradient(top, #373737, #212121);
+  background: #3f3e3c;
 }
 
-#header_wrap .inner {
-  padding: 50px 10px 30px 10px;
+#main-navigation {
+  background: #1b1a18;
+}
+
+#main-navigation a{
+  color: #ffffff;
+  padding: 0.5em 1em;
+  display: block;
+  text-decoration: none;
+}
+
+#main-navigation a:hover, #main-navigation a:focus{
+  background-color: #3f3e3c;
+  border: none;
+}
+
+#main-navigation li {
+  display: inline-block;
+  border-left: 0.15em solid #3f3e3c;
+}
+
+#main-navigation ul {
+  //margin-left: 10em;
+  margin-bottom: 0px;
+  font-weight: 700;
+  font-size: 1em;
+  font-family: 'Roboto Slab', serif;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+/* #header_wrap .inner {
+  padding: 50px 10px 30px 208px;
+  max-width: 88%;
+} */
+
+#header_wrap .inner a {
+  text-decoration: none;
 }
 
 #project_title {
   margin: 0;
   color: #fff;
   font-size: 42px;
-  font-weight: 700;
+  font-weight: 400;
   text-shadow: #111 0px 0px 10px;
 }
 
+#project_title .highlight {
+  border-bottom: 0.1em solid #ecf600;
+  line-height: 42px;
+}
+
 #project_tagline {
-  color: #fff;
-  font-size: 24px;
+  color: #ecf600;
+  font-size: 20px;
   font-weight: 300;
   background: none;
   text-shadow: #111 0px 0px 10px;
@@ -422,4 +452,58 @@ Small Device Styles
     font-size: 11px;
   }
 
+}
+
+a.bookmarklet {
+  background: #373737;
+  display: inline-block;
+  background: -moz-linear-gradient(top, #ffffff 0%, #373737 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#373737)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #ffffff 0%,#373737 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #ffffff 0%,#373737 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #ffffff 0%,#373737 100%); /* IE10+ */
+  background: linear-gradient(to bottom, #ffffff 0%,#373737 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#373737',GradientType=0 ); /* IE6-9 */
+  border-radius: .5em;
+  font-size: 1.75em;
+  padding: .25em .5em;
+  font-weight: bold;
+  box-shadow: .05em .05em .1em rgba(0, 0, 0, .75); */
+  text-shadow: .05em .05em 0 rgba(0, 0, 0, 1);
+  text-decoration: none;
+  color: #fff;
+}
+
+a.bookmarklet:hover, a.bookmarklet:focus {
+  background-color: #556A7B;
+  color: white;
+}
+
+ul.bookmarklet {
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+li.bookmarklet {
+  list-style: none;
+  margin: 2em;
+  display: flex;
+}
+
+li.bookmarklet a {
+  width: 5em;
+  height: 1.5em;
+}
+
+li.bookmarklet p {
+  display: flex;
+  width: 75%;
+  margin-left: 3em;
+}
+
+img.installation {
+  float: right;
+  margin: 10px 0px 10px 100px;
+  width: 50%;
 }

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Bookmarklets : Highlight accessibility features of web pages">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <link href='http://fonts.googleapis.com/css?family=Roboto|Roboto+Slab' rel='stylesheet' type='text/css'>
+    <title>Accessibility Bookmarklets</title>
+  </head>
+
+  <body>
+
+  <!-- HEADER -->
+     <header id="header_wrap" class="outer" role="banner">
+         <div class="inner">
+           <a href="/"><h1 id="project_title"><span class="highlight">Accessibility</span> Bookmarklets</h1></a>
+           <h2 id="project_tagline">Highlight accessibility features of web pages</h2>
+         </div>
+         <nav id="main-navigation" class="outer">
+           <ul class="inner">
+             <li><a href="/">Home</a></li><li><a href="/install.html">Installation</a></li><li><a href="/documentation.html">Documentation</a></li>
+           </ul>
+         </nav>
+      </header>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer" role="main">
+      <section id="main_content" class="inner">
+        <p></p>
+
+    <div id="main-content">
+        <article class="markdown-body entry-content" itemprop="mainContentOfPage">
+          <p>Each bookmarklet puts a colored border around what it highlights. In the upper right-hand corner of the border, there is a label. When you hover over a label, a tooltip will pop up with additional information. The table below explains what the content of the label and tooltip will be for each bookmarklet.</p>
+
+          <table summary="Bookmarklet Features" id="features">
+            <thead>
+              <tr>
+                <th></th>
+                <th id="featuresColHdr2">Label</th>
+                <th id="featuresColHdr3">Tooltip</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th id="featuresRowHdr2">Landmarks</th>
+                <td headers="featuresColHdr2 featuresRowHdr2">One of the following ARIA Roles:
+                  <ul>
+                    <li>complementary</li>
+                    <li>contentinfo</li>
+                    <li>application</li>
+                    <li>navigation</li>
+                    <li>banner</li>
+                    <li>search</li>
+                    <li>main</li>
+                  </ul>
+                </td>
+                <td headers="featuresColHdr3 featuresRowHdr2">The HTML element and the accessible name (ACC. NAME) for that landmark</td>
+              </tr>
+              <tr>
+                <th id="featuresRowHdr3">Headings</th>
+                <td headers="featuresColHdr2 featuresRowHdr3">The HTML element (heading level) for that heading</td>
+                <td headers="featuresColHdr3 featuresRowHdr3">The text content inside of the heading</td>
+              </tr>
+              <tr>
+                <th id="featuresRowHdr4">Lists</th>
+                <td headers="featuresColHdr2 featuresRowHdr4">The HTML element (list type) for that list</td>
+                <td headers="featuresColHdr3 featuresRowHdr4">The accessible name (ACC. NAME) for and the number of immediate child list items in that list</td>
+              </tr>
+              <tr>
+                <th id="featuresRowHdr5">Images</th>
+                <td headers="featuresColHdr2 featuresRowHdr5">The HTML element (img, area, or svg tags) for that image</td>
+                <td headers="featuresColHdr3 featuresRowHdr5">The accessible name (ACC. NAME) for that image</td>
+                </tr>
+            </tbody>
+         </table>
+
+        <p>Accessible name is the name communicated to assistive technologies. It can be computed using many different HTML and ARIA attributes, text content, and mixed content.</p>
+        <h2>Report a Bug? Want to Contribute?</h2>
+        <p>This open source project welcomes all interested collaborators and contributions. If you have a bug or a feature suggestion, please <a href="https://github.com/oaa-tools/bookmarklets/issues">create an issue</a> in GitHub. If you want to contribute a code fix or new feature, feel free to <a href="https://github.com/oaa-tools/bookmarklets">fork the bookmarket repository in GitHub</a> and submit a pull request.</p> 
+        </article>
+    </div>
+   </div>
+   <!-- FOOTER  -->
+     <footer id="footer_wrap" class="outer" role="contentinfo">
+       <div class="inner">
+         <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+       </div>
+     </footer>
+  </body>
+</html>
