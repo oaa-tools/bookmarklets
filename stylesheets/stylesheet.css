@@ -477,12 +477,12 @@ Small Device Styles
   img.installation {
     display: none;
   }
-}
 
 a.bookmarklet {
   display: block;
-  font-size: 1.75em;
-  padding: .25em .5em;
+  font-size: 1.25em;
+  padding: 0 0.5em;
+  width: 5em;
   font-weight: bold;
   text-decoration: none;
   color: #fff;
@@ -533,19 +533,19 @@ ul.bookmarklet {
 
 div.bookmarklet {
   width: 20em;
-  height: 7em;
+  height: 4em;
   background-image:url("http://www.qualtrics.com/wp-content/uploads/2011/05/javasave.png");
 }
 
 li.bookmarklet {
   display: flex;
   list-style: none;
-  margin: 2em;
+  margin: 2em 0;
 }
 
 li.bookmarklet a {
   margin-bottom: 1em;
-  margin-left: 3em;
+  margin-left: 8em;
 }
 
 li.bookmarklet p {
