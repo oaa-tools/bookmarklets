@@ -488,24 +488,36 @@ a.bookmarklet {
   color: #fff;
 }
 
-a.landmarks, li.landmarks {
-  background: #010080;
+a.landmarks, div.landmarks {
   border: 5px solid #010080;
 }
 
-a.headings, li.headings {
-  background: #81007F;
+a.landmarks {
+  background: #010080;
+}
+
+a.headings, div.headings {
   border: 5px solid #81007F;
 }
 
-a.lists, li.lists {
-  background: #5F7000;
+a.headings {
+  background: #81007F;
+}
+
+a.lists, div.lists {
   border: 5px solid #5F7000;
 }
 
-a.images, li.images {
-  background: #C8002F;
+a.lists {
+  background: #5F7000;
+}
+
+a.images, div.images {
   border: 5px solid #C8002F;
+}
+
+a.images {
+  background: #C8002F;
 }
 
 a.bookmarklet:hover, a.bookmarklet:focus {
@@ -519,12 +531,15 @@ ul.bookmarklet {
   margin-right: auto;
 }
 
+div.bookmarklet {
+  width: 17em;
+  height: 7em;
+  background-image:url("http://www.qualtrics.com/wp-content/uploads/2011/05/javasave.png");
+}
+
 li.bookmarklet {
   list-style: none;
   margin: 2em;
-  width: 17em;
-  height: 7em;
-  background-image:url("http://www.qualtrics.com/wp-content/uploads/2011/05/javasave.png"); 
 }
 
 li.bookmarklet a {
