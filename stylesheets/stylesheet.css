@@ -562,6 +562,7 @@ li.bookmarklet {
 li.bookmarklet a {
   margin-bottom: 1em;
   margin-left: 8em;
+  font-family: 'Roboto Slab', serif;
 }
 
 li.bookmarklet p {
