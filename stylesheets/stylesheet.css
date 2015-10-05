@@ -490,18 +490,22 @@ a.bookmarklet {
 
 a.landmarks, li.landmarks {
   background: #010080;
+  border: 5px solid #010080;
 }
 
 a.headings, li.headings {
   background: #81007F;
+  border: 5px solid #81007F;
 }
 
 a.lists, li.lists {
   background: #5F7000;
+  border: 5px solid #5F7000;
 }
 
 a.images, li.images {
   background: #C8002F;
+  border: 5px solid #C8002F;
 }
 
 a.bookmarklet:hover, a.bookmarklet:focus {
@@ -520,14 +524,12 @@ li.bookmarklet {
   margin: 2em;
   width: 17em;
   height: 7em;
-  border: 5px solid;
   background-image:url("http://www.qualtrics.com/wp-content/uploads/2011/05/javasave.png"); 
 }
 
 li.bookmarklet a {
   margin-bottom: 1em;
   margin-left: 3em;
-  border: 5px solid;
 }
 
 li.bookmarklet p {
