@@ -480,23 +480,61 @@ Small Device Styles
 }
 
 a.bookmarklet {
-  background: #373737;
-  display: inline-block;
-  background: -moz-linear-gradient(top, #ffffff 0%, #373737 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#373737)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, #ffffff 0%,#373737 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, #ffffff 0%,#373737 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, #ffffff 0%,#373737 100%); /* IE10+ */
-  background: linear-gradient(to bottom, #ffffff 0%,#373737 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#373737',GradientType=0 ); /* IE6-9 */
-  border-radius: .5em;
-  font-size: 1.75em;
-  padding: .25em .5em;
+  display: block;
+  font-size: 1.25em;
+  padding: 0 0.5em;
+  width: 5em;
   font-weight: bold;
-  box-shadow: .05em .05em .1em rgba(0, 0, 0, .75); */
-  text-shadow: .05em .05em 0 rgba(0, 0, 0, 1);
   text-decoration: none;
   color: #fff;
+}
+
+a.landmarks, div.landmarks {
+  border: 5px solid #010080;
+}
+
+a.landmarks {
+  background: #010080;
+}
+
+div.landmarks {
+  background-image: url("/images/Javablur-1.png");
+}
+
+a.headings, div.headings {
+  border: 5px solid #81007F;
+}
+
+a.headings {
+  background: #81007F;
+}
+
+div.headings {
+  background-image: url("/images/Javablur-2.png");
+}
+
+a.lists, div.lists {
+  border: 5px solid #5F7000;
+}
+
+a.lists {
+  background: #5F7000;
+}
+
+div.lists {
+  background-image: url("/images/Javablur-3.png");
+}
+
+a.images, div.images {
+  border: 5px solid #C8002F;
+}
+
+a.images {
+  background: #C8002F;
+}
+
+div.images {
+  background-image: url("/images/Javablur-4.png");
 }
 
 a.bookmarklet:hover, a.bookmarklet:focus {
@@ -510,15 +548,21 @@ ul.bookmarklet {
   margin-right: auto;
 }
 
+div.bookmarklet {
+  width: 20em;
+  height: 4em;
+}
+
 li.bookmarklet {
-  list-style: none;
-  margin: 2em;
   display: flex;
+  list-style: none;
+  margin: 2em 0;
 }
 
 li.bookmarklet a {
-  width: 5em;
-  height: 1.5em;
+  margin-bottom: 1em;
+  margin-left: 8em;
+  font-family: 'Roboto Slab', serif;
 }
 
 li.bookmarklet p {
