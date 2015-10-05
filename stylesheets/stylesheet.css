@@ -532,12 +532,13 @@ ul.bookmarklet {
 }
 
 div.bookmarklet {
-  width: 17em;
+  width: 20em;
   height: 7em;
   background-image:url("http://www.qualtrics.com/wp-content/uploads/2011/05/javasave.png");
 }
 
 li.bookmarklet {
+  display: flex;
   list-style: none;
   margin: 2em;
 }
