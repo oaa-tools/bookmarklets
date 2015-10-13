@@ -3,16 +3,37 @@
 */
 
 import Bookmarklet from './Bookmarklet';
-import { landmarksCss } from './utils/dom';
+import { isDescendantOf, landmarksCss } from './utils/dom';
 import { getAttributeValue, getAccessibleName } from './utils/accname';
 
 (function () {
+
+  // Filter function called on a list of elements returned by selector
+  // 'header, [role="banner"]'. It returns true for the following
+  // conditions: (1) element IS NOT a header element; (2) element IS a
+  // header element AND IS NOT a descendant of article or section.
+  function isBanner (element) {
+    if (element.tagName.toLowerCase() !== 'header') return true;
+    if (!isDescendantOf(element, ['article', 'section'])) return true;
+    return false;
+  }
+
+  // Filter function called on a list of elements returned by selector
+  // 'footer, [role="contentinfo"]'. It returns true for the following
+  // conditions: (1) element IS NOT a footer element; (2) element IS a
+  // footer element AND IS NOT a descendant of article or section.
+  function isContentinfo (element) {
+    if (element.tagName.toLowerCase() !== 'footer') return true;
+    if (!isDescendantOf(element, ['article', 'section'])) return true;
+    return false;
+  }
+
   let targetList = [
     {selector: 'aside:not([role]), [role="complementary"]', color: "brown",  label: "complementary"},
-    {selector: 'body > footer, [role="contentinfo"]',       color: "olive",  label: "contentinfo"},
+    {selector: 'footer, [role="contentinfo"]',              color: "olive",  label: "contentinfo", filter: isContentinfo},
     {selector: '[role="application"]',                      color: "teal",   label: "application"},
     {selector: 'nav, [role="navigation"]',                  color: "green",  label: "navigation"},
-    {selector: 'body > header, [role="banner"]',            color: "gray",   label: "banner"},
+    {selector: 'header, [role="banner"]',                   color: "gray",   label: "banner", filter: isBanner},
     {selector: '[role="search"]',                           color: "purple", label: "search"},
     {selector: 'main, [role="main"]',                       color: "navy",   label: "main"}
   ];

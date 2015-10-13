@@ -32,6 +32,18 @@ function isVisible (element) {
 }
 
 /*
+*   isDescendantOf: Determine whether element is a descendant of any
+*   element in the DOM with a tagName in the list of tagNames.
+*/
+export function isDescendantOf (element, tagNames) {
+  if (typeof element.closest === 'function') {
+    for (let i = 0; i < tagNames.length; i++)
+      if (element.closest(tagNames[i])) return true;
+  }
+  return false;
+}
+
+/*
 *   addNodes: Use targetList to generate nodeList of elements and to
 *   each of these, add an overlay with a unique CSS class name.
 *   Optionally, if getInfo is specified, add tooltip information;
@@ -42,7 +54,12 @@ export function addNodes (params) {
   let counter = 0;
 
   targetList.forEach(function (target) {
+    // Collect elements based on selector defined for target
     var elements = document.querySelectorAll(target.selector);
+
+    // Filter elements if target defines a filter function
+    if (typeof target.filter === 'function')
+      elements = Array.prototype.filter.call(elements, target.filter);
 
     Array.prototype.forEach.call(elements, function (element) {
       var boundingRect, overlayNode;
