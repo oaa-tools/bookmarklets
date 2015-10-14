@@ -2,7 +2,7 @@
 
 ### Landmarks modifications &mdash; 13 Oct 2015
 
-Problem: According to Steve Faulkner's [ARIA in HTML](https://specs.webplatform.org/html-aria/webspecs/master/) document that specifies default ARIA landmarks roles for HTML 5.1 elements, a `header` or `footer` element should only be considered a `banner` or `contentinfo` landmark, respectively, when it is not a descendant of an `article` or `section` element. However, the criteria we had been using required that `header` or `footer` be a top-level element, i.e., a child of the `body` element, to be considered a landmark.
+Problem: According to Steve Faulkner's [ARIA in HTML](https://specs.webplatform.org/html-aria/webspecs/master/) document that specifies the default ARIA landmark roles for HTML 5.1 elements, a `header` or `footer` element should only be considered a `banner` or `contentinfo` landmark, respectively, when it is not a descendant of an `article` or `section` element. However, the criteria we had been using required that `header` or `footer` be a top-level element, i.e., a child of the `body` element, to be considered a landmark.
 
 Solution: Modify the logic for `banner` and `contentinfo` landmarks to follow the evolving HTML 5.1
 specification.
