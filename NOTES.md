@@ -6,7 +6,7 @@
    `$ cd /path/to/working-copy`<br>
    `$ npm install`
 1. Once the environment is set up, use the following command to incorporate modifications and build all outputs:<br>
-   $ `npm run build`
+   `$ npm run build`
 1. To add a new bookmarklet, edit the `entry` object in `webpack.config.js` and create the corresponding JavaScript file.
 
 ### Landmarks modifications &mdash; 13 Oct 2015
