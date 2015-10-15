@@ -3,7 +3,7 @@
 */
 
 import Bookmarklet from './Bookmarklet';
-import { getAccessibleNameUseContent } from './utils/accname';
+import { getAccessibleNameUseContents } from './utils/accname';
 import { headingsCss } from './utils/dom';
 import { formatInfo } from './utils/utils';
 
@@ -22,10 +22,10 @@ import { formatInfo } from './utils/utils';
   function getInfo (element, target) {
     let info = {
       title: 'HEADING INFO',
-      accName: getAccessibleNameUseContent(element),
+      accName: getAccessibleNameUseContents(element),
       role: 'heading',
       props: 'level ' + target.label.substring(1)
-    }
+    };
 
     return formatInfo(info);
   }
