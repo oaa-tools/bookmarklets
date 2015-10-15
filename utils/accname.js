@@ -141,8 +141,9 @@ export function getAccessibleName (element) {
 }
 
 /*
-*   getAccessibleNameUseContents: Fall back to using element contents
-*   when other methods for specifying accessible name are not used.
+*   getAccessibleNameUseContents: For elements that allow this, fall back
+*   to using element contents when accessible name has not been specified
+*   by other methods.
 */
 export function getAccessibleNameUseContents (element) {
   var name;
