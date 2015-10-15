@@ -3,9 +3,9 @@
 */
 
 import Bookmarklet from './Bookmarklet';
-import { listsCss } from './utils/dom';
 import { getAccessibleName } from './utils/accname';
-import { countChildrenWithTagNames } from './utils/utils.js';
+import { countChildrenWithTagNames, listsCss } from './utils/dom';
+import { formatInfo } from './utils/utils';
 
 (function () {
   let targetList = [
@@ -17,39 +17,31 @@ import { countChildrenWithTagNames } from './utils/utils.js';
   let selectors = targetList.map(function (tgt) {return tgt.selector;}).join(', ');
 
   function getInfo (element, target) {
-    let accessibleName = getAccessibleName(element);
+    let roleInfo, listCount;
 
-    let roleInfo, listType, listCount;
     switch (target.label) {
       case 'dl':
-        listType  = 'Definition list';
+        roleInfo  = '';
         listCount = countChildrenWithTagNames(element, ['DT', 'DD']);
         break;
       case 'ol':
-        roleInfo  = 'List';
-        listType  = 'Ordered list';
+        roleInfo  = 'list';
         listCount = countChildrenWithTagNames(element, ['LI']);
         break;
       case 'ul':
-        roleInfo  = 'List';
-        listType  = 'Unordered list';
+        roleInfo  = 'list';
         listCount = countChildrenWithTagNames(element, ['LI']);
         break;
     }
 
-    if (roleInfo) {
-      if (accessibleName)
-        accessibleName = roleInfo + ': ' + accessibleName;
-      else
-        accessibleName = roleInfo;
-    }
+    let info = {
+      title: 'LIST INFO',
+      accName: getAccessibleName(element),
+      role: roleInfo,
+      props: listCount + ' items'
+    };
 
-    let props = listType + ' with ' + listCount + ' items';
-
-    let info = 'PROPERTIES: ' + props;
-    if (accessibleName) info += '\n' + 'ACC. NAME: ' + accessibleName;
-
-    return info;
+    return formatInfo(info);
   }
 
   let params = {

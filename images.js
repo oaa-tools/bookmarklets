@@ -3,9 +3,9 @@
 */
 
 import Bookmarklet from './Bookmarklet';
+import { getAccessibleNameUseAttributes } from './utils/accname';
 import { imagesCss } from './utils/dom';
-import { getAccessibleName, getElementText } from './utils/accname';
-import { countChildrenWithTagNames } from './utils/utils.js';
+import { formatInfo } from './utils/utils';
 
 (function (utils) {
   let targetList = [
@@ -17,10 +17,14 @@ import { countChildrenWithTagNames } from './utils/utils.js';
     let selectors = targetList.map(function (tgt) {return tgt.selector;}).join(', ');
 
     function getInfo (element, target) {
-      let textContent = getElementText(element);
-      let accessibleName = getAccessibleName(element);
-      return target.label + ": " + textContent + "\n" + "ACC. Name: " + accessibleName;
-    } 
+      let info = {
+        title: 'IMAGE INFO',
+        accName: getAccessibleNameUseAttributes(element, ['alt']),
+        role: 'img'
+      };
+
+      return formatInfo(info);
+    }
 
     let params = {
       msgTitle: "Images",
@@ -30,7 +34,7 @@ import { countChildrenWithTagNames } from './utils/utils.js';
       getInfo: getInfo,
       dndFlag: true
     };
-    
+
     let blt = new Bookmarklet("a11yImages", params);
     blt.run();
 })();

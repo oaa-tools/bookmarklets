@@ -3,8 +3,9 @@
 */
 
 import Bookmarklet from './Bookmarklet';
+import { getAccessibleNameUseContent } from './utils/accname';
 import { headingsCss } from './utils/dom';
-import { getElementText } from './utils/accname';
+import { formatInfo } from './utils/utils';
 
 (function () {
   let targetList = [
@@ -19,8 +20,14 @@ import { getElementText } from './utils/accname';
   let selectors = targetList.map(function (tgt) {return tgt.selector;}).join(', ');
 
   function getInfo (element, target) {
-    var textContent = getElementText(element);
-    return target.label + ": " + textContent;
+    let info = {
+      title: 'HEADING INFO',
+      accName: getAccessibleNameUseContent(element),
+      role: 'heading',
+      props: 'level ' + target.label.substring(1)
+    }
+
+    return formatInfo(info);
   }
 
   let params = {

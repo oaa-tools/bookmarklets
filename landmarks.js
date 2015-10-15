@@ -3,8 +3,9 @@
 */
 
 import Bookmarklet from './Bookmarklet';
-import { isDescendantOf, landmarksCss } from './utils/dom';
 import { getAttributeValue, getAccessibleName } from './utils/accname';
+import { isDescendantOf, landmarksCss } from './utils/dom';
+import { formatInfo } from './utils/utils';
 
 (function () {
 
@@ -47,9 +48,14 @@ import { getAttributeValue, getAccessibleName } from './utils/accname';
   }
 
   function getInfo (element, target) {
-    let elementInfo = getElementInfo(element);
-    let accessibleName = getAccessibleName(element) || target.label;
-    return 'ELEMENT: ' + elementInfo + '\n' + 'ACC. NAME: ' + accessibleName;
+    let info = {
+      title: 'LANDMARK INFO',
+      element: getElementInfo(element),
+      accName: getAccessibleName(element),
+      role: target.label
+    };
+
+    return formatInfo(info);
   }
 
   let params = {
