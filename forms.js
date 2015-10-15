@@ -3,12 +3,18 @@
 */
 
 import Bookmarklet from './Bookmarklet';
-import { getAttributeValue, getElementText, getAccessibleNameAria } from './utils/accname';
+import {
+  getAttributeValue,
+  getElementText,
+  getAccessibleNameAria,
+  getAccessibleNameUseContents,
+  getAccessibleNameUseAttributes
+} from './utils/accname';
 import { formsCss } from './utils/dom';
+import { formatInfo } from './utils/utils';
 
 (function () {
   let targetList = [
-    // {selector: "form",     color: "silver",   label: "form"},
     {selector: "output",   color: "teal",   label: "output"},
     {selector: "fieldset", color: "gray",   label: "fieldset"},
     {selector: "legend",   color: "maroon", label: "legend"},
@@ -21,37 +27,20 @@ import { formsCss } from './utils/dom';
 
   let selectors = targetList.map(function (tgt) {return '<li>' + tgt.selector + '</li>';}).join('');
 
-  function getAccessibleNameUseAttributes (element, attributes) {
-    let name;
-
-    name = getAccessibleNameAria(element);
-    if (name) return name.name;
-
-    if (typeof attributes !== 'undefined') {
-      for (let attr of attributes) {
-        name = getAttributeValue(element, attr);
-        if (name.length) return name;
-      }
-    }
-
-    name = getAttributeValue(element, 'title');
-    if (name.length) return name;
-
-    return '';
-  }
+// HIGHER-LEVEL ACCESSIBLE NAME FUNCTIONS THAT RETURN AN OBJECT WITH SOURCE PROPERTY
 
   function getAccessibleNameUseLabel (element, attributes) {
     let name, label;
 
     name = getAccessibleNameAria(element);
-    if (name) return name.name;
+    if (name) return name;
 
     // use label selector [for=id]
     if (element.id) {
       label = document.querySelector('[for="' + element.id + '"]');
       if (label) {
         name = getElementText(label);
-        if (name.length) return name;
+        if (name.length) return { name: name, source: 'label[for=id]' };
       }
     }
 
@@ -60,59 +49,59 @@ import { formsCss } from './utils/dom';
       label = element.closest('label');
       if (label) {
         name = getElementText(label);
-        if (name.length) return name;
+        if (name.length) return { name: name, source: 'label container' };
       }
     }
 
-    // fallback to attributes
+    // fall back to attributes
     if (typeof attributes !== 'undefined') {
       for (let attr of attributes) {
         name = getAttributeValue(element, attr);
-        if (name.length) return name;
+        if (name.length) return { name: name, source: attr };
       }
     }
 
     name = getAttributeValue(element, 'title');
-    if (name.length) return name;
+    if (name.length) return { name: name, source: 'title' };
 
-    return '';
+    return null;
   }
 
   // Use for input type submit or reset
-  function getAccessibleNameOrDefault (element, defValue) {
+  function getAccessibleNameUseDefault (element, defValue) {
     let name;
 
     name = getAccessibleNameAria(element);
-    if (name) return name.name;
+    if (name) return name;
 
     name = getAttributeValue(element, 'value');
-    if (name.length) return name;
+    if (name.length) return { name: name, source: 'value' };
 
-    if (defValue && defValue.length) return defValue;
+    if (defValue && defValue.length) return { name: defValue, source: 'default' };
 
     name = getAttributeValue(element, 'title');
-    if (name.length) return name;
+    if (name.length) return { name: name, source: 'title' };
 
-    return '';
+    return null;
   }
 
   function getAccessibleNameButton (element) {
     let name;
 
     name = getAccessibleNameAria(element);
-    if (name) return name.name;
+    if (name) return name;
 
     name = getElementText(element);
-    if (name.length) return name;
+    if (name.length) return { name: name, source: 'contents' };
 
     name = getAttributeValue(element, 'title');
-    if (name.length) return name;
+    if (name.length) return { name: name, source: 'title' };
 
-    return '';
+    return null;
   }
 
   function addFieldsetLegend (element, accName) {
-    let fieldset, legend, text, name;
+    let fieldset, legend, text;
 
     if (typeof element.closest === 'function') {
       fieldset = element.closest('fieldset');
@@ -120,22 +109,19 @@ import { formsCss } from './utils/dom';
         legend = fieldset.querySelector('legend');
         if (legend) {
           text = getElementText(legend);
-          if (text.length)
-            name = text + ' ' + accName;
-          else
-            name = accName;
+          if (text.length) {
+            accName.name = text + ' ' + accName.name;
+            accName.source = 'fieldset/legend + ' + accName.source;
+          }
         }
-        else {
-          name = accName;
-        }
-        return addFieldsetLegend(fieldset.parentNode, name);
+        return addFieldsetLegend(fieldset.parentNode, accName);
       }
     }
 
     return accName;
   }
 
-  function getElementInfoAndAccName (element) {
+  function getInfo (element, target) {
     let tagName = element.tagName.toLowerCase(),
         id      = element.id,
         type    = element.type,
@@ -161,10 +147,10 @@ import { formsCss } from './utils/dom';
             accName = getAccessibleNameUseAttributes(element, ['value']);
             break;
           case 'submit':
-            accName = getAccessibleNameOrDefault(element, 'Submit');
+            accName = getAccessibleNameUseDefault(element, 'Submit');
             break;
           case 'reset':
-            accName = getAccessibleNameOrDefault(element, 'Reset');
+            accName = getAccessibleNameUseDefault(element, 'Reset');
             break;
           default:
             accName = getAccessibleNameUseLabel(element);
@@ -189,41 +175,34 @@ import { formsCss } from './utils/dom';
       case 'label':
         forVal = element.getAttribute('for');
         elementInfo = (forVal && forVal.length) ? tagName + ' [for="' + forVal + '"]' : tagName;
-        accName = getElementText(element);
+        accName = getAccessibleNameUseContents(element);
         break;
       case 'legend':
         elementInfo = tagName;
-        accName = getElementText(element);
+        accName = getAccessibleNameUseContents(element);
         break;
       default:
         elementInfo = tagName;
-        accName = '';
+        accName = null;
     }
 
     switch (tagName) {
+      case 'fieldset':
       case 'label':
       case 'legend':
-        if (accName.length) accName = 'TEXT CONTENT: ' + accName;
-        break;
-      case 'form':
-      case 'fieldset':
         break;
       default:
         accName = addFieldsetLegend(element, accName);
-        if (accName.length) accName = 'ACC. NAME: ' + accName;
         break;
     }
 
-    elementInfo = 'ELEMENT: ' + elementInfo;
+    let info = {
+      title: 'FORM INFO',
+      element: elementInfo,
+      accName: accName
+    };
 
-    if (accName.length)
-      return elementInfo + '\n' + accName;
-    else
-      return elementInfo;
-  }
-
-  function getInfo (element, target) {
-    return getElementInfoAndAccName(element);
+    return formatInfo(info);
   }
 
   let params = {
