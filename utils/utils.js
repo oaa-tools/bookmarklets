@@ -95,22 +95,19 @@ export function drag (elementToDrag, dragCallback, event) {
 }
 
 /*
-*   countChildrenWithTagNames: For the specified DOM element, return the
-*   number of its child elements with tagName equal to one of the values
-*   in the tagNames array.
-*
-*   @param element  : DOM element
-*   @param tagNames : Array of String
+*   formatInfo: Convert info properties into a string with line breaks.
 */
+export function formatInfo (info) {
+  let value = '';
+  let { title, element, accName, role, props } = info;
 
-export function countChildrenWithTagNames (element, tagNames) {
-  let count = 0;
-
-  let child = element.firstElementChild;
-  while (child) {
-    if (tagNames.indexOf(child.tagName) > -1) count += 1;
-    child = child.nextElementSibling;
+  value += '=== ' + title + ' ===';
+  if (element) value += '\nELEMENT: ' + element;
+  if (accName) {
+    value += '\nACC. NAME: ' + accName.name + '\nFROM: ' + accName.source;
   }
+  if (role) value += '\nARIA ROLE: ' + role;
+  if (props) value += '\nPROPERTIES: ' + props;
 
-  return count;
+  return value;
 }
