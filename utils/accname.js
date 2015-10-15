@@ -109,8 +109,8 @@ function getAttributeIdRefsValue (element, attribute) {
 // HIGHER-LEVEL FUNCTIONS THAT RETURN AN OBJECT WITH SOURCE PROPERTY
 
 /*
-*   getAccessibleNameAria: The attributes that take precedence over all
-*   other associations in determining an accessible name for an element
+*   getAccessibleNameAria: Use ARIA attributes that take precedence over
+*   all other methods for determining the accessible name for an element.
 */
 export function getAccessibleNameAria (element) {
   var name;
@@ -126,7 +126,7 @@ export function getAccessibleNameAria (element) {
 
 /*
 *   getAccessibleName: Use ARIA accessible name calculation algorithm
-*   to retrieve accessible name from sources in order of precedence
+*   to retrieve accessible name from sources in order of precedence.
 */
 export function getAccessibleName (element) {
   var name;
@@ -141,10 +141,10 @@ export function getAccessibleName (element) {
 }
 
 /*
-*   getAccessibleNameUseContent: Fall back to using element text content
-*   for elements that permit accessible name to come from content.
+*   getAccessibleNameUseContents: Fall back to using element contents
+*   when other methods for specifying accessible name are not used.
 */
-export function getAccessibleNameUseContent (element) {
+export function getAccessibleNameUseContents (element) {
   var name;
 
   name = getAccessibleName(element);
@@ -157,8 +157,8 @@ export function getAccessibleNameUseContent (element) {
 }
 
 /*
-*   getAccessibleNameUseAttributes: Use algorithm similar to getAccessibleName
-*   but interject use of specified attributes before using 'title' attribute.
+*   getAccessibleNameUseAttributes: Use algorithm similar to getAccessibleName but
+*   give precedence to use of specified attributes before using 'title' attribute.
 */
 
 export function getAccessibleNameUseAttributes (element, attributes) {
