@@ -14,6 +14,59 @@ function normalize (s) {
 }
 
 /*
+*   getAttributeValue: Return attribute value if present on element,
+*   otherwise return empty string.
+*/
+export function getAttributeValue (element, attribute) {
+  var value = element.getAttribute(attribute);
+  return (value === null) ? '' : normalize(value);
+}
+
+/*
+*   getElementText: Recursively collect, in document order, all text nodes
+*   along with all 'alt' text of 'img' and 'area' elements of element and
+*   its descendants and return a string whose value is the space-separated
+*   concatenation of that content.
+*/
+export function getElementText (element) {
+  var arrayOfStrings;
+
+  function getTextRec (node, arr) {
+    var tagName, altText, content;
+
+    switch (node.nodeType) {
+      case (Node.ELEMENT_NODE):
+        tagName = node.tagName.toLowerCase();
+        if (tagName === 'img' || tagName === 'area') {
+          altText = getAttributeValue(node, 'alt');
+          if (altText.length) arr.push(altText);
+        }
+        else {
+          if (node.hasChildNodes()) {
+            Array.prototype.forEach.call(node.childNodes, function (n) {
+              getTextRec(n, arr);
+            });
+          }
+        }
+        break;
+      case (Node.TEXT_NODE):
+        content = normalize(node.textContent);
+        if (content.length) arr.push(content);
+        break;
+      default:
+        break;
+    }
+
+    return arr;
+  }
+
+  arrayOfStrings = getTextRec(element, []);
+  if (arrayOfStrings.length)
+    return arrayOfStrings.join(' ');
+  return '';
+}
+
+/*
 *   getRefElementAccessibleName: Get text content from element and
 *   if that is empty, get its title attribute value, and if that is
 *   null or empty return an empty string.
@@ -53,14 +106,7 @@ function getAttributeIdRefsValue (element, attribute) {
   return '';
 }
 
-/*
-*   getAttributeValue: Return attribute value if present on element,
-*   otherwise return empty string.
-*/
-export function getAttributeValue (element, attribute) {
-  var value = element.getAttribute(attribute);
-  return (value === null) ? '' : normalize(value);
-}
+// HIGHER-LEVEL FUNCTIONS THAT RETURN AN OBJECT WITH SOURCE PROPERTY
 
 /*
 *   getAccessibleNameAria: The attributes that take precedence over all
@@ -70,12 +116,12 @@ export function getAccessibleNameAria (element) {
   var name;
 
   name = getAttributeIdRefsValue(element, 'aria-labelledby');
-  if (name.length) return name;
+  if (name.length) return { name: name, source: 'aria-labelledby'};
 
   name = getAttributeValue(element, 'aria-label');
-  if (name.length) return name;
+  if (name.length) return { name: name, source: 'aria-label'};
 
-  return '';
+  return null;
 }
 
 /*
@@ -86,52 +132,50 @@ export function getAccessibleName (element) {
   var name;
 
   name = getAccessibleNameAria(element);
-  if (name.length) return name;
+  if (name) return name;
 
-  name = getAttributeValue(element, "title");
-  if (name.length) return name;
+  name = getAttributeValue(element, 'title');
+  if (name.length) return { name: name, source: 'title'};
 
-  return '';
+  return null;
 }
 
 /*
-*   getElementText: Recursively concatenate the text nodes of element and
-*   alt text of 'img' and 'area' children of element and its descendants.
+*   getAccessibleNameUseContent: Fall back to using element text content
+*   for elements that permit accessible name to come from content.
 */
-export function getElementText (element) {
-  var arrayOfStrings;
+export function getAccessibleNameUseContent (element) {
+  var name;
 
-  function getTextRec (node, arr) {
-    var tagName, altText, content;
+  name = getAccessibleName(element);
+  if (name) return name;
 
-    switch (node.nodeType) {
-      case (Node.ELEMENT_NODE):
-        tagName = node.tagName.toLowerCase();
-        if (tagName === 'img' || tagName === 'area') {
-          altText = getAttributeValue(node, "alt");
-          if (altText.length) arr.push(altText);
-        }
-        else {
-          if (node.hasChildNodes()) {
-            Array.prototype.forEach.call(node.childNodes, function (n) {
-              getTextRec(n, arr);
-            });
-          }
-        }
-        break;
-      case (Node.TEXT_NODE):
-        content = normalize(node.textContent);
-        if (content.length) arr.push(content);
-        break;
-      default:
-        break;
+  name = getElementText(element);
+  if (name.length) return { name: name, source: 'content'};
+
+  return null;
+}
+
+/*
+*   getAccessibleNameUseAttributes: Use algorithm similar to getAccessibleName
+*   but interject use of specified attributes before using 'title' attribute.
+*/
+
+export function getAccessibleNameUseAttributes (element, attributes) {
+  var name;
+
+  name = getAccessibleNameAria(element);
+  if (name) return name;
+
+  if (typeof attributes !== 'undefined') {
+    for (let attr of attributes) {
+      name = getAttributeValue(element, attr);
+      if (name.length) return { name: name, source: attr};
     }
-
-    return arr;
   }
 
-  arrayOfStrings = getTextRec(element, []);
-  if (arrayOfStrings.length)
-    return arrayOfStrings.join(' ');
-  return '';
+  name = getAttributeValue(element, 'title');
+  if (name.length) return { name: name, source: 'title'};
+
+  return null;
 }
