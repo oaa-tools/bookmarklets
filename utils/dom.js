@@ -32,6 +32,23 @@ function isVisible (element) {
 }
 
 /*
+*   countChildrenWithTagNames: For the specified DOM element, return the
+*   number of its child elements with tagName equal to one of the values
+*   in the tagNames array.
+*/
+export function countChildrenWithTagNames (element, tagNames) {
+  let count = 0;
+
+  let child = element.firstElementChild;
+  while (child) {
+    if (tagNames.indexOf(child.tagName) > -1) count += 1;
+    child = child.nextElementSibling;
+  }
+
+  return count;
+}
+
+/*
 *   isDescendantOf: Determine whether element is a descendant of any
 *   element in the DOM with a tagName in the list of tagNames.
 */
