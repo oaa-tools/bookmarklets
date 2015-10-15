@@ -116,10 +116,10 @@ export function getAccessibleNameAria (element) {
   var name;
 
   name = getAttributeIdRefsValue(element, 'aria-labelledby');
-  if (name.length) return { name: name, source: 'aria-labelledby'};
+  if (name.length) return { name: name, source: 'aria-labelledby' };
 
   name = getAttributeValue(element, 'aria-label');
-  if (name.length) return { name: name, source: 'aria-label'};
+  if (name.length) return { name: name, source: 'aria-label' };
 
   return null;
 }
@@ -135,7 +135,7 @@ export function getAccessibleName (element) {
   if (name) return name;
 
   name = getAttributeValue(element, 'title');
-  if (name.length) return { name: name, source: 'title'};
+  if (name.length) return { name: name, source: 'title' };
 
   return null;
 }
@@ -151,7 +151,7 @@ export function getAccessibleNameUseContent (element) {
   if (name) return name;
 
   name = getElementText(element);
-  if (name.length) return { name: name, source: 'content'};
+  if (name.length) return { name: name, source: 'contents' };
 
   return null;
 }
@@ -170,12 +170,12 @@ export function getAccessibleNameUseAttributes (element, attributes) {
   if (typeof attributes !== 'undefined') {
     for (let attr of attributes) {
       name = getAttributeValue(element, attr);
-      if (name.length) return { name: name, source: attr};
+      if (name.length) return { name: name, source: attr };
     }
   }
 
   name = getAttributeValue(element, 'title');
-  if (name.length) return { name: name, source: 'title'};
+  if (name.length) return { name: name, source: 'title' };
 
   return null;
 }
