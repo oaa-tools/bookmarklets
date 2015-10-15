@@ -3,12 +3,8 @@
 */
 
 import Bookmarklet from './Bookmarklet';
+import { getAttributeValue, getElementText, getAccessibleNameAria } from './utils/accname';
 import { formsCss } from './utils/dom';
-import {
-  getAccessibleNameAria,
-  getAttributeValue,
-  getElementText
-} from './utils/accname';
 
 (function () {
   let targetList = [
@@ -29,7 +25,7 @@ import {
     let name;
 
     name = getAccessibleNameAria(element);
-    if (name.length) return name;
+    if (name) return name.name;
 
     if (typeof attributes !== 'undefined') {
       for (let attr of attributes) {
@@ -48,7 +44,7 @@ import {
     let name, label;
 
     name = getAccessibleNameAria(element);
-    if (name.length) return name;
+    if (name) return name.name;
 
     // use label selector [for=id]
     if (element.id) {
@@ -87,7 +83,7 @@ import {
     let name;
 
     name = getAccessibleNameAria(element);
-    if (name.length) return name;
+    if (name) return name.name;
 
     name = getAttributeValue(element, 'value');
     if (name.length) return name;
@@ -104,7 +100,7 @@ import {
     let name;
 
     name = getAccessibleNameAria(element);
-    if (name.length) return name;
+    if (name) return name.name;
 
     name = getElementText(element);
     if (name.length) return name;
