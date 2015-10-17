@@ -179,7 +179,23 @@ export function nameFromAttribute (element, attribute) {
   return null;
 }
 
-export function nameFromLabel (element) {
+export function nameFromAltAttribute (element) {
+  let name;
+
+  // Detect whether attribute is present
+  name = element.getAttribute('alt');
+  if (name !== null) {
+    name = normalize(name);
+    return (name.length) ?
+      { name: name, source: 'alt' } :
+      { name: '<empty>', source: 'alt' };
+  }
+
+  // Attribute not present
+  return null;
+}
+
+export function nameFromLabelElement (element) {
   let name, label;
 
   // label[for=id]
@@ -200,22 +216,6 @@ export function nameFromLabel (element) {
     }
   }
 
-  return null;
-}
-
-export function nameFromAltAttribute (element) {
-  let name;
-
-  // Detect whether attribute is present
-  name = element.getAttribute('alt');
-  if (name !== null) {
-    name = normalize(name);
-    return (name.length) ?
-      { name: name, source: 'alt' } :
-      { name: '<empty>', source: 'alt' };
-  }
-
-  // Attribute not present
   return null;
 }
 

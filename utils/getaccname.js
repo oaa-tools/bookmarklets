@@ -7,8 +7,8 @@ import {
   nameFromAriaLabel,
   nameFromContents,
   nameFromAttribute,
-  nameFromLabel,
   nameFromAltAttribute,
+  nameFromLabelElement,
   nameFromTitleElement
 } from './namefrom';
 
@@ -85,7 +85,7 @@ export function nameFromNativeSemantics (element) {
         case 'tel':
         case 'email':
         case 'url':
-          accName = nameFromLabel(element);
+          accName = nameFromLabelElement(element);
           if (accName === null) accName = nameFromAttribute(element, 'placeholder');
           break;
         case 'image':
@@ -115,11 +115,11 @@ export function nameFromNativeSemantics (element) {
 
     case 'keygen':
     case 'select':
-      accName = nameFromLabel(element);
+      accName = nameFromLabelElement(element);
       break;
 
     case 'textarea':
-      accName = nameFromLabel(element);
+      accName = nameFromLabelElement(element);
       if (accName === null) accName = nameFromAttribute(element, 'placeholder');
       break;
 
