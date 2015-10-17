@@ -19,7 +19,7 @@ function normalize (s) {
 *   getAttributeValue: Return attribute value if present on element,
 *   otherwise return empty string.
 */
-function getAttributeValue (element, attribute) {
+export function getAttributeValue (element, attribute) {
   var value = element.getAttribute(attribute);
   return (value === null) ? '' : normalize(value);
 }
