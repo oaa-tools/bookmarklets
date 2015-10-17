@@ -35,10 +35,11 @@ import { formatInfo } from './utils/utils';
     let id = element.id,
         type = element.type,
         tagName = element.tagName.toLowerCase(),
-        elementInfo, forVal;
+        elementInfo = tagName, forVal;
 
-    if (tagName === 'input' && !type) type = 'text';
-    elementInfo = (type && type.length) ? tagName + ' [type="' + type + '"]' : tagName;
+    if (tagName === 'input') {
+      if (type && type.length) elementInfo += ' [type="' + type + '"]';
+    }
     forVal = getAttributeValue(element, 'for');
     if (forVal && forVal.length) elementInfo += ' [for="' + forVal + '"]';
     if (id && id.length) elementInfo += ' [id="' + id + '"]';
