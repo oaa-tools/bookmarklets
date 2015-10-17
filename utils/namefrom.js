@@ -203,7 +203,7 @@ export function nameFromLabelElement (element) {
     label = document.querySelector('[for="' + element.id + '"]');
     if (label) {
       name = getLabelContents(label);
-      if (name.length) return { name: name, source: 'label[for=id]' };
+      if (name.length) return { name: name, source: 'label [for=id]' };
     }
   }
 
