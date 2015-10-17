@@ -85,21 +85,6 @@ import { formatInfo } from './utils/utils';
     return null;
   }
 
-  function getAccessibleNameButton (element) {
-    let name;
-
-    name = getAccessibleNameAria(element);
-    if (name) return name;
-
-    name = getElementText(element);
-    if (name.length) return { name: name, source: 'contents' };
-
-    name = getAttributeValue(element, 'title');
-    if (name.length) return { name: name, source: 'title' };
-
-    return null;
-  }
-
   function addFieldsetLegend (element, accName) {
     let fieldset, legend, text;
 
@@ -170,7 +155,7 @@ import { formatInfo } from './utils/utils';
         break;
       case 'button':
         elementInfo = tagName;
-        accName = getAccessibleNameButton(element);
+        accName = getAccessibleNameUseContents(element);
         break;
       case 'label':
         forVal = element.getAttribute('for');
