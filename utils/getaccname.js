@@ -79,29 +79,41 @@ export function nameFromNativeSemantics (element) {
     // FORM ELEMENTS
     case 'input':
       switch (element.type) {
-        case 'text':
+
+        case 'hidden':
+          break;
+
+        // TEXT FIELDS
+        case 'email':
         case 'password':
         case 'search':
         case 'tel':
-        case 'email':
+        case 'text':
         case 'url':
           accName = nameFromLabelElement(element);
           if (accName === null) accName = nameFromAttribute(element, 'placeholder');
           break;
+
+        case 'button':
+          accName = nameFromAttribute(element, 'value');
+          break;
+
         case 'image':
           accName = nameFromAltAttribute(element);
           if (accName === null) accName = nameFromAttribute(element, 'value');
           break;
-        case 'button':
-          accName = nameFromAttribute(element, 'value');
-          break;
-        case 'submit':
-          accName = { name: 'Submit', source: 'default' };
-          break;
+
         case 'reset':
           accName = { name: 'Reset', source: 'default' };
           break;
-        // TODO: IS DEFAULT NEEDED HERE FOR OTHER INPUT TYPES, WITH EXCEPTION FOR HIDDEN?
+
+        case 'submit':
+          accName = { name: 'Submit', source: 'default' };
+          break;
+
+        default:
+          accName = nameFromLabelElement(element);
+          break;
       }
       break;
 
