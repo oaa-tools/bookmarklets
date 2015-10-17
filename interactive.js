@@ -4,6 +4,7 @@
 
 import Bookmarklet from './Bookmarklet';
 import { getAccessibleName } from './utils/getaccname';
+import { getAttributeValue } from './utils/namefrom';
 import { interactiveCss } from './utils/dom';
 import { formatInfo } from './utils/utils';
 
@@ -31,8 +32,20 @@ import { formatInfo } from './utils/utils';
   let selectors = targetList.map(function (tgt) {return tgt.selector;}).join(', ');
 
   function getInfo (element, target) {
+    let id = element.id,
+        type = element.type,
+        tagName = element.tagName.toLowerCase(),
+        elementInfo, forVal;
+
+    if (tagName === 'input' && !type) type = 'text';
+    elementInfo = (type && type.length) ? tagName + ' [type="' + type + '"]' : tagName;
+    forVal = getAttributeValue(element, 'for');
+    if (forVal && forVal.length) elementInfo += ' [for="' + forVal + '"]';
+    if (id && id.length) elementInfo += ' [id="' + id + '"]';
+
     let info = {
       title: 'INTERACTIVE INFO',
+      element: elementInfo,
       accName: getAccessibleName(element)
     };
 
