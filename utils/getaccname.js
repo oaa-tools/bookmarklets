@@ -56,6 +56,9 @@ function handleLabelableElements (element, accName) {
       break;
     case 'button':
     case 'keygen':
+    case 'meter':
+    case 'output':
+    case 'progress':
     case 'select':
     case 'textarea':
       accName = addFieldsetLegend(element, accName);
@@ -79,13 +82,12 @@ export function nameFromNativeSemantics (element) {
     // FORM ELEMENTS
     case 'input':
       switch (element.type) {
-
+        // DO NOTHING FOR TYPE HIDDEN
         case 'hidden':
           break;
 
         // TEXT FIELDS
         case 'email':
-        case 'password':
         case 'search':
         case 'tel':
         case 'text':
@@ -94,21 +96,24 @@ export function nameFromNativeSemantics (element) {
           if (accName === null) accName = nameFromAttribute(element, 'placeholder');
           break;
 
+        // OTHER INPUT TYPES
         case 'button':
           accName = nameFromAttribute(element, 'value');
+          break;
+
+        case 'reset':
+          accName = nameFromAttribute(element, 'value');
+          if (accName === null) accName = { name: 'Reset', source: 'default' };
+          break;
+
+        case 'submit':
+          accName = nameFromAttribute(element, 'value');
+          if (accName === null) accName = { name: 'Submit', source: 'default' };
           break;
 
         case 'image':
           accName = nameFromAltAttribute(element);
           if (accName === null) accName = nameFromAttribute(element, 'value');
-          break;
-
-        case 'reset':
-          accName = { name: 'Reset', source: 'default' };
-          break;
-
-        case 'submit':
-          accName = { name: 'Submit', source: 'default' };
           break;
 
         default:
@@ -117,6 +122,7 @@ export function nameFromNativeSemantics (element) {
       }
       break;
 
+    // FORM ELEMENTS (CONT.)
     case 'button':
       accName = nameFromContents(element);
       break;
@@ -126,6 +132,9 @@ export function nameFromNativeSemantics (element) {
       break;
 
     case 'keygen':
+    case 'meter':
+    case 'output':
+    case 'progress':
     case 'select':
       accName = nameFromLabelElement(element);
       break;
