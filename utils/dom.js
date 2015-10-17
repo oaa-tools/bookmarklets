@@ -109,8 +109,9 @@ export function removeNodes (cssClass) {
 /*
 *   Unique CSS class names
 */
-export const formsCss     = "a11yGfdXALm0";
-export const headingsCss  = "a11yGfdXALm1";
-export const imagesCss    = "a11yGfdXALm2";
-export const landmarksCss = "a11yGfdXALm3";
-export const listsCss     = "a11yGfdXALm4";
+export const formsCss       = "a11yGfdXALm0";
+export const headingsCss    = "a11yGfdXALm1";
+export const imagesCss      = "a11yGfdXALm2";
+export const landmarksCss   = "a11yGfdXALm3";
+export const listsCss       = "a11yGfdXALm4";
+export const interactiveCss = "a11yGfdXALm5";
