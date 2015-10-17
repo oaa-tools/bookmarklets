@@ -8,7 +8,7 @@
 *   Mozilla documentation on String.prototype.trim polyfill. Handles
 *   BOM and NBSP characters.
 */
-function normalize (s) {
+export function normalize (s) {
   let rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
   return s.replace(rtrim, '').replace(/\s+/g, ' ');
 }
@@ -143,16 +143,19 @@ export function getAccessibleName (element) {
 /*
 *   getAccessibleNameUseContents: For elements that allow this, fall back
 *   to using element contents when accessible name has not been specified
-*   by other methods.
+*   by ARIA attribute methods.
 */
 export function getAccessibleNameUseContents (element) {
   var name;
 
-  name = getAccessibleName(element);
+  name = getAccessibleNameAria(element);
   if (name) return name;
 
   name = getElementText(element);
   if (name.length) return { name: name, source: 'contents' };
+
+  name = getAttributeValue(element, 'title');
+  if (name.length) return { name: name, source: 'title' };
 
   return null;
 }
@@ -161,7 +164,6 @@ export function getAccessibleNameUseContents (element) {
 *   getAccessibleNameUseAttributes: Use algorithm similar to getAccessibleName but
 *   give precedence to use of specified attributes before using 'title' attribute.
 */
-
 export function getAccessibleNameUseAttributes (element, attributes) {
   var name;
 
