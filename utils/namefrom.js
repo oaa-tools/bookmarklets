@@ -269,10 +269,10 @@ export function nameFromTitleElement (element) {
 }
 
 /*
-*   nameFromDetailsOrSummary: If the open attribute is present, return
-*   the contents of the summary element, followed by the contents of all
-*   child elements except summary elements. Otherwise, return only the
-*   contents of the first summary element child.
+*   nameFromDetailsOrSummary: If element is expanded (has open attribute),
+*   return the contents of the summary element followed by the text contents
+*   of element and all of its non-summary child elements. Otherwise, return
+*   only the contents of the first summary element child.
 */
 export function nameFromDetailsOrSummary (element) {
   let name, summary;
