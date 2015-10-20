@@ -9,7 +9,8 @@ import {
   nameFromAttribute,
   nameFromAltAttribute,
   nameFromLabelElement,
-  nameFromTitleElement
+  nameFromTitleElement,
+  nameFromDetailsOrSummary
 } from './namefrom';
 
 /*
@@ -180,7 +181,7 @@ export function nameFromNativeSemantics (element) {
       break;
 
     case 'details':
-      accName = { name: 'NOT YET IMPLEMENTED', source: '' };
+      accName = nameFromDetailsOrSummary(element);
       break;
 
     // ALL OTHER ELEMENTS
@@ -204,8 +205,8 @@ export function nameFromNativeSemantics (element) {
 *   of those results if any, otherwise return null.
 */
 function nameFromAriaLabelledBy (element) {
-  var value = element.getAttribute('aria-labelledby');
-  var idRefs, i, refElement, accName, arr = [];
+  let value = element.getAttribute('aria-labelledby');
+  let idRefs, i, refElement, accName, arr = [];
 
   if (value && value.length) {
     idRefs = value.split(' ');
@@ -232,7 +233,7 @@ function nameFromAriaLabelledBy (element) {
 *   of the precedence list, use of the title attribute.
 */
 export function getAccessibleName (element, recFlag = false) {
-  var accName = null;
+  let accName = null;
 
   if (!recFlag) accName = nameFromAriaLabelledBy(element);
   if (accName === null) accName = nameFromAriaLabel(element);
