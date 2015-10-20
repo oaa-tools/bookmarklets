@@ -25,8 +25,8 @@ export function getAttributeValue (element, attribute) {
 }
 
 /*
-*   couldHaveAltText: Predicate function that determines whether element
-*   (based on HTML5 spec) could have an 'alt' attribute.
+*   couldHaveAltText: Based on HTML5 specification, determine whether
+*   element could have an 'alt' attribute.
 */
 function couldHaveAltText (element) {
   let tagName = element.tagName.toLowerCase();
@@ -43,16 +43,15 @@ function couldHaveAltText (element) {
 }
 
 /*
-*   isTextField: Predicate function that determines whether element (based
-*   on HTML5 spec) is a text field, which could have a user-provided value.
+*   isTextField: Based on HTML5 specification, determine whether element
+*   is a text field, which could have a user-provided value.
 */
 function isTextField (element) {
   let tagName = element.tagName.toLowerCase(),
-      type;
+      type    = element.type;
 
   switch (tagName) {
     case 'input':
-      type = element.type;
       switch (type) {
         case 'email':
         case 'search':
@@ -71,6 +70,30 @@ function isTextField (element) {
   }
 
   return false;
+}
+
+/*
+*   isLabelableElement: Based on HTML5 specification, determine whether
+*   element can be associated with a label.
+*/
+export function isLabelableElement (element) {
+  let tagName = element.tagName.toLowerCase(),
+      type    = element.type;
+
+  switch (tagName) {
+    case 'input':
+      return (type !== 'hidden');
+    case 'button':
+    case 'keygen':
+    case 'meter':
+    case 'output':
+    case 'progress':
+    case 'select':
+    case 'textarea':
+      return true;
+    default:
+      return false;
+  }
 }
 
 /*
