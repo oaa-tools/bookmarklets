@@ -47,7 +47,7 @@ export function formatInfo (info) {
   if (accName) {
     value += '\nACC. NAME: ' + accName.name + '\nFROM: ' + accName.source;
   }
-  if (role) value += '\nARIA ROLE: ' + role;
+  if (role) value += '\nROLE: ' + role;
   if (props) value += '\nPROPERTIES: ' + props;
 
   return value;
