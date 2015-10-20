@@ -25,32 +25,6 @@ export function getAttributeValue (element, attribute) {
 }
 
 /*
-*   getContentsOfChildNodes: Using predicate function for filtering element
-*   nodes, collect text content from all child nodes of element.
-*/
-function getContentsOfChildNodes (element, predicate) {
-  let arr = [], content;
-
-  Array.prototype.forEach.call(element.childNodes, function (node) {
-    switch (node.nodeType) {
-      case (Node.ELEMENT_NODE):
-        if (predicate(node)) {
-          content = getElementContents(node);
-          if (content.length) arr.push(content);
-        }
-        break;
-      case (Node.TEXT_NODE):
-        content = normalize(node.textContent);
-        if (content.length) arr.push(content);
-        break;
-    }
-  });
-
-  if (arr.length) return arr.join(' ');
-  return '';
-}
-
-/*
 *   couldHaveAltText: Predicate function that determines whether element
 *   (based on HTML5 spec) could have an 'alt' attribute.
 */
@@ -187,8 +161,37 @@ export function getLabelContents (element) {
   return '';
 }
 
+/*
+*   getContentsOfChildNodes: Using predicate function for filtering element
+*   nodes, collect text content from all child nodes of element.
+*/
+function getContentsOfChildNodes (element, predicate) {
+  let arr = [], content;
+
+  Array.prototype.forEach.call(element.childNodes, function (node) {
+    switch (node.nodeType) {
+      case (Node.ELEMENT_NODE):
+        if (predicate(node)) {
+          content = getElementContents(node);
+          if (content.length) arr.push(content);
+        }
+        break;
+      case (Node.TEXT_NODE):
+        content = normalize(node.textContent);
+        if (content.length) arr.push(content);
+        break;
+    }
+  });
+
+  if (arr.length) return arr.join(' ');
+  return '';
+}
+
 // HIGHER-LEVEL FUNCTIONS THAT RETURN AN OBJECT WITH SOURCE PROPERTY
 
+/*
+*   nameFromAriaLabel
+*/
 export function nameFromAriaLabel (element) {
   let name;
 
@@ -198,6 +201,9 @@ export function nameFromAriaLabel (element) {
   return null;
 }
 
+/*
+*   nameFromContents
+*/
 export function nameFromContents (element) {
   let name;
 
@@ -207,6 +213,9 @@ export function nameFromContents (element) {
   return null;
 }
 
+/*
+*   nameFromAttribute
+*/
 export function nameFromAttribute (element, attribute) {
   let name;
 
@@ -216,6 +225,9 @@ export function nameFromAttribute (element, attribute) {
   return null;
 }
 
+/*
+*   nameFromAltAttribute
+*/
 export function nameFromAltAttribute (element) {
   let name;
 
@@ -232,6 +244,9 @@ export function nameFromAltAttribute (element) {
   return null;
 }
 
+/*
+*   nameFromLabelElement
+*/
 export function nameFromLabelElement (element) {
   let name, label;
 
@@ -256,6 +271,9 @@ export function nameFromLabelElement (element) {
   return null;
 }
 
+/*
+*   nameFromTitleElement
+*/
 export function nameFromTitleElement (element) {
   let name, title;
 
