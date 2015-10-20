@@ -20,10 +20,40 @@ function normalize (s) {
 *   otherwise return empty string.
 */
 export function getAttributeValue (element, attribute) {
-  var value = element.getAttribute(attribute);
+  let value = element.getAttribute(attribute);
   return (value === null) ? '' : normalize(value);
 }
 
+/*
+*   getContentsOfChildNodes: Using predicate function for filtering element
+*   nodes, collect text content from all child nodes of element.
+*/
+function getContentsOfChildNodes (element, predicate) {
+  let arr = [], content;
+
+  Array.prototype.forEach.call(element.childNodes, function (node) {
+    switch (node.nodeType) {
+      case (Node.ELEMENT_NODE):
+        if (predicate(node)) {
+          content = getElementContents(node);
+          if (content.length) arr.push(content);
+        }
+        break;
+      case (Node.TEXT_NODE):
+        content = normalize(node.textContent);
+        if (content.length) arr.push(content);
+        break;
+    }
+  });
+
+  if (arr.length) return arr.join(' ');
+  return '';
+}
+
+/*
+*   couldHaveAltText: Predicate function that determines whether element
+*   (based on HTML5 spec) could have an 'alt' attribute.
+*/
 function couldHaveAltText (element) {
   let tagName = element.tagName.toLowerCase();
 
@@ -38,19 +68,22 @@ function couldHaveAltText (element) {
   return false;
 }
 
+/*
+*   isTextField: Predicate function that determines whether element (based
+*   on HTML5 spec) is a text field, which could have a user-provided value.
+*/
 function isTextField (element) {
-  var tagName = element.tagName.toLowerCase(),
+  let tagName = element.tagName.toLowerCase(),
       type;
 
   switch (tagName) {
     case 'input':
       type = element.type;
       switch (type) {
-        case 'text':
-        case 'password':
+        case 'email':
         case 'search':
         case 'tel':
-        case 'email':
+        case 'text':
         case 'url':
           return true;
 
@@ -67,16 +100,15 @@ function isTextField (element) {
 }
 
 /*
-*   getElementContents: Recursively collect, in document order, all text
-*   nodes, along with all 'alt' text of 'img' and 'area' elements, starting
-*   with element and then visiting all of its descendants. Return a string
-*   whose value is the space-separated concatenation of that content.
+*   getElementContents: Construct the text alternative for element by
+*   collecting all text node descendants, along with the 'alt' text of
+*   element and all of its element descendants.
 */
 export function getElementContents (element) {
-  var arrayOfStrings;
+  let arrayOfStrings;
 
   function getContentsRec (node, arr) {
-    var altText, content;
+    let altText, content;
 
     switch (node.nodeType) {
       case (Node.ELEMENT_NODE):
@@ -109,8 +141,13 @@ export function getElementContents (element) {
   return '';
 }
 
+/*
+*   getLabelContents: Construct the text alternative for element by
+*   collecting all text node descendants, along with the 'alt' text and
+*   text field values of element and all of its element descendants.
+*/
 export function getLabelContents (element) {
-  var arrayOfStrings;
+  let arrayOfStrings;
 
   function getContentsRec (node, arr) {
     var altText, value, content;
@@ -153,7 +190,7 @@ export function getLabelContents (element) {
 // HIGHER-LEVEL FUNCTIONS THAT RETURN AN OBJECT WITH SOURCE PROPERTY
 
 export function nameFromAriaLabel (element) {
-  var name;
+  let name;
 
   name = getAttributeValue(element, 'aria-label');
   if (name.length) return { name: name, source: 'aria-label' };
@@ -162,7 +199,7 @@ export function nameFromAriaLabel (element) {
 }
 
 export function nameFromContents (element) {
-  var name;
+  let name;
 
   name = getElementContents(element);
   if (name.length) return { name: name, source: 'contents' };
@@ -171,7 +208,7 @@ export function nameFromContents (element) {
 }
 
 export function nameFromAttribute (element, attribute) {
-  var name;
+  let name;
 
   name = getAttributeValue(element, attribute);
   if (name.length) return { name: name, source: attribute };
@@ -198,7 +235,7 @@ export function nameFromAltAttribute (element) {
 export function nameFromLabelElement (element) {
   let name, label;
 
-  // label[for=id]
+  // label [for=id]
   if (element.id) {
     label = document.querySelector('[for="' + element.id + '"]');
     if (label) {
@@ -226,6 +263,35 @@ export function nameFromTitleElement (element) {
   if (title) {
     name = getElementContents(title);
     if (name.length) return { name: name, source: 'title element' };
+  }
+
+  return null;
+}
+
+/*
+*   nameFromDetailsOrSummary: If the open attribute is present, return
+*   the contents of the summary element, followed by the contents of all
+*   child elements except summary elements. Otherwise, return only the
+*   contents of the first summary element child.
+*/
+export function nameFromDetailsOrSummary (element) {
+  let name, summary;
+
+  function isExpanded (elem) { return elem.hasAttribute('open'); }
+
+  // At minimum, always use summary contents
+  summary = element.querySelector('summary');
+  if (summary) name = getElementContents(summary);
+
+  // Get all non-summary children of element
+  if (isExpanded(element)) {
+    name += getContentsOfChildNodes(element, function (elem) {
+      return elem.tagName.toLowerCase() !== 'summary';
+    });
+    if (name.length) return { name: name, source: 'contents' };
+  }
+  else {
+    if (name.length) return { name: name, source: 'summary element' };
   }
 
   return null;
