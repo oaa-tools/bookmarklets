@@ -4,6 +4,7 @@
 
 import {
   getElementContents,
+  isLabelableElement,
   nameFromAriaLabel,
   nameFromContents,
   nameFromAttribute,
@@ -38,32 +39,6 @@ function addFieldsetLegend (element, accName) {
       }
       return addFieldsetLegend(fieldset.parentNode, accName);
     }
-  }
-
-  return accName;
-}
-
-/*
-*   handleLabelableElements: Handle labelable elements if nested in
-*   fieldset with legend.
-*/
-function handleLabelableElements (element, accName) {
-  let tagName = element.tagName.toLowerCase();
-
-  switch (tagName) {
-    case 'input':
-      if (element.type !== 'hidden')
-        accName = addFieldsetLegend(element, accName);
-      break;
-    case 'button':
-    case 'keygen':
-    case 'meter':
-    case 'output':
-    case 'progress':
-    case 'select':
-    case 'textarea':
-      accName = addFieldsetLegend(element, accName);
-      break;
   }
 
   return accName;
@@ -239,7 +214,8 @@ export function getAccessibleName (element, recFlag = false) {
   if (accName === null) accName = nameFromAriaLabel(element);
   if (accName === null) accName = nameFromNativeSemantics(element);
 
-  accName = handleLabelableElements(element, accName);
+  if (isLabelableElement(element))
+    accName = addFieldsetLegend(element, accName);
 
   return accName;
 }
