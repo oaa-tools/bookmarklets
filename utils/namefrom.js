@@ -283,7 +283,7 @@ export function nameFromDetailsOrSummary (element) {
   summary = element.querySelector('summary');
   if (summary) name = getElementContents(summary);
 
-  // Get all non-summary children of element
+  // Return either summary + details (non-summary) or summary only
   if (isExpanded(element)) {
     name += getContentsOfChildNodes(element, function (elem) {
       return elem.tagName.toLowerCase() !== 'summary';
