@@ -3,9 +3,9 @@
 */
 
 import Bookmarklet from './Bookmarklet';
-import { getAttributeValue, getAccessibleName } from './utils/accname';
 import { isDescendantOf, landmarksCss } from './utils/dom';
-import { formatInfo } from './utils/utils';
+import { getAccessibleName } from './utils/getaccname';
+import { getElementInfo, formatInfo } from './utils/info';
 
 (function () {
 
@@ -40,12 +40,6 @@ import { formatInfo } from './utils/utils';
   ];
 
   let selectors = targetList.map(function (tgt) {return '<li>' + tgt.selector + '</li>';}).join('');
-
-  function getElementInfo (element) {
-    let tagName = element.tagName.toLowerCase();
-    let role = getAttributeValue(element, 'role');
-    return role.length ? tagName + ' [role="' + role + '"]' : tagName;
-  }
 
   function getInfo (element, target) {
     let info = {
