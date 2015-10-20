@@ -14,6 +14,8 @@ import {
   nameFromDetailsOrSummary
 } from './namefrom';
 
+import { nameFromIncludesContents } from './roles';
+
 /*
 *   addFieldsetLegend: Recursively prepend legend contents of closest
 *   fieldset ancestor to the accName, which may already have content.
@@ -45,12 +47,14 @@ function addFieldsetLegend (element, accName) {
 }
 
 /*
-*   nameFromNativeSemantics: Use method appropriate to the native
-*   semantics of element to find accessible name. Includes methods
-*   for all interactive elements, and for non-interactive elements
-*   defaults to nameFromContents.
+*   nameFromNativeSemantics: Use method appropriate to the native semantics
+*   of element to find accessible name. Includes methods for all interactive
+*   elements. For non-interactive elements, if the element's ARIA role allows
+*   its acc. name to be derived from its text contents, or if recFlag is set,
+*   indicating that we are in a recursive aria-labelledby calculation, the
+*   nameFromContents method is used.
 */
-export function nameFromNativeSemantics (element) {
+export function nameFromNativeSemantics (element, recFlag = false) {
   let tagName = element.tagName.toLowerCase(),
       accName = null;
 
@@ -161,7 +165,8 @@ export function nameFromNativeSemantics (element) {
 
     // ALL OTHER ELEMENTS
     default:
-      accName = nameFromContents(element);
+      if (nameFromIncludesContents(element) || recFlag)
+        accName = nameFromContents(element);
       break;
   }
 
@@ -212,7 +217,7 @@ export function getAccessibleName (element, recFlag = false) {
 
   if (!recFlag) accName = nameFromAriaLabelledBy(element);
   if (accName === null) accName = nameFromAriaLabel(element);
-  if (accName === null) accName = nameFromNativeSemantics(element);
+  if (accName === null) accName = nameFromNativeSemantics(element, recFlag);
 
   if (isLabelableElement(element))
     accName = addFieldsetLegend(element, accName);
