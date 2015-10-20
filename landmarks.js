@@ -6,6 +6,7 @@ import Bookmarklet from './Bookmarklet';
 import { isDescendantOf, landmarksCss } from './utils/dom';
 import { getAccessibleName } from './utils/getaccname';
 import { getElementInfo, formatInfo } from './utils/info';
+import { getAriaRole } from './utils/roles';
 
 (function () {
 
@@ -43,10 +44,10 @@ import { getElementInfo, formatInfo } from './utils/info';
 
   function getInfo (element, target) {
     let info = {
-      title: 'LANDMARK INFO',
+      title:   'LANDMARK INFO',
       element: getElementInfo(element),
       accName: getAccessibleName(element),
-      role: target.label
+      role:    getAriaRole(element)
     };
 
     return formatInfo(info);

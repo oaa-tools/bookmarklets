@@ -6,6 +6,7 @@ import Bookmarklet from './Bookmarklet';
 import { formsCss } from './utils/dom';
 import { getAccessibleName } from './utils/getaccname';
 import { getElementInfo, formatInfo } from './utils/info';
+import { getAriaRole } from './utils/roles';
 
 (function () {
   let targetList = [
@@ -23,9 +24,10 @@ import { getElementInfo, formatInfo } from './utils/info';
 
   function getInfo (element, target) {
     let info = {
-      title: 'FORM INFO',
+      title:   'FORM INFO',
       element: getElementInfo(element),
-      accName: getAccessibleName(element)
+      accName: getAccessibleName(element),
+      role:    getAriaRole(element)
     };
 
     return formatInfo(info);
