@@ -150,7 +150,7 @@ export function getLabelContents (element) {
   let arrayOfStrings;
 
   function getContentsRec (node, arr) {
-    var altText, value, content;
+    let altText, value, content;
 
     switch (node.nodeType) {
       case (Node.ELEMENT_NODE):
