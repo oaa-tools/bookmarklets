@@ -94,6 +94,9 @@ export function drag (elementToDrag, dragCallback, event) {
   }
 }
 
+// NOTE: formatInfo has a new home in info.js. Remove from this module
+// after dependencies have been eliminated.
+
 /*
 *   formatInfo: Convert info properties into a string with line breaks.
 */
