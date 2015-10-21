@@ -54,8 +54,19 @@ export function countChildrenWithTagNames (element, tagNames) {
 */
 export function isDescendantOf (element, tagNames) {
   if (typeof element.closest === 'function') {
-    for (let i = 0; i < tagNames.length; i++)
-      if (element.closest(tagNames[i])) return true;
+    return tagNames.some(name => element.closest(name) !== null);
+  }
+  return false;
+}
+
+/*
+*   hasParentWithName: Determine whether element has a parent with
+*   tagName in the list of tagNames.
+*/
+export function hasParentWithName (element, tagNames) {
+  let parentTagName = element.parentElement.tagName.toLowerCase();
+  if (parentTagName) {
+    return tagNames.some(name => parentTagName === name);
   }
   return false;
 }
