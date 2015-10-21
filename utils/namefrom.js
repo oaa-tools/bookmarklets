@@ -43,6 +43,16 @@ function couldHaveAltText (element) {
 }
 
 /*
+*   hasEmptyAltText: Determine whether the alt attribute is present
+*   and its value is the empty string.
+*/
+export function hasEmptyAltText (element) {
+  let val = element.getAttribute('alt'); // if not present, returns null
+  if (val !== null) return (normalize(val).length === 0);
+  return false;
+}
+
+/*
 *   isTextField: Based on HTML5 specification, determine whether element
 *   is a text field, which could have a user-provided value.
 */
