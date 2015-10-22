@@ -24,10 +24,10 @@ import { getAriaRole } from './utils/roles';
 
   function getInfo (element, target) {
     let info = {
-      title:   'FORM INFO',
-      element: getElementInfo(element),
-      accName: getAccessibleName(element),
-      role:    getAriaRole(element)
+      title:    'FORM INFO',
+      element:  getElementInfo(element),
+      accName:  getAccessibleName(element),
+      role:     getAriaRole(element)
     };
 
     return formatInfo(info);

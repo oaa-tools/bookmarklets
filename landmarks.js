@@ -44,10 +44,10 @@ import { getAriaRole } from './utils/roles';
 
   function getInfo (element, target) {
     let info = {
-      title:   'LANDMARK INFO',
-      element: getElementInfo(element),
-      accName: getAccessibleName(element),
-      role:    getAriaRole(element)
+      title:    'LANDMARK INFO',
+      element:  getElementInfo(element),
+      accName:  getAccessibleName(element),
+      role:     getAriaRole(element)
     };
 
     return formatInfo(info);
