@@ -49,6 +49,7 @@ function couldHaveAltText (element) {
 export function hasEmptyAltText (element) {
   let val = element.getAttribute('alt'); // if not present, returns null
   if (val !== null) return (normalize(val).length === 0);
+
   return false;
 }
 
@@ -262,10 +263,9 @@ export function nameFromAttribute (element, attribute) {
 *   nameFromAltAttribute
 */
 export function nameFromAltAttribute (element) {
-  let name;
+  let name = element.getAttribute('alt');
 
-  // Detect whether attribute is present
-  name = element.getAttribute('alt');
+  // Attribute is present
   if (name !== null) {
     name = normalize(name);
     return (name.length) ?
