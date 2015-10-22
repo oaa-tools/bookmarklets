@@ -93,24 +93,3 @@ export function drag (elementToDrag, dragCallback, event) {
     else e.cancelBubble = true;
   }
 }
-
-// NOTE: formatInfo has a new home in info.js. Remove from this module
-// after dependencies have been eliminated.
-
-/*
-*   formatInfo: Convert info properties into a string with line breaks.
-*/
-export function formatInfo (info) {
-  let value = '';
-  let { title, element, accName, role, props } = info;
-
-  value += '=== ' + title + ' ===';
-  if (element) value += '\nELEMENT: ' + element;
-  if (accName) {
-    value += '\nACC. NAME: ' + accName.name + '\nFROM: ' + accName.source;
-  }
-  if (role) value += '\nARIA ROLE: ' + role;
-  if (props) value += '\nPROPERTIES: ' + props;
-
-  return value;
-}
