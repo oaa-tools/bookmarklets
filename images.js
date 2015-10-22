@@ -8,7 +8,7 @@ import { getAccessibleName } from './utils/getaccname';
 import { getElementInfo, formatInfo } from './utils/info';
 import { getAriaRole } from './utils/roles';
 
-(function (utils) {
+(function () {
   let targetList = [
     {selector: "area", color: "teal",   label: "area"},
     {selector: "img",  color: "olive",  label: "img"},
