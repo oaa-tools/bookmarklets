@@ -8,8 +8,6 @@ import { getAccessibleName } from './utils/getaccname';
 import { getElementInfo, formatInfo } from './utils/info';
 import { getAriaRole } from './utils/roles';
 
-
-
 (function () {
   let targetList = [
     {selector: "h1", color: "navy",   label: "h1"},
