@@ -47,8 +47,11 @@ function couldHaveAltText (element) {
 *   and its value is the empty string.
 */
 export function hasEmptyAltText (element) {
-  let val = element.getAttribute('alt'); // if not present, returns null
-  if (val !== null) return (normalize(val).length === 0);
+  let value = element.getAttribute('alt');
+
+   // Attribute is present
+  if (value !== null)
+    return (normalize(value).length === 0);
 
   return false;
 }
