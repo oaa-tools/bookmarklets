@@ -8,8 +8,6 @@ import { getAccessibleName } from './utils/getaccname';
 import { getElementInfo, formatInfo } from './utils/info';
 import { getAriaRole } from './utils/roles';
 
-
-
 (function () {
   let targetList = [
     {selector: "dl", color: "olive",  label: "dl"},
@@ -20,19 +18,14 @@ import { getAriaRole } from './utils/roles';
   let selectors = targetList.map(function (tgt) {return tgt.selector;}).join(', ');
 
   function getInfo (element, target) {
-    let roleInfo, listCount;
+    let listCount;
 
     switch (target.label) {
       case 'dl':
-        roleInfo  = '';
         listCount = countChildrenWithTagNames(element, ['DT', 'DD']);
         break;
       case 'ol':
-        roleInfo  = 'list';
-        listCount = countChildrenWithTagNames(element, ['LI']);
-        break;
       case 'ul':
-        roleInfo  = 'list';
         listCount = countChildrenWithTagNames(element, ['LI']);
         break;
     }
