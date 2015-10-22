@@ -1,11 +1,14 @@
 /*
-*   headings.js: bookmarklet script for highlighting HTML heading elements
+*   headings.js: bookmarklet script for highlighting heading elements
 */
 
 import Bookmarklet from './Bookmarklet';
-import { getAccessibleNameUseContents } from './utils/accname';
 import { headingsCss } from './utils/dom';
-import { formatInfo } from './utils/utils';
+import { getAccessibleName } from './utils/getaccname';
+import { getElementInfo, formatInfo } from './utils/info';
+import { getAriaRole } from './utils/roles';
+
+
 
 (function () {
   let targetList = [
@@ -21,10 +24,11 @@ import { formatInfo } from './utils/utils';
 
   function getInfo (element, target) {
     let info = {
-      title: 'HEADING INFO',
-      accName: getAccessibleNameUseContents(element),
-      role: 'heading',
-      props: 'level ' + target.label.substring(1)
+      title:    'HEADING INFO',
+      element:  getElementInfo(element),
+      accName:  getAccessibleName(element),
+      role:     getAriaRole(element),
+      props:    'level ' + target.label.substring(1)
     };
 
     return formatInfo(info);

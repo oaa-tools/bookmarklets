@@ -1,11 +1,14 @@
 /*
-*   lists.js: bookmarklet script for highlighting HTML list elements
+*   lists.js: bookmarklet script for highlighting list elements
 */
 
 import Bookmarklet from './Bookmarklet';
-import { getAccessibleName } from './utils/accname';
 import { countChildrenWithTagNames, listsCss } from './utils/dom';
-import { formatInfo } from './utils/utils';
+import { getAccessibleName } from './utils/getaccname';
+import { getElementInfo, formatInfo } from './utils/info';
+import { getAriaRole } from './utils/roles';
+
+
 
 (function () {
   let targetList = [
@@ -35,10 +38,11 @@ import { formatInfo } from './utils/utils';
     }
 
     let info = {
-      title: 'LIST INFO',
-      accName: getAccessibleName(element),
-      role: roleInfo,
-      props: listCount + ' items'
+      title:    'LIST INFO',
+      element:  getElementInfo(element),
+      accName:  getAccessibleName(element),
+      role:     getAriaRole(element),
+      props:    listCount + ' items'
     };
 
     return formatInfo(info);
