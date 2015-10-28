@@ -5,7 +5,7 @@
 import Bookmarklet from './Bookmarklet';
 import { countChildrenWithTagNames, listsCss } from './utils/dom';
 import { getAccessibleName } from './utils/getaccname';
-import { getElementInfo, formatInfo } from './utils/info';
+import { getElementInfo } from './utils/info';
 import { getAriaRole } from './utils/roles';
 
 (function () {
@@ -38,7 +38,7 @@ import { getAriaRole } from './utils/roles';
       props:    listCount + ' items'
     };
 
-    return formatInfo(info);
+    return info;
   }
 
   let params = {

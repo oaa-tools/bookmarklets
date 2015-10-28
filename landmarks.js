@@ -5,7 +5,7 @@
 import Bookmarklet from './Bookmarklet';
 import { isDescendantOf, landmarksCss } from './utils/dom';
 import { getAccessibleName } from './utils/getaccname';
-import { getElementInfo, formatInfo } from './utils/info';
+import { getElementInfo } from './utils/info';
 import { getAriaRole } from './utils/roles';
 
 (function () {
@@ -50,7 +50,7 @@ import { getAriaRole } from './utils/roles';
       role:     getAriaRole(element)
     };
 
-    return formatInfo(info);
+    return info;
   }
 
   let params = {
