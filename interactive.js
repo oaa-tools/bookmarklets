@@ -5,7 +5,7 @@
 import Bookmarklet from './Bookmarklet';
 import { interactiveCss } from './utils/dom';
 import { getAccessibleName } from './utils/getaccname';
-import { getElementInfo, formatInfo } from './utils/info';
+import { getElementInfo } from './utils/info';
 import { getAriaRole } from './utils/roles';
 
 (function () {
@@ -44,7 +44,11 @@ import { getAriaRole } from './utils/roles';
       role:     getAriaRole(element)
     };
 
-    return formatInfo(info);
+    return info;
+  }
+
+  function evalInfo (info, target) {
+    target.color = (info.accName === null) ? 'red' : 'blue';
   }
 
   let params = {
@@ -53,6 +57,7 @@ import { getAriaRole } from './utils/roles';
     targetList: targetList,
     cssClass:   interactiveCss,
     getInfo:    getInfo,
+    evalInfo:   evalInfo,
     dndFlag:    true
   };
 
