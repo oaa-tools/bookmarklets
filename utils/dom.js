@@ -3,6 +3,7 @@
 */
 
 import { createOverlay, addDragAndDrop } from './overlay';
+import { formatInfo } from './info';
 
 /*
 *   isVisible: Recursively check element properties from getComputedStyle
@@ -78,24 +79,25 @@ export function hasParentWithName (element, tagNames) {
 *   if dndFlag is set, add drag-and-drop functionality.
 */
 export function addNodes (params) {
-  let { targetList, cssClass, getInfo, dndFlag } = params;
+  let { targetList, cssClass, getInfo, evalInfo, dndFlag } = params;
   let counter = 0;
 
   targetList.forEach(function (target) {
     // Collect elements based on selector defined for target
-    var elements = document.querySelectorAll(target.selector);
+    let elements = document.querySelectorAll(target.selector);
 
     // Filter elements if target defines a filter function
     if (typeof target.filter === 'function')
       elements = Array.prototype.filter.call(elements, target.filter);
 
     Array.prototype.forEach.call(elements, function (element) {
-      var boundingRect, overlayNode;
       if (isVisible(element)) {
-        boundingRect = element.getBoundingClientRect();
-        overlayNode = createOverlay(target, boundingRect, cssClass);
+        let info = getInfo(element, target);
+        if (evalInfo) evalInfo(info, target);
+        let boundingRect = element.getBoundingClientRect();
+        let overlayNode = createOverlay(target, boundingRect, cssClass);
         if (dndFlag) addDragAndDrop(overlayNode);
-        if (getInfo) overlayNode.title = getInfo(element, target);
+        overlayNode.title = formatInfo(info);
         document.body.appendChild(overlayNode);
         counter += 1;
       }
