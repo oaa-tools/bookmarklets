@@ -1,5 +1,10 @@
 /*
 *   roles.js
+*
+*   Note: The information in this module is based on the following documents:
+*   1. ARIA in HTML (https://specs.webplatform.org/html-aria/webspecs/master/)
+*   2. WAI-ARIA 1.1 (http://www.w3.org/TR/wai-aria-1.1/)
+*   3. WAI-ARIA 1.0 (http://www.w3.org/TR/wai-aria/)
 */
 
 import { isDescendantOf, hasParentWithName } from './dom';
@@ -29,17 +34,112 @@ function inListOfOptions (element) {
 }
 
 /*
+*   getValidRole: For each value in space-separated list, if it matches a
+*   valid ARIA role, return that role. Otherwise, if there are no matches
+*   return null.
+*/
+export function getValidRole (spaceSepList) {
+  let arr = spaceSepList.split(' ');
+
+  for (let i = 0; i < arr.length; i++) {
+    switch (arr[i]) {
+
+      // WIDGET
+      case 'alert':
+      case 'alertdialog':
+      case 'button':
+      case 'checkbox':
+      case 'dialog':
+      case 'gridcell':
+      case 'link':
+      case 'log':
+      case 'marquee':
+      case 'menuitem':
+      case 'menuitemcheckbox':
+      case 'menuitemradio':
+      case 'option':
+      case 'progressbar':
+      case 'radio':
+      case 'scrollbar':
+      case 'searchbox':         // ARIA 1.1
+      case 'slider':
+      case 'spinbutton':
+      case 'status':
+      case 'switch':            // ARIA 1.1
+      case 'tab':
+      case 'tabpanel':
+      case 'textbox':
+      case 'timer':
+      case 'tooltip':
+      case 'treeitem':
+
+      // COMPOSITE WIDGET
+      case 'combobox':
+      case 'grid':
+      case 'listbox':
+      case 'menu':
+      case 'menubar':
+      case 'radiogroup':
+      case 'tablist':
+      case 'tree':
+      case 'treegrid':
+
+      // DOCUMENT STRUCTURE
+      case 'article':
+      case 'cell':              // ARIA 1.1
+      case 'columnheader':
+      case 'definition':
+      case 'directory':
+      case 'document':
+      case 'group':
+      case 'heading':
+      case 'img':
+      case 'list':
+      case 'listitem':
+      case 'math':
+      case 'none':              // ARIA 1.1
+      case 'note':
+      case 'presentation':
+      case 'region':
+      case 'row':
+      case 'rowgroup':
+      case 'rowheader':
+      case 'separator':
+      case 'table':             // ARIA 1.1
+      case 'text':              // ARIA 1.1
+      case 'toolbar':
+
+      // LANDMARK
+      case 'application':
+      case 'banner':
+      case 'complementary':
+      case 'contentinfo':
+      case 'form':
+      case 'main':
+      case 'navigation':
+      case 'search':
+        return arr[i];
+
+      default:
+        break;
+    }
+  } // END LOOP
+
+  return null;
+}
+
+/*
 *   getAriaRole: Get the value of the role attribute, if it is present. If
 *   not specified, get the default role of element if it has one. Based on
-*   ARIA in HTML (https://specs.webplatform.org/html-aria/webspecs/master/)
-*   as of 21 October 2015.
+*   ARIA in HTML as of 21 October 2015.
 */
 export function getAriaRole (element) {
   let tagName = element.tagName.toLowerCase(),
       type    = element.type;
 
-  if (element.hasAttribute('role'))
-    return getAttributeValue(element, 'role');
+  if (element.hasAttribute('role')) {
+    return getValidRole(getAttributeValue(element, 'role'));
+  }
 
   switch (tagName) {
 
@@ -169,6 +269,7 @@ export function nameFromIncludesContents (element) {
 
   switch (role) {
     case 'button':
+    case 'cell':                // ARIA 1.1
     case 'checkbox':
     case 'columnheader':
     case 'directory':
@@ -184,7 +285,9 @@ export function nameFromIncludesContents (element) {
     case 'row':
     case 'rowgroup':
     case 'rowheader':
+    case 'switch':              // ARIA 1.1
     case 'tab':
+    case 'text':                // ARIA 1.1
     case 'tooltip':
     case 'treeitem':
       return true;
