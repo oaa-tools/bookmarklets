@@ -227,30 +227,6 @@ function getContentsOfChildNodes (element, predicate) {
 // HIGHER-LEVEL FUNCTIONS THAT RETURN AN OBJECT WITH SOURCE PROPERTY
 
 /*
-*   nameFromAriaLabel
-*/
-export function nameFromAriaLabel (element) {
-  let name;
-
-  name = getAttributeValue(element, 'aria-label');
-  if (name.length) return { name: name, source: 'aria-label' };
-
-  return null;
-}
-
-/*
-*   nameFromContents
-*/
-export function nameFromContents (element) {
-  let name;
-
-  name = getElementContents(element);
-  if (name.length) return { name: name, source: 'contents' };
-
-  return null;
-}
-
-/*
 *   nameFromAttribute
 */
 export function nameFromAttribute (element, attribute) {
@@ -277,6 +253,38 @@ export function nameFromAltAttribute (element) {
   }
 
   // Attribute not present
+  return null;
+}
+
+/*
+*   nameFromContents
+*/
+export function nameFromContents (element) {
+  let name;
+
+  name = getElementContents(element);
+  if (name.length) return { name: name, source: 'contents' };
+
+  return null;
+}
+
+/*
+*   nameFromDefault
+*/
+export function nameFromDefault (name) {
+  return name.length ? { name: name, source: 'default' } : null;
+}
+
+/*
+*   nameFromDescendant
+*/
+export function nameFromDescendant (element, tagName) {
+  let descendant = element.querySelector(tagName);
+  if (descendant) {
+    let name = getElementContents(descendant);
+    if (name.length) return { name: name, source: tagName + ' element' };
+  }
+
   return null;
 }
 
@@ -308,25 +316,10 @@ export function nameFromLabelElement (element) {
 }
 
 /*
-*   nameFromTitleElement
-*/
-export function nameFromTitleElement (element) {
-  let name, title;
-
-  title = element.querySelector('title');
-  if (title) {
-    name = getElementContents(title);
-    if (name.length) return { name: name, source: 'title element' };
-  }
-
-  return null;
-}
-
-/*
 *   nameFromDetailsOrSummary: If element is expanded (has open attribute),
 *   return the contents of the summary element followed by the text contents
 *   of element and all of its non-summary child elements. Otherwise, return
-*   only the contents of the first summary element child.
+*   only the contents of the first summary element descendant.
 */
 export function nameFromDetailsOrSummary (element) {
   let name, summary;
