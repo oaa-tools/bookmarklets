@@ -1,20 +1,25 @@
 /*
 *   getaccname.js
+*
+*   Note: Information in this module is based on the following documents:
+*   1. HTML Accessibility API Mappings 1.0 (http://rawgit.com/w3c/aria/master/html-aam/html-aam.html)
+*   2. SVG Accessibility API Mappings (http://rawgit.com/w3c/aria/master/svg-aam/svg-aam.html)
 */
 
 import {
   getElementContents,
+  hasFirstValue,
   isLabelableElement,
-  nameFromAriaLabel,
-  nameFromContents,
   nameFromAttribute,
   nameFromAltAttribute,
+  nameFromContents,
+  nameFromDefault,
+  nameFromDescendant,
   nameFromLabelElement,
-  nameFromTitleElement,
   nameFromDetailsOrSummary
 } from './namefrom';
 
-import { nameFromIncludesContents } from './roles';
+import { getAriaRole, nameFromIncludesContents } from './roles';
 
 /*
 *   addFieldsetLegend: Recursively prepend legend contents of closest
@@ -56,18 +61,28 @@ function addFieldsetLegend (element, accName) {
 */
 export function nameFromNativeSemantics (element, recFlag = false) {
   let tagName = element.tagName.toLowerCase(),
+      ariaRole = getAriaRole(element),
       accName = null;
 
+  // TODO: Verify that this applies to all elements
+  if (ariaRole && (ariaRole === 'presentation' || ariaRole === 'none')) {
+    return null;
+  }
+
   switch (tagName) {
-    // FORM ELEMENTS
+    // FORM ELEMENTS: INPUT
     case 'input':
       switch (element.type) {
-        // DO NOTHING FOR TYPE HIDDEN
+        // HIDDEN
         case 'hidden':
+          if (recFlag) {
+            accName = nameFromLabelElement(element);
+          }
           break;
 
         // TEXT FIELDS
         case 'email':
+        case 'password':
         case 'search':
         case 'tel':
         case 'text':
@@ -83,12 +98,12 @@ export function nameFromNativeSemantics (element, recFlag = false) {
 
         case 'reset':
           accName = nameFromAttribute(element, 'value');
-          if (accName === null) accName = { name: 'Reset', source: 'default' };
+          if (accName === null) accName = nameFromDefault('Reset');
           break;
 
         case 'submit':
           accName = nameFromAttribute(element, 'value');
-          if (accName === null) accName = { name: 'Submit', source: 'default' };
+          if (accName === null) accName = nameFromDefault('Submit');
           break;
 
         case 'image':
@@ -102,7 +117,7 @@ export function nameFromNativeSemantics (element, recFlag = false) {
       }
       break;
 
-    // FORM ELEMENTS (CONT.)
+    // FORM ELEMENTS: OTHER
     case 'button':
       accName = nameFromContents(element);
       break;
@@ -147,14 +162,14 @@ export function nameFromNativeSemantics (element, recFlag = false) {
       break;
 
     case 'svg': // added
-      accName = nameFromTitleElement(element);
+      accName = nameFromDescendant(element, 'title');
       break;
 
     case 'video': // if 'controls' attribute is present
       accName = { name: 'NOT YET IMPLEMENTED', source: '' };
       break;
 
-    // OTHER INTERACTIVE ELEMENTS
+    // OTHER ELEMENTS
     case 'a':
       accName = nameFromContents(element);
       break;
@@ -163,7 +178,15 @@ export function nameFromNativeSemantics (element, recFlag = false) {
       accName = nameFromDetailsOrSummary(element);
       break;
 
-    // ALL OTHER ELEMENTS
+    case 'figure':
+      accName = nameFromDescendant(element, 'figcaption');
+      break;
+
+    case 'table':
+      accName = nameFromDescendant(element, 'caption');
+      break;
+
+    // ELEMENTS NOT SPECIFIED ABOVE
     default:
       if (nameFromIncludesContents(element) || recFlag)
         accName = nameFromContents(element);
@@ -216,7 +239,7 @@ export function getAccessibleName (element, recFlag = false) {
   let accName = null;
 
   if (!recFlag) accName = nameFromAriaLabelledBy(element);
-  if (accName === null) accName = nameFromAriaLabel(element);
+  if (accName === null) accName = nameFromAttribute(element, 'aria-label');
   if (accName === null) accName = nameFromNativeSemantics(element, recFlag);
 
   if (isLabelableElement(element))
