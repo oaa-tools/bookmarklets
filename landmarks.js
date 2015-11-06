@@ -31,13 +31,13 @@ import { getAriaRole } from './utils/roles';
   }
 
   let targetList = [
-    {selector: 'aside:not([role]), [role="complementary"]',           color: "brown",  label: "complementary"},
-    {selector: 'footer, [role="contentinfo"]', filter: isContentinfo, color: "olive",  label: "contentinfo"},
-    {selector: '[role="application"]',                                color: "teal",   label: "application"},
-    {selector: 'nav, [role="navigation"]',                            color: "green",  label: "navigation"},
-    {selector: 'header, [role="banner"]', filter: isBanner,           color: "gray",   label: "banner"},
-    {selector: '[role="search"]',                                     color: "purple", label: "search"},
-    {selector: 'main, [role="main"]',                                 color: "navy",   label: "main"}
+    {selector: 'aside:not([role]), [role~="complementary"], [role~="COMPLEMENTARY"]',         color: "brown",  label: "complementary"},
+    {selector: 'footer, [role~="contentinfo"], [role~="CONTENTINFO"]', filter: isContentinfo, color: "olive",  label: "contentinfo"},
+    {selector: '[role~="application"], [role~="APPLICATION"]',                                color: "teal",   label: "application"},
+    {selector: 'nav, [role~="navigation"], [role~="NAVIGATION"]',                             color: "green",  label: "navigation"},
+    {selector: 'header, [role~="banner"], [role~="BANNER"]', filter: isBanner,                color: "gray",   label: "banner"},
+    {selector: '[role~="search"], [role~="SEARCH"]',                                          color: "purple", label: "search"},
+    {selector: 'main, [role~="main"], [role~="MAIN"]',                                        color: "navy",   label: "main"}
   ];
 
   let selectors = targetList.map(function (tgt) {return '<li>' + tgt.selector + '</li>';}).join('');
