@@ -34,96 +34,100 @@ function inListOfOptions (element) {
 }
 
 /*
-*   getValidRole: For each value in space-separated list, if it matches a
-*   valid ARIA role, return that role. Otherwise, if there are no matches
-*   return null.
+*   validRoles: Reference list of all concrete ARIA roles as specified in
+*   WAI-ARIA 1.1 Working Draft of 14 July 2015
+*/
+const validRoles = [
+
+  // LANDMARK
+  'application',
+  'banner',
+  'complementary',
+  'contentinfo',
+  'form',
+  'main',
+  'navigation',
+  'search',
+
+  // WIDGET
+  'alert',
+  'alertdialog',
+  'button',
+  'checkbox',
+  'dialog',
+  'gridcell',
+  'link',
+  'log',
+  'marquee',
+  'menuitem',
+  'menuitemcheckbox',
+  'menuitemradio',
+  'option',
+  'progressbar',
+  'radio',
+  'scrollbar',
+  'searchbox',
+  'slider',
+  'spinbutton',
+  'status',
+  'switch',
+  'tab',
+  'tabpanel',
+  'textbox',
+  'timer',
+  'tooltip',
+  'treeitem',
+
+  // COMPOSITE WIDGET
+  'combobox',
+  'grid',
+  'listbox',
+  'menu',
+  'menubar',
+  'radiogroup',
+  'tablist',
+  'tree',
+  'treegrid',
+
+  // DOCUMENT STRUCTURE
+  'article',
+  'cell',
+  'columnheader',
+  'definition',
+  'directory',
+  'document',
+  'group',
+  'heading',
+  'img',
+  'list',
+  'listitem',
+  'math',
+  'none',
+  'note',
+  'presentation',
+  'region',
+  'row',
+  'rowgroup',
+  'rowheader',
+  'separator',
+  'table',
+  'text',
+  'toolbar'
+];
+
+/*
+*   getValidRole: Examine each value in space-separated list by attempting
+*   to find its match in the validRoles array. If a match is found, return
+*   it. Otherwise, return null.
 */
 export function getValidRole (spaceSepList) {
   let arr = spaceSepList.split(' ');
 
   for (let i = 0; i < arr.length; i++) {
-    switch (arr[i]) {
-
-      // WIDGET
-      case 'alert':
-      case 'alertdialog':
-      case 'button':
-      case 'checkbox':
-      case 'dialog':
-      case 'gridcell':
-      case 'link':
-      case 'log':
-      case 'marquee':
-      case 'menuitem':
-      case 'menuitemcheckbox':
-      case 'menuitemradio':
-      case 'option':
-      case 'progressbar':
-      case 'radio':
-      case 'scrollbar':
-      case 'searchbox':         // ARIA 1.1
-      case 'slider':
-      case 'spinbutton':
-      case 'status':
-      case 'switch':            // ARIA 1.1
-      case 'tab':
-      case 'tabpanel':
-      case 'textbox':
-      case 'timer':
-      case 'tooltip':
-      case 'treeitem':
-
-      // COMPOSITE WIDGET
-      case 'combobox':
-      case 'grid':
-      case 'listbox':
-      case 'menu':
-      case 'menubar':
-      case 'radiogroup':
-      case 'tablist':
-      case 'tree':
-      case 'treegrid':
-
-      // DOCUMENT STRUCTURE
-      case 'article':
-      case 'cell':              // ARIA 1.1
-      case 'columnheader':
-      case 'definition':
-      case 'directory':
-      case 'document':
-      case 'group':
-      case 'heading':
-      case 'img':
-      case 'list':
-      case 'listitem':
-      case 'math':
-      case 'none':              // ARIA 1.1
-      case 'note':
-      case 'presentation':
-      case 'region':
-      case 'row':
-      case 'rowgroup':
-      case 'rowheader':
-      case 'separator':
-      case 'table':             // ARIA 1.1
-      case 'text':              // ARIA 1.1
-      case 'toolbar':
-
-      // LANDMARK
-      case 'application':
-      case 'banner':
-      case 'complementary':
-      case 'contentinfo':
-      case 'form':
-      case 'main':
-      case 'navigation':
-      case 'search':
-        return arr[i];
-
-      default:
-        break;
-    }
-  } // END LOOP
+    let value = arr[i].toLowerCase();
+    let validRole = validRoles.find(role => role === value);
+    if (validRole) return validRole;
+  }
 
   return null;
 }
