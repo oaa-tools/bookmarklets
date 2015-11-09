@@ -68,6 +68,7 @@ function isTextField (element) {
     case 'input':
       switch (type) {
         case 'email':
+        case 'password':
         case 'search':
         case 'tel':
         case 'text':
