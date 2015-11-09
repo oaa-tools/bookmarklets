@@ -66,11 +66,11 @@ const validRoles = [
   'progressbar',
   'radio',
   'scrollbar',
-  'searchbox',
+  'searchbox',             // ARIA 1.1
   'slider',
   'spinbutton',
   'status',
-  'switch',
+  'switch',                // ARIA 1.1
   'tab',
   'tabpanel',
   'textbox',
@@ -91,7 +91,7 @@ const validRoles = [
 
   // DOCUMENT STRUCTURE
   'article',
-  'cell',
+  'cell',                  // ARIA 1.1
   'columnheader',
   'definition',
   'directory',
@@ -102,7 +102,7 @@ const validRoles = [
   'list',
   'listitem',
   'math',
-  'none',
+  'none',                  // ARIA 1.1
   'note',
   'presentation',
   'region',
@@ -110,8 +110,8 @@ const validRoles = [
   'rowgroup',
   'rowheader',
   'separator',
-  'table',
-  'text',
+  'table',                 // ARIA 1.1
+  'text',                  // ARIA 1.1
   'toolbar'
 ];
 
@@ -264,8 +264,8 @@ export function getAriaRole (element) {
 }
 
 /*
-*   nameFromIncludesContents: Determine whether element has an ARIA role
-*   with a nameFrom property the includes 'contents'.
+*   nameFromIncludesContents: Determine whether the ARIA role of element
+*   specifies that its 'name from' includes 'contents'.
 */
 export function nameFromIncludesContents (element) {
   let elementRole = getAriaRole(element);
