@@ -268,34 +268,34 @@ export function getAriaRole (element) {
 *   with a nameFrom property the includes 'contents'.
 */
 export function nameFromIncludesContents (element) {
-  let role = getAriaRole(element);
-  if (role === null) return false;
+  let elementRole = getAriaRole(element);
+  if (elementRole === null) return false;
 
-  switch (role) {
-    case 'button':
-    case 'cell':                // ARIA 1.1
-    case 'checkbox':
-    case 'columnheader':
-    case 'directory':
-    case 'gridcell':
-    case 'heading':
-    case 'link':
-    case 'listitem':
-    case 'menuitem':
-    case 'menuitemcheckbox':
-    case 'menuitemradio':
-    case 'option':
-    case 'radio':
-    case 'row':
-    case 'rowgroup':
-    case 'rowheader':
-    case 'switch':              // ARIA 1.1
-    case 'tab':
-    case 'text':                // ARIA 1.1
-    case 'tooltip':
-    case 'treeitem':
-      return true;
-    default:
-      return false;
-  }
+  let contentsRoles = [
+    'button',
+    'cell',                // ARIA 1.1
+    'checkbox',
+    'columnheader',
+    'directory',
+    'gridcell',
+    'heading',
+    'link',
+    'listitem',
+    'menuitem',
+    'menuitemcheckbox',
+    'menuitemradio',
+    'option',
+    'radio',
+    'row',
+    'rowgroup',
+    'rowheader',
+    'switch',              // ARIA 1.1
+    'tab',
+    'text',                // ARIA 1.1
+    'tooltip',
+    'treeitem'
+  ];
+
+  let contentsRole = contentsRoles.find(role => role === elementRole);
+  return (typeof contentsRole !== 'undefined');
 }
