@@ -9,6 +9,8 @@ requirements, including:
 * Lists
 * Forms (work in progress)
 
+To install the bookmarklets, please visit the [Accessibility Bookmarklets website](https://accessibility-bookmarklets.org).
+
 Instructions for using the web accessibility bookmarklets:
 
 * An outlined area (e.g., a heading outline with label 'h2') is referred
