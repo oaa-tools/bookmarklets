@@ -3,7 +3,6 @@
 */
 
 import { isEmbeddedControl, getEmbeddedControlValue } from './embedded';
-import { getAriaRole } from './roles';
 
 // LOW-LEVEL FUNCTIONS
 
