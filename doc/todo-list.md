@@ -1,6 +1,17 @@
-## Bookmarklets Development: To Do List
+## Bookmarklets To Do Lists
 
-1. Add aria-describedby calculations/information.
-1. Determine whether embedded elements should be listed in getaccname.js/nameFromNativeSemantics and, if so, how to calculate accessible name.
-1. Determine where to add embedded label calculations, and the mapping of the roles specified in the name calculation algorithm to HTML5 elements.
-1. Determine how to improve the selectors for landmarks, possibly with additional filtering.
+### Development
+
+* Add aria-describedby calculations/information.
+* Improve the accuracy of selectors for landmarks, possibly with additional filtering.
+* Determine where to add embedded label calculations, and the mapping of the roles specified in the name calculation algorithm to HTML5 elements.
+* Determine whether embedded elements should be included in getaccname.js/nameFromNativeSemantics and, if so, how to calculate accessible name.
+
+### Documentation
+
+* What needs to be tested?
+* What testing artifacts/scripts are needed?
+
+### Collaboration
+
+* Who is available to do testing?
