@@ -2,6 +2,9 @@
 *   namefrom.js
 */
 
+import { isEmbeddedControl, getEmbeddedControlValue } from './embedded';
+import { getAriaRole } from './roles';
+
 // LOW-LEVEL FUNCTIONS
 
 /*
@@ -57,37 +60,6 @@ export function hasEmptyAltText (element) {
 }
 
 /*
-*   isTextField: Based on HTML5 specification, determine whether element
-*   is a text field, which could have a user-provided value.
-*/
-function isTextField (element) {
-  let tagName = element.tagName.toLowerCase(),
-      type    = element.type;
-
-  switch (tagName) {
-    case 'input':
-      switch (type) {
-        case 'email':
-        case 'password':
-        case 'search':
-        case 'tel':
-        case 'text':
-        case 'url':
-          return true;
-
-        default:
-          return false;
-      }
-      break;
-
-    case 'textarea':
-      return true;
-  }
-
-  return false;
-}
-
-/*
 *   isLabelableElement: Based on HTML5 specification, determine whether
 *   element can be associated with a label.
 */
@@ -113,14 +85,14 @@ export function isLabelableElement (element) {
 
 /*
 *   getElementContents: Construct the text alternative for element by
-*   collecting all text node descendants, along with the 'alt' text of
-*   element and all of its element descendants.
+*   collecting all of its text node descendants, along with 'alt' text
+*   and embedded control values of corresponding element descendants.
 */
 export function getElementContents (element) {
   let arrayOfStrings;
 
   function getContentsRec (node, arr) {
-    let altText, content;
+    let altText, content, value;
 
     switch (node.nodeType) {
       case (Node.ELEMENT_NODE):
@@ -128,50 +100,8 @@ export function getElementContents (element) {
           altText = getAttributeValue(node, 'alt');
           if (altText.length) arr.push(altText);
         }
-        else {
-          if (node.hasChildNodes()) {
-            Array.prototype.forEach.call(node.childNodes, function (n) {
-              getContentsRec(n, arr);
-            });
-          }
-        }
-        break;
-      case (Node.TEXT_NODE):
-        content = normalize(node.textContent);
-        if (content.length) arr.push(content);
-        break;
-      default:
-        break;
-    }
-
-    return arr;
-  }
-
-  arrayOfStrings = getContentsRec(element, []);
-  if (arrayOfStrings.length) return arrayOfStrings.join(' ');
-
-  return '';
-}
-
-/*
-*   getLabelContents: Construct the text alternative for element by
-*   collecting all text node descendants, along with the 'alt' text and
-*   text field values of element and all of its element descendants.
-*/
-export function getLabelContents (element) {
-  let arrayOfStrings;
-
-  function getContentsRec (node, arr) {
-    let altText, value, content;
-
-    switch (node.nodeType) {
-      case (Node.ELEMENT_NODE):
-        if (couldHaveAltText(node)) {
-          altText = getAttributeValue(node, 'alt');
-          if (altText.length) arr.push(altText);
-        }
-        else if (isTextField(node)) {
-          value = normalize(node.value);
+        else if (isEmbeddedControl(node)) {
+          value = getEmbeddedControlValue(node);
           if (value.length) arr.push(value);
         }
         else {
@@ -299,7 +229,7 @@ export function nameFromLabelElement (element) {
   if (element.id) {
     label = document.querySelector('[for="' + element.id + '"]');
     if (label) {
-      name = getLabelContents(label);
+      name = getElementContents(label);
       if (name.length) return { name: name, source: 'label [for=id]' };
     }
   }
@@ -308,7 +238,7 @@ export function nameFromLabelElement (element) {
   if (typeof element.closest === 'function') {
     label = element.closest('label');
     if (label) {
-      name = getLabelContents(label);
+      name = getElementContents(label);
       if (name.length) return { name: name, source: 'label container' };
     }
   }
