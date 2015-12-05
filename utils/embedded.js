@@ -3,7 +3,7 @@
 */
 
 import { getAriaRole } from './roles';
-import { getElementContents, normalize } from './namefrom';
+import { normalize } from './namefrom';
 
 // LOW-LEVEL FUNCTIONS
 
@@ -23,7 +23,7 @@ function getTextboxValue (element) {
   }
 
   if (tagName === 'textarea') {
-    return getElementContents(element);
+    return getInputValue(element);
   }
 
   return '';
