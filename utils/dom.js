@@ -5,6 +5,8 @@
 import { createOverlay, addDragAndDrop } from './overlay';
 import { formatInfo } from './info';
 
+let consoleOutput = false;
+
 /*
 *   isVisible: Recursively check element properties from getComputedStyle
 *   until document element is reached, to determine whether element or any
@@ -85,6 +87,8 @@ export function addNodes (params) {
   targetList.forEach(function (target) {
     // Collect elements based on selector defined for target
     let elements = document.querySelectorAll(target.selector);
+    if (consoleOutput && elements.length)
+      console.log(target.label + ": " + elements.length);
 
     // Filter elements if target defines a filter function
     if (typeof target.filter === 'function')
@@ -93,6 +97,8 @@ export function addNodes (params) {
     Array.prototype.forEach.call(elements, function (element) {
       if (isVisible(element)) {
         let info = getInfo(element, target);
+        if (consoleOutput && info.accName)
+          console.log("accName: " + info.accName.name);
         if (evalInfo) evalInfo(info, target);
         let boundingRect = element.getBoundingClientRect();
         let overlayNode = createOverlay(target, boundingRect, cssClass);
