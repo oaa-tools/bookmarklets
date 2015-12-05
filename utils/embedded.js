@@ -3,7 +3,13 @@
 */
 
 import { getAriaRole } from './roles';
-import { getElementContents } from './namefrom';
+import { getElementContents, normalize } from './namefrom';
+
+// LOW-LEVEL FUNCTIONS
+
+function getInputValue (element) {
+  return normalize(element.value);
+}
 
 // HELPER FUNCTIONS FOR SPECIFIC ROLES
 
@@ -13,7 +19,7 @@ function getTextboxValue (element) {
       type    = element.type;
 
   if (tagName === 'input' && inputTypes.indexOf(type) !== -1) {
-    return element.value;
+    return getInputValue(element);
   }
 
   if (tagName === 'textarea') {
@@ -29,7 +35,7 @@ function getComboboxValue (element) {
       type    = element.type;
 
   if (tagName === 'input' && inputTypes.indexOf(type) !== -1) {
-    return element.value;
+    return getInputValue(element);
   }
 
   return '';
@@ -40,7 +46,7 @@ function getSliderValue (element) {
       type    = element.type;
 
   if (tagName === 'input' && type === 'range') {
-    return element.value;
+    return getInputValue(element);
   }
 
   return '';
@@ -51,7 +57,7 @@ function getSpinbuttonValue (element) {
       type    = element.type;
 
   if (tagName === 'input' && type === 'number') {
-    return element.value;
+    return getInputValue(element);
   }
 
   return '';
@@ -65,7 +71,8 @@ function getListboxValue (element) {
 
     for (let i = 0; i < selectedOptions.length; i++) {
       let option = selectedOptions[i];
-      if (option.value.length) arr.push(option.value);
+      let value = normalize(option.value);
+      if (value.length) arr.push(value);
     }
 
     if (arr.length) return arr.join(' ');

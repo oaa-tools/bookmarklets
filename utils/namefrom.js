@@ -12,7 +12,7 @@ import { isEmbeddedControl, getEmbeddedControlValue } from './embedded';
 *   Mozilla documentation on String.prototype.trim polyfill. Handles
 *   BOM and NBSP characters.
 */
-function normalize (s) {
+export function normalize (s) {
   let rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
   return s.replace(rtrim, '').replace(/\s+/g, ' ');
 }
