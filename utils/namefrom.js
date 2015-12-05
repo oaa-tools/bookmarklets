@@ -86,12 +86,20 @@ export function isLabelableElement (element) {
 *   getElementContents: Construct the text alternative for element by
 *   collecting all of its text node descendants, along with 'alt' text
 *   and embedded control values of corresponding element descendants.
+*
+*   Note: The forElement parameter is used to determine whether the
+*   collection process is being run on behalf of an embedded control,
+*   in which case its value is not included. Used by nameFromLabel fn.
 */
-export function getElementContents (element) {
-  let arrayOfStrings;
+export function getElementContents (element, forElement) {
+  let arrayOfStrings = [];
 
   function getContentsRec (node, arr) {
     let altText, content, value;
+
+    // If descendant node is the element for which we are collecting the
+    // contents, do not get its value per ARIA specification.
+    if (node === forElement) return arr;
 
     switch (node.nodeType) {
       case (Node.ELEMENT_NODE):
@@ -122,7 +130,9 @@ export function getElementContents (element) {
     return arr;
   }
 
-  arrayOfStrings = getContentsRec(element, []);
+  Array.prototype.forEach.call(element.childNodes, function (node) {
+    getContentsRec(node, arrayOfStrings);
+  });
   if (arrayOfStrings.length) return arrayOfStrings.join(' ');
 
   return '';
@@ -228,7 +238,7 @@ export function nameFromLabelElement (element) {
   if (element.id) {
     label = document.querySelector('[for="' + element.id + '"]');
     if (label) {
-      name = getElementContents(label);
+      name = getElementContents(label, element);
       if (name.length) return { name: name, source: 'label [for=id]' };
     }
   }
@@ -237,7 +247,7 @@ export function nameFromLabelElement (element) {
   if (typeof element.closest === 'function') {
     label = element.closest('label');
     if (label) {
-      name = getElementContents(label);
+      name = getElementContents(label, element);
       if (name.length) return { name: name, source: 'label container' };
     }
   }
