@@ -242,7 +242,7 @@ export function getAccessibleName (element, recFlag = false) {
   if (accName === null) accName = nameFromAttribute(element, 'aria-label');
   if (accName === null) accName = nameFromNativeSemantics(element, recFlag);
 
-  if (isLabelableElement(element))
+  if (accName && isLabelableElement(element))
     accName = addFieldsetLegend(element, accName);
 
   return accName;
