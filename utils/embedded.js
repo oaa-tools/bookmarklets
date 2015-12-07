@@ -3,12 +3,31 @@
 */
 
 import { getAriaRole } from './roles';
-import { normalize } from './namefrom';
+import { getAttributeValue, normalize } from './namefrom';
 
 // LOW-LEVEL FUNCTIONS
 
+/*
+*   getInputValue: Get current value of 'input' or 'textarea' element.
+*/
 function getInputValue (element) {
   return normalize(element.value);
+}
+
+/*
+*   getRangeValue: Get current value of control with role 'spinbutton'
+*   or 'slider' (i.e., subclass of abstract 'range' role).
+*/
+function getRangeValue (element) {
+  let value;
+
+  value = getAttributeValue(element, 'aria-valuetext');
+  if (value.length) return value;
+
+  value = getAttributeValue(element, 'aria-valuenow');
+  if (value.length) return value;
+
+  return getInputValue(element);
 }
 
 // HELPER FUNCTIONS FOR SPECIFIC ROLES
@@ -46,7 +65,7 @@ function getSliderValue (element) {
       type    = element.type;
 
   if (tagName === 'input' && type === 'range') {
-    return getInputValue(element);
+    return getRangeValue(element);
   }
 
   return '';
@@ -57,7 +76,7 @@ function getSpinbuttonValue (element) {
       type    = element.type;
 
   if (tagName === 'input' && type === 'number') {
-    return getInputValue(element);
+    return getRangeValue(element);
   }
 
   return '';
