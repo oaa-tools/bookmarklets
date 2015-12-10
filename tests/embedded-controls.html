@@ -1,5 +1,13 @@
 <html>
 <head>
+  <style>
+    label::before {
+      content: "abc ";
+    }
+    label::after {
+      content: ' xyz';
+    }
+  </style>
 </head>
 
 <body>
@@ -10,11 +18,11 @@
   </div>
 
   <div style="margin-top: 2em">
-    <label>Flash the screen <select><option>2</option><option>3</option><option selected>4</option></select> times</label>
+    <input type="text" aria-labelledby="label-1"/>
   </div>
 
   <div style="margin-top: 2em">
-    <input type="text" aria-labelledby="label-1"/>
+    <label>Flash the screen <select><option>2</option><option>3</option><option selected>4</option></select> times</label>
   </div>
 
   <div style="margin-top: 2em">
