@@ -83,59 +83,91 @@ export function isLabelableElement (element) {
 }
 
 /*
-*   getElementContents: Construct the text alternative for element by
-*   collecting all of its text node descendants, along with 'alt' text
-*   and embedded control values of corresponding element descendants.
+*   addCssGeneratedContent: Add CSS-generated content for pseudo-elements
+*   :before and :after. According to the CSS spec, test that content value
+*   is other than the default computed value of 'none'.
 *
-*   Note: The forElement parameter is used to determine whether the
-*   collection process is being run on behalf of an embedded control,
-*   in which case its value is not included. Used by nameFromLabel fn.
+*   Note: Even if an author specifies content: 'none', because browsers add
+*   the double-quote character to the beginning and end of computed string
+*   values, the result cannot and will not be equal to 'none'.
 */
-export function getElementContents (element, forElement) {
-  let arrayOfStrings = [];
+function addCssGeneratedContent (element, contents) {
+  let result = contents,
+      prefix = getComputedStyle(element, ':before').content,
+      suffix = getComputedStyle(element, ':after').content;
 
-  function getContentsRec (node, arr) {
-    let altText, content, value;
+  if (prefix !== 'none') result = prefix + result;
+  if (suffix !== 'none') result = result + suffix;
 
-    // If descendant node is the element for which we are collecting the
-    // contents, do not get its value per ARIA specification.
-    if (node === forElement) return arr;
+  return result;
+}
 
-    switch (node.nodeType) {
-      case (Node.ELEMENT_NODE):
-        if (couldHaveAltText(node)) {
-          altText = getAttributeValue(node, 'alt');
-          if (altText.length) arr.push(altText);
-        }
-        else if (isEmbeddedControl(node)) {
-          value = getEmbeddedControlValue(node);
-          if (value.length) arr.push(value);
-        }
-        else {
-          if (node.hasChildNodes()) {
-            Array.prototype.forEach.call(node.childNodes, function (n) {
-              getContentsRec(n, arr);
-            });
+/*
+*   getNodeContents: Recursively process element and text nodes by aggregating
+*   their text values for an ARIA text equivalent calculation.
+*   1. This includes special handling of elements with 'alt' text and embedded
+*      controls.
+*   2. The forElem parameter is needed for label processing to avoid inclusion
+*      of an embedded control's value when the label is for the control itself.
+*/
+function getNodeContents (node, forElem) {
+  let contents = '';
+
+  if (node === forElem) return '';
+
+  switch (node.nodeType) {
+    case Node.ELEMENT_NODE:
+      if (couldHaveAltText(node)) {
+        contents = getAttributeValue(node, 'alt');
+      }
+      else if (isEmbeddedControl(node)) {
+        contents = getEmbeddedControlValue(node);
+      }
+      else {
+        if (node.hasChildNodes()) {
+          let children = node.childNodes,
+              arr = [];
+
+          for (let i = 0; i < children.length; i++) {
+            let nc = getNodeContents(children[i], forElem);
+            if (nc.length) arr.push(nc);
           }
-        }
-        break;
-      case (Node.TEXT_NODE):
-        content = normalize(node.textContent);
-        if (content.length) arr.push(content);
-        break;
-      default:
-        break;
-    }
 
-    return arr;
+          contents = (arr.length) ? arr.join(' ') : '';
+        }
+      }
+      // For all branches of the ELEMENT_NODE case...
+      contents = addCssGeneratedContent(node, contents);
+      break;
+
+    case Node.TEXT_NODE:
+      contents = normalize(node.textContent);
   }
 
-  Array.prototype.forEach.call(element.childNodes, function (node) {
-    getContentsRec(node, arrayOfStrings);
-  });
-  if (arrayOfStrings.length) return arrayOfStrings.join(' ');
+  return contents;
+}
 
-  return '';
+/*
+*   getElementContents: Construct the ARIA text alternative for element by
+*   processing its element and text node descendants and then adding any CSS-
+*   generated content if present.
+*/
+function getElementContents (element, forElement) {
+  let result = '';
+
+  if (element.hasChildNodes()) {
+    let children = element.childNodes,
+        arrayOfStrings = [];
+
+    for (let i = 0; i < children.length; i++) {
+      let contents = getNodeContents(children[i], forElement);
+      if (contents.length) arrayOfStrings.push(contents);
+    }
+
+    result = (arrayOfStrings.length) ? arrayOfStrings.join(' ') : '';
+  }
+
+  return addCssGeneratedContent(element, result);
 }
 
 /*
