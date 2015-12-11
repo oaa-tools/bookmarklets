@@ -7,6 +7,7 @@
 */
 
 import {
+  getAttributeValue,
   getElementContents,
   hasFirstValue,
   isLabelableElement,
@@ -200,18 +201,18 @@ export function nameFromNativeSemantics (element, recFlag = false) {
 }
 
 /*
-*   nameFromAriaLabelledBy: Get the aria-labelledby attribute value of the
-*   element param (a space-separated list of IDREFs), visit each referenced
-*   element in the order it appears in the list and obtain its accessible
-*   name (skipping recursive aria-labelledby calculations), and return an
-*   object with name property set to a space-separated string concatenation
-*   of those results if any, otherwise return null.
+*   nameFromAttributeIdRefs: Get the value of attrName on element (a space-
+*   separated list of IDREFs), visit each referenced element in the order it
+*   appears in the list and obtain its accessible name (skipping recursive
+*   aria-labelledby or aria-describedby calculations), and return an object
+*   with name property set to a string that is a space-separated concatena-
+*   tion of those results if any, otherwise return null.
 */
-function nameFromAriaLabelledBy (element) {
-  let value = element.getAttribute('aria-labelledby');
+function nameFromAttributeIdRefs (element, attribute) {
+  let value = getAttributeValue(element, attribute);
   let idRefs, i, refElement, accName, arr = [];
 
-  if (value && value.length) {
+  if (value.length) {
     idRefs = value.split(' ');
 
     for (i = 0; i < idRefs.length; i++) {
@@ -222,23 +223,23 @@ function nameFromAriaLabelledBy (element) {
   }
 
   if (arr.length)
-    return { name: arr.join(' '), source: 'aria-labelledby' };
+    return { name: arr.join(' '), source: attribute };
 
   return null;
 }
 
 /*
-*   getAccessibleName: Use ARIA Roles Model specification for accessible
-*   name calculation based on precedence order: (1) Use aria-labelledby,
-*   unless we are already in the midst of a recursive aria-labelledby
-*   calculation; (2) use aria-label; (3) use whatever method is specified
-*   by the native semantics of the element, which includes, at the bottom
-*   of the precedence list, use of the title attribute.
+*   getAccessibleName: Use the ARIA Roles Model specification for accessible
+*   name calculation based on its precedence order:
+*   (1) Use aria-labelledby, unless a traversal is already underway;
+*   (2) Use aria-label attribute value;
+*   (3) Use whatever method is specified by the native semantics of the
+*   element, which includes, as last resort, use of the title attribute.
 */
 export function getAccessibleName (element, recFlag = false) {
   let accName = null;
 
-  if (!recFlag) accName = nameFromAriaLabelledBy(element);
+  if (!recFlag) accName = nameFromAttributeIdRefs(element, 'aria-labelledby');
   if (accName === null) accName = nameFromAttribute(element, 'aria-label');
   if (accName === null) accName = nameFromNativeSemantics(element, recFlag);
 
@@ -246,4 +247,20 @@ export function getAccessibleName (element, recFlag = false) {
     accName = addFieldsetLegend(element, accName);
 
   return accName;
+}
+
+/*
+*   getAccessibleDesc: Use the ARIA Roles Model specification for accessible
+*   description calculation based on its precedence order:
+*   (1) Use aria-describedby, unless a traversal is already underway;
+*   (2) Use whatever method is specified by the native semantics of the
+*   element, which includes, as last resort, use of the title attribute.
+*/
+export function getAccessibleDesc (element, recFlag = false) {
+  let accDesc = null;
+
+  if (!recFlag) accDesc = nameFromAttributeIdRefs(element, 'aria-describedby');
+  if (accDesc === null) accDesc = nameFromAttribute(element, 'title');
+
+  return accDesc;
 }
