@@ -4,7 +4,7 @@
 
 import Bookmarklet from './Bookmarklet';
 import { isDescendantOf, landmarksCss } from './utils/dom';
-import { getAccessibleName } from './utils/getaccname';
+import { getAccessibleName, getAccessibleDesc } from './utils/getaccname';
 import { getElementInfo } from './utils/info';
 import { getAriaRole } from './utils/roles';
 
@@ -47,6 +47,7 @@ import { getAriaRole } from './utils/roles';
       title:    'LANDMARK INFO',
       element:  getElementInfo(element),
       accName:  getAccessibleName(element),
+      accDesc:  getAccessibleDesc(element),
       role:     getAriaRole(element)
     };
 

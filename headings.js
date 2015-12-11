@@ -4,7 +4,7 @@
 
 import Bookmarklet from './Bookmarklet';
 import { headingsCss } from './utils/dom';
-import { getAccessibleName } from './utils/getaccname';
+import { getAccessibleName, getAccessibleDesc } from './utils/getaccname';
 import { getElementInfo } from './utils/info';
 import { getAriaRole } from './utils/roles';
 
@@ -25,6 +25,7 @@ import { getAriaRole } from './utils/roles';
       title:    'HEADING INFO',
       element:  getElementInfo(element),
       accName:  getAccessibleName(element),
+      accDesc:  getAccessibleDesc(element),
       role:     getAriaRole(element),
       props:    'level ' + target.label.substring(1)
     };

@@ -4,7 +4,7 @@
 
 import Bookmarklet from './Bookmarklet';
 import { formsCss } from './utils/dom';
-import { getAccessibleName } from './utils/getaccname';
+import { getAccessibleName, getAccessibleDesc } from './utils/getaccname';
 import { getElementInfo } from './utils/info';
 import { getAriaRole } from './utils/roles';
 
@@ -27,6 +27,7 @@ import { getAriaRole } from './utils/roles';
       title:    'FORM INFO',
       element:  getElementInfo(element),
       accName:  getAccessibleName(element),
+      accDesc:  getAccessibleDesc(element),
       role:     getAriaRole(element)
     };
 

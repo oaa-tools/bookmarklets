@@ -4,7 +4,7 @@
 
 import Bookmarklet from './Bookmarklet';
 import { countChildrenWithTagNames, listsCss } from './utils/dom';
-import { getAccessibleName } from './utils/getaccname';
+import { getAccessibleName, getAccessibleDesc } from './utils/getaccname';
 import { getElementInfo } from './utils/info';
 import { getAriaRole } from './utils/roles';
 
@@ -34,6 +34,7 @@ import { getAriaRole } from './utils/roles';
       title:    'LIST INFO',
       element:  getElementInfo(element),
       accName:  getAccessibleName(element),
+      accDesc:  getAccessibleDesc(element),
       role:     getAriaRole(element),
       props:    listCount + ' items'
     };
