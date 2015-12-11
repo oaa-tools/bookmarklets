@@ -40,12 +40,15 @@ export function getElementInfo (element) {
 */
 export function formatInfo (info) {
   let value = '';
-  let { title, element, accName, role, props } = info;
+  let { title, element, accName, accDesc, role, props } = info;
 
   value += '=== ' + title + ' ===';
   if (element) value += '\nELEMENT: ' + element;
   if (accName) {
     value += '\nACC. NAME: ' + accName.name + '\nFROM: ' + accName.source;
+  }
+  if (accDesc) {
+    value += '\nACC. DESC: ' + accDesc.name + '\nFROM: ' + accDesc.source;
   }
   if (role) value += '\nROLE: ' + role;
   if (props) value += '\nPROPERTIES: ' + props;
