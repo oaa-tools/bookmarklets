@@ -152,7 +152,7 @@ function getNodeContents (node, forElem) {
 *   processing its element and text node descendants and then adding any CSS-
 *   generated content if present.
 */
-function getElementContents (element, forElement) {
+export function getElementContents (element, forElement) {
   let result = '';
 
   if (element.hasChildNodes()) {
