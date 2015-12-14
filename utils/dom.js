@@ -3,6 +3,9 @@
 */
 
 import { createOverlay, addDragAndDrop } from './overlay';
+import { formatInfo } from './info';
+
+let consoleOutput = false;
 
 /*
 *   isVisible: Recursively check element properties from getComputedStyle
@@ -32,25 +35,75 @@ function isVisible (element) {
 }
 
 /*
+*   countChildrenWithTagNames: For the specified DOM element, return the
+*   number of its child elements with tagName equal to one of the values
+*   in the tagNames array.
+*/
+export function countChildrenWithTagNames (element, tagNames) {
+  let count = 0;
+
+  let child = element.firstElementChild;
+  while (child) {
+    if (tagNames.indexOf(child.tagName) > -1) count += 1;
+    child = child.nextElementSibling;
+  }
+
+  return count;
+}
+
+/*
+*   isDescendantOf: Determine whether element is a descendant of any
+*   element in the DOM with a tagName in the list of tagNames.
+*/
+export function isDescendantOf (element, tagNames) {
+  if (typeof element.closest === 'function') {
+    return tagNames.some(name => element.closest(name) !== null);
+  }
+  return false;
+}
+
+/*
+*   hasParentWithName: Determine whether element has a parent with
+*   tagName in the list of tagNames.
+*/
+export function hasParentWithName (element, tagNames) {
+  let parentTagName = element.parentElement.tagName.toLowerCase();
+  if (parentTagName) {
+    return tagNames.some(name => parentTagName === name);
+  }
+  return false;
+}
+
+/*
 *   addNodes: Use targetList to generate nodeList of elements and to
 *   each of these, add an overlay with a unique CSS class name.
 *   Optionally, if getInfo is specified, add tooltip information;
 *   if dndFlag is set, add drag-and-drop functionality.
 */
 export function addNodes (params) {
-  let { targetList, cssClass, getInfo, dndFlag } = params;
+  let { targetList, cssClass, getInfo, evalInfo, dndFlag } = params;
   let counter = 0;
 
   targetList.forEach(function (target) {
-    var elements = document.querySelectorAll(target.selector);
+    // Collect elements based on selector defined for target
+    let elements = document.querySelectorAll(target.selector);
+    if (consoleOutput && elements.length)
+      console.log(target.label + ": " + elements.length);
+
+    // Filter elements if target defines a filter function
+    if (typeof target.filter === 'function')
+      elements = Array.prototype.filter.call(elements, target.filter);
 
     Array.prototype.forEach.call(elements, function (element) {
-      var boundingRect, overlayNode;
       if (isVisible(element)) {
-        boundingRect = element.getBoundingClientRect();
-        overlayNode = createOverlay(target, boundingRect, cssClass);
+        let info = getInfo(element, target);
+        if (consoleOutput && info.accName)
+          console.log("accName: " + info.accName.name);
+        if (evalInfo) evalInfo(info, target);
+        let boundingRect = element.getBoundingClientRect();
+        let overlayNode = createOverlay(target, boundingRect, cssClass);
         if (dndFlag) addDragAndDrop(overlayNode);
-        if (getInfo) overlayNode.title = getInfo(element, target);
+        overlayNode.title = formatInfo(info);
         document.body.appendChild(overlayNode);
         counter += 1;
       }
@@ -75,8 +128,9 @@ export function removeNodes (cssClass) {
 /*
 *   Unique CSS class names
 */
-export const formsCss     = "a11yGfdXALm0";
-export const headingsCss  = "a11yGfdXALm1";
-export const imagesCss    = "a11yGfdXALm2";
-export const landmarksCss = "a11yGfdXALm3";
-export const listsCss     = "a11yGfdXALm4";
+export const formsCss       = "a11yGfdXALm0";
+export const headingsCss    = "a11yGfdXALm1";
+export const imagesCss      = "a11yGfdXALm2";
+export const landmarksCss   = "a11yGfdXALm3";
+export const listsCss       = "a11yGfdXALm4";
+export const interactiveCss = "a11yGfdXALm5";

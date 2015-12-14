@@ -1,0 +1,33 @@
+<html>
+<head>
+  <title>acc-desc.html</title>
+</head>
+
+<body>
+  <header>
+    <h1>Accessible Description</h1>
+  </header>
+
+  <div id="div-1">
+  First div: text content of div#div-1.
+  </div>
+
+  <div id="div-2">
+  Second div: text content of div#div-2.
+  </div>
+
+  <div id="div-3">
+  Third div: text content of div#div-3.
+  </div>
+
+  <main>
+    <p>This is the first paragraph within the main element.</p>
+    <img src="#" alt="Image without valid src" aria-describedby="div-1 div-2 div-3"/>
+    <img src="#" aria-labelledby="div-1 div-2 div-3" title="This is the description."/>
+  </main>
+
+  <footer>
+    <h2>Top-level footer</h2>
+  </footer>
+</body>
+</html>

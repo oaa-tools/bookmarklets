@@ -43,6 +43,31 @@
 * `input` `type=` all types not listed above
   * use `label`, then attribute `title`
 
+#### Embedded Controls: Roles, Elements and Native Semantics
+
+Role: textbox
+* `input [email|password|search|tel|text|url]` -> getValue
+* `textarea` -> getElementContents
+
+Role: combobox
+* `input [email|search|tel|text|url]` -> getValue
+
+Role: listbox
+* `datalist` -> getSelectedOption
+* `select` -> getAllSelectedOptions
+
+Role: slider
+* `input [range]` -> getValue
+
+Role: spinbutton
+* `input [number]` -> getValue
+
+Functions:
+* getValue: use `HTMLInputElement` interface: `value` property
+* getSelectedOption: loop through `option` elements, get text contents of first with `selected` property
+* getAllSelectedOptions: use `selectedOptions` property, which is an HTMLCollection
+
+
 #### Questions
 * When the `aria-labelledby` attribute is specified on an element, and an
   element referenced by an IDREF has an `aria-label` attribute, does it
