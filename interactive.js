@@ -4,7 +4,11 @@
 
 import Bookmarklet from './Bookmarklet';
 import { interactiveCss } from './utils/dom';
-import { getAccessibleName, getAccessibleDesc } from './utils/getaccname';
+import {
+  getAccessibleName,
+  getAccessibleDesc,
+  getGroupingLabels
+} from './utils/getaccname';
 import { getElementInfo } from './utils/info';
 import { getAriaRole } from './utils/roles';
 
@@ -51,11 +55,12 @@ import { getAriaRole } from './utils/roles';
 
   function getInfo (element, target) {
     let info = {
-      title:    'INTERACTIVE INFO',
-      element:  getElementInfo(element),
-      accName:  getAccessibleName(element),
-      accDesc:  getAccessibleDesc(element),
-      role:     getAriaRole(element)
+      title:      'INTERACTIVE INFO',
+      element:    getElementInfo(element),
+      grpLabels:  getGroupingLabels(element),
+      accName:    getAccessibleName(element),
+      accDesc:    getAccessibleDesc(element),
+      role:       getAriaRole(element)
     };
 
     return info;
