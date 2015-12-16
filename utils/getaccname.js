@@ -24,8 +24,8 @@ import { getAriaRole, nameFromIncludesContents } from './roles';
 
 /*
 *   getFieldsetLegendLabels: Recursively collect legend contents of
-*   fieldset ancestors, starting with the closest (innermost) and
-*   returns results in an array of strings.
+*   fieldset ancestors, starting with the closest (innermost).
+*   Return collection as a possibly empty array of strings.
 */
 function getFieldsetLegendLabels (element) {
   let arrayOfStrings = [];
@@ -265,8 +265,7 @@ export function getAccessibleName (element, recFlag = false) {
 *   getAccessibleDesc: Use the ARIA Roles Model specification for accessible
 *   description calculation based on its precedence order:
 *   (1) Use aria-describedby, unless a traversal is already underway;
-*   (2) Use whatever method is specified by the native semantics of the
-*   element, which includes, as last resort, use of the title attribute.
+*   (2) As last resort, use the title attribute.
 */
 export function getAccessibleDesc (element, recFlag = false) {
   let accDesc = null;
