@@ -5,6 +5,7 @@
 import { createOverlay, addDragAndDrop } from './overlay';
 import { formatInfo } from './info';
 
+/* eslint no-console: 0 */
 let consoleOutput = false;
 
 /*

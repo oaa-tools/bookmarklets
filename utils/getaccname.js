@@ -9,7 +9,6 @@
 import {
   getAttributeValue,
   getElementContents,
-  hasFirstValue,
   isLabelableElement,
   nameFromAttribute,
   nameFromAltAttribute,

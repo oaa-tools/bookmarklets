@@ -1,5 +1,4 @@
 var path = require("path");
-var webpack = require("webpack");
 
 module.exports = {
   entry: {
@@ -15,8 +14,14 @@ module.exports = {
     filename: "[name].js"
   },
   module: {
+    preLoaders: [
+      { test: /\.js$/, exclude: /node_modules/, loader: "eslint-loader" }
+    ],
     loaders: [
       { test: /\.js$/, exclude: /node_modules/, loader: "babel" }
     ]
+  },
+  eslint: {
+    quiet: true
   }
 };

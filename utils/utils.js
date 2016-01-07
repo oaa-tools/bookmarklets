@@ -12,12 +12,12 @@ export function getScrollOffsets () {
 
   var xOffset = (typeof window.pageXOffset === "undefined") ?
     (((t = document.documentElement) || (t = document.body.parentNode)) &&
-      typeof t.ScrollLeft == 'number' ? t : document.body).ScrollLeft :
+      typeof t.ScrollLeft === 'number' ? t : document.body).ScrollLeft :
     window.pageXOffset;
 
   var yOffset = (typeof window.pageYOffset === "undefined") ?
     (((t = document.documentElement) || (t = document.body.parentNode)) &&
-      typeof t.ScrollTop == 'number' ? t : document.body).ScrollTop :
+      typeof t.ScrollTop === 'number' ? t : document.body).ScrollTop :
     window.pageYOffset;
 
   return { x: xOffset, y: yOffset };
