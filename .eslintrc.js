@@ -1,4 +1,4 @@
-{
+module.exports = {
   "ecmaFeatures": {
     "experimentalObjectRestSpread": true,
     "modules": true
