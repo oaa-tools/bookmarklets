@@ -537,6 +537,19 @@ div.images {
   background-image: url("/images/Javablur-4.png");
 }
 
+a.forms, div.forms {
+   border: 5px solid gray;
+}
+
+a.forms {
+  background: gray;
+}
+
+div.forms {
+  background-image: url("/images/Javablur-1.png");
+}
+
+
 a.bookmarklet:hover, a.bookmarklet:focus {
   background-color: #556A7B;
   color: white;

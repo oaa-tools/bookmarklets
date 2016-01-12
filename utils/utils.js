@@ -12,12 +12,12 @@ export function getScrollOffsets () {
 
   var xOffset = (typeof window.pageXOffset === "undefined") ?
     (((t = document.documentElement) || (t = document.body.parentNode)) &&
-      typeof t.ScrollLeft == 'number' ? t : document.body).ScrollLeft :
+      typeof t.ScrollLeft === 'number' ? t : document.body).ScrollLeft :
     window.pageXOffset;
 
   var yOffset = (typeof window.pageYOffset === "undefined") ?
     (((t = document.documentElement) || (t = document.body.parentNode)) &&
-      typeof t.ScrollTop == 'number' ? t : document.body).ScrollTop :
+      typeof t.ScrollTop === 'number' ? t : document.body).ScrollTop :
     window.pageYOffset;
 
   return { x: xOffset, y: yOffset };
@@ -92,25 +92,4 @@ export function drag (elementToDrag, dragCallback, event) {
     if (e.stopPropagation) e.stopPropagation();
     else e.cancelBubble = true;
   }
-}
-
-/*
-*   countChildrenWithTagNames: For the specified DOM element, return the
-*   number of its child elements with tagName equal to one of the values
-*   in the tagNames array.
-*
-*   @param element  : DOM element
-*   @param tagNames : Array of String
-*/
-
-export function countChildrenWithTagNames (element, tagNames) {
-  let count = 0;
-
-  let child = element.firstElementChild;
-  while (child) {
-    if (tagNames.indexOf(child.tagName) > -1) count += 1;
-    child = child.nextElementSibling;
-  }
-
-  return count;
 }

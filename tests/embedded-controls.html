@@ -1,0 +1,50 @@
+<html>
+<head>
+  <title>embedded-controls.html</title>
+  <style>
+    label::before {
+      content: "abc ";
+    }
+    label::after {
+      content: ' xyz';
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Embedded Controls</h1>
+
+  <div id="label-1">
+    <label>Flash the screen <input type="text" value="5"/> times</label>
+  </div>
+
+  <div style="margin-top: 2em">
+    <input type="text" aria-labelledby="label-1"/>
+  </div>
+
+  <div style="margin-top: 2em">
+    <label>Flash the screen <select><option>2</option><option>3</option><option selected>4</option></select> times</label>
+  </div>
+
+  <div style="margin-top: 2em">
+    <label for="input-1">Flash the screen <select><option>20</option><option>30</option><option selected>40</option></select> times if current user is: </label>
+    <input id="input-1" type="text"/>
+  </div>
+
+  <div style="margin-top: 2em">
+    <label for="input-2"><textarea>Default content for textarea</textarea></label>
+    <input id="input-2" type="text">
+  </div>
+
+  <div style="margin-top: 2em">
+    <label for="input-3">Flash the screen <input type="range" step="5"/> times for user:
+    <input type="text" id="input-3" value="default"/></label>
+  </div>
+
+  <div style="margin-top: 2em">
+    <label for="input-4">Flash the screen <input type="number" min="0" max="20" step="2" value="0"/> times for user:
+    <input type="text" id="input-4" value="default"/></label>
+  </div>
+
+</body>
+</html>

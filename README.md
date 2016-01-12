@@ -3,10 +3,13 @@
 Highlight classes of elements on a web page that relate to accessibility
 requirements, including:
 
-* Forms
-* Headings
 * Landmarks
+* Headings
+* Images
 * Lists
+* Forms (work in progress)
+
+To install the bookmarklets, please visit the [Accessibility Bookmarklets website](https://accessibility-bookmarklets.org).
 
 Instructions for using the web accessibility bookmarklets:
 

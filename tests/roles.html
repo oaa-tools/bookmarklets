@@ -1,0 +1,28 @@
+<html>
+<head>
+  <title>roles.html</title>
+</head>
+
+<body>
+  <header>
+    <h1>ARIA Roles Parsing</h1>
+  </header>
+
+  <div role="abc def MAIN">
+  This div element has role=MAIN.
+  </div>
+
+  <div id="d1" role="text">First part of contents.</div>
+  <div id="d2" role="group">Second part of contents.</div>
+
+  <a href="#" aria-labelledby="d1 d2">Some text here...</a>
+
+  <h1 role="group">This is a heading level 1</h1>
+
+  <MAIN>This is a MAIN element (uppercase)</MAIN>
+
+  <footer>
+    <h2>Top-level footer</h2>
+  </footer>
+</body>
+</html>

@@ -1,11 +1,12 @@
 /*
-*   lists.js: bookmarklet script for highlighting HTML list elements
+*   lists.js: bookmarklet script for highlighting list elements
 */
 
 import Bookmarklet from './Bookmarklet';
-import { listsCss } from './utils/dom';
-import { getAccessibleName } from './utils/accname';
-import { countChildrenWithTagNames } from './utils/utils.js';
+import { countChildrenWithTagNames, listsCss } from './utils/dom';
+import { getAccessibleName, getAccessibleDesc } from './utils/getaccname';
+import { getElementInfo } from './utils/info';
+import { getAriaRole } from './utils/roles';
 
 (function () {
   let targetList = [
@@ -17,37 +18,26 @@ import { countChildrenWithTagNames } from './utils/utils.js';
   let selectors = targetList.map(function (tgt) {return tgt.selector;}).join(', ');
 
   function getInfo (element, target) {
-    let accessibleName = getAccessibleName(element);
+    let listCount;
 
-    let roleInfo, listType, listCount;
     switch (target.label) {
       case 'dl':
-        listType  = 'Definition list';
         listCount = countChildrenWithTagNames(element, ['DT', 'DD']);
         break;
       case 'ol':
-        roleInfo  = 'List';
-        listType  = 'Ordered list';
-        listCount = countChildrenWithTagNames(element, ['LI']);
-        break;
       case 'ul':
-        roleInfo  = 'List';
-        listType  = 'Unordered list';
         listCount = countChildrenWithTagNames(element, ['LI']);
         break;
     }
 
-    if (roleInfo) {
-      if (accessibleName)
-        accessibleName = roleInfo + ': ' + accessibleName;
-      else
-        accessibleName = roleInfo;
-    }
-
-    let props = listType + ' with ' + listCount + ' items';
-
-    let info = 'PROPERTIES: ' + props;
-    if (accessibleName) info += '\n' + 'ACC. NAME: ' + accessibleName;
+    let info = {
+      title:    'LIST INFO',
+      element:  getElementInfo(element),
+      accName:  getAccessibleName(element),
+      accDesc:  getAccessibleDesc(element),
+      role:     getAriaRole(element),
+      props:    listCount + ' items'
+    };
 
     return info;
   }
