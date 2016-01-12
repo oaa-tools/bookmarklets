@@ -9,7 +9,6 @@
 import {
   getAttributeValue,
   getElementContents,
-  hasFirstValue,
   isLabelableElement,
   nameFromAttribute,
   nameFromAltAttribute,
@@ -23,33 +22,48 @@ import {
 import { getAriaRole, nameFromIncludesContents } from './roles';
 
 /*
-*   addFieldsetLegend: Recursively prepend legend contents of closest
-*   fieldset ancestor to the accName, which may already have content.
+*   getFieldsetLegendLabels: Recursively collect legend contents of
+*   fieldset ancestors, starting with the closest (innermost).
+*   Return collection as a possibly empty array of strings.
 */
-function addFieldsetLegend (element, accName) {
-  let fieldset, legend, text;
+function getFieldsetLegendLabels (element) {
+  let arrayOfStrings = [];
 
-  if (typeof element.closest === 'function') {
-    fieldset = element.closest('fieldset');
+  if (typeof element.closest !== 'function') {
+    return arrayOfStrings;
+  }
+
+  function getLabelsRec (elem, arr) {
+    let fieldset = elem.closest('fieldset');
+
     if (fieldset) {
-      legend = fieldset.querySelector('legend');
+      let legend = fieldset.querySelector('legend');
       if (legend) {
-        text = getElementContents(legend);
-        if (text.length) {
-          if (accName) {
-            accName.name = text + ' ' + accName.name;
-            accName.source = 'fieldset/legend + ' + accName.source;
-          }
-          else {
-            accName = { name: text, source: 'fieldset/legend' };
-          }
+        let text = getElementContents(legend);
+        if (text.length){
+          arr.push({ name: text, source: 'fieldset/legend' });
         }
       }
-      return addFieldsetLegend(fieldset.parentNode, accName);
+      // process ancestors
+      getLabelsRec(fieldset.parentNode, arr);
     }
   }
 
-  return accName;
+  getLabelsRec(element, arrayOfStrings);
+  return arrayOfStrings;
+}
+
+/*
+*   getGroupingLabels: Return an array of grouping label objects for
+*   element, each with two properties: 'name' and 'source'.
+*/
+export function getGroupingLabels (element) {
+  // We currently only handle labelable elements as defined in HTML 5.1
+  if (isLabelableElement(element)) {
+    return getFieldsetLegendLabels(element);
+  }
+
+  return [];
 }
 
 /*
@@ -243,9 +257,6 @@ export function getAccessibleName (element, recFlag = false) {
   if (accName === null) accName = nameFromAttribute(element, 'aria-label');
   if (accName === null) accName = nameFromNativeSemantics(element, recFlag);
 
-  if (accName && isLabelableElement(element))
-    accName = addFieldsetLegend(element, accName);
-
   return accName;
 }
 
@@ -253,8 +264,7 @@ export function getAccessibleName (element, recFlag = false) {
 *   getAccessibleDesc: Use the ARIA Roles Model specification for accessible
 *   description calculation based on its precedence order:
 *   (1) Use aria-describedby, unless a traversal is already underway;
-*   (2) Use whatever method is specified by the native semantics of the
-*   element, which includes, as last resort, use of the title attribute.
+*   (2) As last resort, use the title attribute.
 */
 export function getAccessibleDesc (element, recFlag = false) {
   let accDesc = null;

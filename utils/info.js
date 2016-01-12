@@ -40,17 +40,28 @@ export function getElementInfo (element) {
 */
 export function formatInfo (info) {
   let value = '';
-  let { title, element, accName, accDesc, role, props } = info;
+  let { title, element, grpLabels, accName, accDesc, role, props } = info;
 
   value += '=== ' + title + ' ===';
   if (element) value += '\nELEMENT: ' + element;
+
+  if (grpLabels && grpLabels.length) {
+    // array starts with innermost label, so process from the end
+    for (let i = grpLabels.length - 1; i >= 0; i--) {
+      value += '\nGRP. LABEL: ' + grpLabels[i].name + '\nFROM: ' + grpLabels[i].source;
+    }
+  }
+
   if (accName) {
     value += '\nACC. NAME: ' + accName.name + '\nFROM: ' + accName.source;
   }
+
   if (accDesc) {
     value += '\nACC. DESC: ' + accDesc.name + '\nFROM: ' + accDesc.source;
   }
+
   if (role) value += '\nROLE: ' + role;
+
   if (props) value += '\nPROPERTIES: ' + props;
 
   return value;
