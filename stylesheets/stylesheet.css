@@ -537,6 +537,10 @@ div.images {
   background-image: url("/images/Javablur-4.png");
 }
 
+a.forms, div.forms {
+   border: 5px solid gray;
+}
+
 a.forms {
   background: gray;
 }
