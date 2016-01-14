@@ -7,7 +7,7 @@ requirements, including:
 * Headings
 * Images
 * Lists
-* Forms (work in progress)
+* Forms
 
 To install the bookmarklets, please visit the [Accessibility Bookmarklets website](https://accessibility-bookmarklets.org).
 
