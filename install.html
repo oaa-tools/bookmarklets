@@ -72,8 +72,9 @@
             </ul>
             <p>You can run multiple bookmarklets on the same page at the same time. See the <a href="/documentation.html">documentation</a> for more about using each bookmarklet.</p>
             <p><span class="footnote-symbol">*</span> Some web pages have Content Security Policies
-            that do not allow web browsers to run inline scripts. Because bookmarklets appear to be
-            inline scripts to the browser, such pages will prevent bookmarklets from running.</p>
+            that do not allow web browsers to run inline scripts. Because bookmarklets are functionally
+            equivalent to inline scripts (when activated, they are inserted into the DOM of the web page),
+            the browser will prevent any and all bookmarklets from running on such pages.</p>
 
             <h2>Supported Browsers</h2>
             <p>The drag-and-drop installation works on modern desktop browsers including:
