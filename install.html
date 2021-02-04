@@ -10,6 +10,14 @@
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
     <link href='https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab' rel='stylesheet' type='text/css'>
     <title>Accessibility Bookmarklets</title>
+    <style type="text/css">
+      .footnote-symbol {
+        color: crimson;
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.0;
+      }
+    </style>
   </head>
 
   <body>
@@ -56,13 +64,17 @@
              </ul>
             <img src="images/bookmarklets.gif" alt="illustration of bookmarklets installation" class="installation"/>
             <h2>How to Use</h2>
-            <p>Once installed, these bookmarklets can interact with any web page.</p>
+            <p>Once installed, these bookmarklets can interact with most web pages.<span class="footnote-symbol">*</span></p>
             <ul>
                 <li>To activate, click a bookmarklet in your bookmarks or favorites bar</li>
                 <li>To de-activate, simply click it again or refresh your page</li>
                 <li>It will also de-activate when you resize your window or navigate to another page</li>
             </ul>
             <p>You can run multiple bookmarklets on the same page at the same time. See the <a href="/documentation.html">documentation</a> for more about using each bookmarklet.</p>
+            <p><span class="footnote-symbol">*</span> Some web pages have Content Security Policies
+            that do not allow web browsers to run inline scripts. Because bookmarklets appear to be
+            inline scripts to the browser, such pages will prevent bookmarklets from running.</p>
+
             <h2>Supported Browsers</h2>
             <p>The drag-and-drop installation works on modern desktop browsers including:
                 <ul>
