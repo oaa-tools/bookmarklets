@@ -30,12 +30,22 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer" role="main">
       <section id="main_content" class="inner">
-        <p></p>
 
     <div id="main-content">
         <article class="markdown-body entry-content" itemprop="mainContentOfPage">
-            <p>A bookmarklet is a link that contains Javascript. Below they are styled as buttons. To install a bookmarklet, the most common way is to drag and drop a bookmarklet link into your browser's bookmarks or favorites bar.</p>
-            <p>There are alternative, browser-specific installation methods such as copying and pasting the link into your bookmarks or favorites.</p>
+            <h2>Installation and Usage</h2>
+            <p>A bookmarklet is a link that contains JavaScript. When a bookmarklet link is activated,
+            the browser runs the JavaScript code that it contains.</p>
+            <p>In each of the five rectangles below, the label in its upper-right corner is an Accessibility
+            Bookmarklet link. The labels are: Landmarks, Headings, Lists, Images and Forms. Each bookmarklet
+            link must be installed separately, but you can successively install any combination of them to
+            suit your needs.</p>
+            <p>The most common way of installing a bookmarklet is to drag and drop the bookmarklet link
+            into your browser's bookmarks or favorites toolbar. The shortcut for toggling the display of the
+            bookmarks toolbar in Chrome, Firefox and Safari is <code>Shift + Ctrl/Cmd + B</code>.</p>
+            <p>There are alternative, browser-specific installation methods such as copying the link location
+            of the bookmarklet link and pasting it into the Location field of a bookmark that you create using
+            your browser's Bookmark Manager or Show All Bookmarks feature.</p>
              <ul class="bookmarklet">
                  <li class="bookmarklet"><div class="landmarks bookmarklet"><a class="bookmarklet landmarks" href="javascript:if(window.a11yLandmarks)window.a11yLandmarks.run();else{(function(){var%20link=document.createElement('link');link.rel='stylesheet';link.type='text/css';link.href='https://accessibility-bookmarklets.org/build/styles.css';document.getElementsByTagName('head')[0].appendChild(link);var%20script=document.createElement('script');script.type='text/javascript';script.src='https://accessibility-bookmarklets.org/build/landmarks.js';document.getElementsByTagName('head')[0].appendChild(script);})();}">Landmarks</a></div><p>Highlights all ARIA landmarks, including HTML5 tags that are interpreted as landmarks</p></li>
                 <li class="bookmarklet"><div class="headings bookmarklet"><a class="bookmarklet headings" href="javascript:if(window.a11yHeadings)window.a11yHeadings.run();else{(function(){var%20link=document.createElement('link');link.rel='stylesheet';link.type='text/css';link.href='https://accessibility-bookmarklets.org/build/styles.css';document.getElementsByTagName('head')[0].appendChild(link);var%20script=document.createElement('script');script.type='text/javascript';script.src='https://accessibility-bookmarklets.org/build/headings.js';document.getElementsByTagName('head')[0].appendChild(script);})();}">Headings</a></div><p>Highlights all H1 through H6 elements on a page</p></li>
@@ -49,12 +59,12 @@
             <p>Once installed, these bookmarklets can interact with any web page.</p>
             <ul>
                 <li>To activate, click a bookmarklet in your bookmarks or favorites bar</li>
-                <li>To de-activate, simply click it again or refresh your page</li> 
+                <li>To de-activate, simply click it again or refresh your page</li>
                 <li>It will also de-activate when you resize your window or navigate to another page</li>
             </ul>
             <p>You can run multiple bookmarklets on the same page at the same time. See the <a href="/documentation.html">documentation</a> for more about using each bookmarklet.</p>
             <h2>Supported Browsers</h2>
-            <p>The drag-and-drop installation works on modern desktop browsers including: 
+            <p>The drag-and-drop installation works on modern desktop browsers including:
                 <ul>
                     <li>Chrome, Firefox, Opera, and Internet Explorer 9+ on Windows 7, 8.x, and 10</li>
                     <li>Chrome, Firefox, Safari, and Opera on OS X</li>
